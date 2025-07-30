@@ -221,31 +221,37 @@ export default function CreateReadmeForm({ data, onChange }) {
           </div>
           
           {data.technologies.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="space-y-3">
               {data.technologies.map((tech) => (
-                <Badge 
-                  key={tech.name} 
-                  variant="secondary" 
-                  className="flex items-center gap-2 px-3 py-1.5 hover:shadow-md transition-all duration-200"
-                  style={{ 
-                    backgroundColor: tech.bg || '#f1f5f9',
-                    borderColor: tech.color + '40' || '#cbd5e1'
-                  }}
-                >
-                  <i 
-                    className={`${tech.icon} text-lg`}
-                    style={{ color: tech.color || '#64748b' }}
-                  ></i>
-                  <span className="font-medium">{tech.name}</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-4 w-4 p-0 hover:bg-destructive hover:text-destructive-foreground ml-1"
-                    onClick={() => removeTechnology(tech.name)}
-                  >
-                    <X className="w-3 h-3" />
-                  </Button>
-                </Badge>
+                <div key={tech.name} className="flex items-center gap-3 p-3 border rounded-lg hover:shadow-md transition-shadow duration-200">
+                  <div className="flex items-center gap-2">
+                    <i 
+                      className={`${tech.icon} text-lg`}
+                      style={{ color: tech.color || '#64748b' }}
+                    ></i>
+                    {tech.showName && (
+                      <span className="font-medium">{tech.name}</span>
+                    )}
+                  </div>
+                  
+                  <div className="flex-1 flex items-center justify-end gap-4">
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        checked={tech.showName}
+                        onCheckedChange={(checked) => updateTechnology(tech.name, 'showName', checked)}
+                      />
+                      <span className="text-sm">Show name</span>
+                    </div>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeTechnology(tech.name)}
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
               ))}
             </div>
           )}
