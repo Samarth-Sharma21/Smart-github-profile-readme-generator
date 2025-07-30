@@ -1,8 +1,14 @@
 import './globals.css'
 import 'github-markdown-css/github-markdown-light.css'
 import { Toaster } from '@/components/ui/sonner'
+import Script from 'next/script'
+import { FeedbackButton } from '@/components/FeedbackButton'
+import { PerformanceOptimizer } from '@/components/PerformanceOptimizer'
+import PerformanceBooster from '@/components/PerformanceBooster'
+import MediaOptimizer from '@/components/MediaOptimizer'
 
 export const metadata = {
+  metadataBase: new URL('https://github-profile-readme-generator.vercel.app'),
   title: 'Smart GitHub Profile README Generator | Create Beautiful GitHub READMEs',
   description: 'Create beautiful GitHub profile README files with interactive forms and live preview. Customize your GitHub profile with technologies, stats, projects and more.',
   keywords: ['github profile', 'readme generator', 'github readme', 'profile generator', 'markdown generator', 'github stats', 'developer profile', 'github bio'],
@@ -51,14 +57,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       </head>
-      <body className="font-sans antialiased">
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <PerformanceOptimizer />
+        <PerformanceBooster />
+        <MediaOptimizer />
         {children}
+        <FeedbackButton />
         <Toaster />
+
       </body>
     </html>
   )

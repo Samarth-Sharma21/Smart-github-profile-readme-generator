@@ -4,11 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Toggle } from '@/components/ui/toggle'
-import { Star, GitFork, Coffee, Eye } from 'lucide-react'
+import { Star, GitFork, Coffee, Eye, Github } from 'lucide-react'
 import { gsap } from 'gsap'
 import Lenis from 'lenis'
 import CreateReadmeForm from '@/components/CreateReadmeForm'
 import PreviewReadme from '@/components/PreviewReadme'
+import { GitHubStats } from '@/components/GitHubStats'
 
 export default function App() {
   const [currentView, setCurrentView] = useState('create')
@@ -180,9 +181,13 @@ export default function App() {
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-primary">
-              Smart GitHub Profile README Generator
-            </h1>
+            <div className="flex flex-col">
+              <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
+                <Github className="w-6 h-6" />
+                Smart GitHub Profile README Generator
+              </h1>
+              <GitHubStats />
+            </div>
             
             <div className="flex items-center gap-3">
               <Button 
@@ -190,7 +195,7 @@ export default function App() {
                 variant="outline" 
                 size="sm"
                 className="flex items-center gap-2 hover:bg-yellow-50 hover:border-yellow-300 transition-colors"
-                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-gh-profile-readme-generator', '_blank')}
+                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/star', '_self')}
               >
                 <Star className="w-4 h-4 text-yellow-500" />
                 Star Repo
@@ -200,7 +205,7 @@ export default function App() {
                 variant="outline" 
                 size="sm"
                 className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-colors"
-                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-gh-profile-readme-generator', '_blank')}
+                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/fork', '_self')}
               >
                 <GitFork className="w-4 h-4 text-blue-500" />
                 Fork Repo
@@ -214,20 +219,31 @@ export default function App() {
       <div className="border-b bg-muted/30">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-center">
-            <div className="flex items-center bg-background rounded-lg p-1 border shadow-sm">
+            <div className="flex items-center bg-background rounded-lg p-1 border shadow-sm relative overflow-hidden">
+              {/* Animated background pill */}
+              <div 
+                className="absolute h-full rounded-md bg-black transition-all duration-500 z-0 water-blob"
+                style={{
+                  width: '50%',
+                  left: currentView === 'create' ? '0%' : '50%',
+                  transform: 'scale(0.95)',
+                  filter: 'blur(1px)',
+                  opacity: 0.9
+                }}
+              />
               <Button
-                variant={currentView === 'create' ? 'default' : 'ghost'}
+                variant="ghost"
                 size="sm"
                 onClick={() => handleToggleChange('create')}
-                className="px-6"
+                className={`px-6 transition-all duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
               >
                 Create README
               </Button>
               <Button
-                variant={currentView === 'preview' ? 'default' : 'ghost'}
+                variant="ghost"
                 size="sm"
                 onClick={() => handleToggleChange('preview')}
-                className="px-6"
+                className={`px-6 transition-all duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
               >
                 Preview README
               </Button>
