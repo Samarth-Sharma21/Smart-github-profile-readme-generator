@@ -14,185 +14,119 @@ export default function PreviewReadme({ data }) {
 
   const generateMarkdown = useMemo(() => {
     let markdown = ''
+
+    // Profile Introduction
+    if (data.profile.name) {
+      markdown += `# ${data.profile.name}\n\n`
+    }
     
-    // Create an ordered array of section generators
-    const sectionGenerators = [
-      // Profile/About Me section
-      () => {
-        let sectionMarkdown = ''
-        
-        // Check if we should use "About Me" as heading or use name directly
-        if (data.profile.useAboutMeHeading) {
-          // Use "About Me" as heading with name underneath
-          sectionMarkdown += `# About Me\n\n${data.profile.name}\n\n`
+    if (data.profile.subtitle) {
+      markdown += `### ${data.profile.subtitle}\n\n`
+    }
+
+    if (data.profile.welcomeMessage) {
+      markdown += `${data.profile.welcomeMessage}\n\n`
+    }
+
+    // Profile Views Badge
+    if (data.githubStats.showProfileViews && data.githubStats.username) {
+      markdown += `<p align="left"> <img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat" alt="${data.githubStats.username}" /> </p>\n\n`
+    }
+
+    // Social Links
+    if (data.socialLinks.length > 0) {
+      const socialHeading = data.sectionHeadings?.socialLinks || '🌐 Connect with me:'
+      markdown += `## ${socialHeading}\n`
+      markdown += `<p align="left">\n`
+      data.socialLinks.forEach(social => {
+        if (social.username) {
+          const url = social.urlTemplate.replace('{username}', social.username)
+          markdown += `<a href="${url}" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform.toLowerCase()}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
+        }
+      })
+      markdown += `</p>\n\n`
+    }
+
+    // Technologies
+    if (data.technologies.length > 0) {
+      const techHeading = data.sectionHeadings?.technologies || '🛠️ Languages and Tools:'
+      markdown += `## ${techHeading}\n`
+      markdown += `<p align="left"> `
+      data.technologies.forEach(tech => {
+        const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+        if (tech.showName) {
+          // Show with name in alt text and tooltip
+          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
         } else {
-          // Use name directly as heading
-          sectionMarkdown += `# ${data.profile.name}\n\n`
+          // Show only icon, smaller size
+          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
         }
-        
-        if (data.profile.subtitle) {
-          sectionMarkdown += `### ${data.profile.subtitle}\n\n`
-        }
-
-        if (data.profile.welcomeMessage) {
-          sectionMarkdown += `${data.profile.welcomeMessage}\n\n`
-        }
-        
-        // Profile Views Badge
-        if (data.githubStats.showProfileViews && data.githubStats.username) {
-          sectionMarkdown += `<p align="left"> <img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat" alt="${data.githubStats.username}" /> </p>\n\n`
-        }
-        
-        return sectionMarkdown
-      },
-      
-      // Technologies section
-      () => {
-        let sectionMarkdown = ''
-        if (data.technologies.length > 0) {
-          const techHeading = data.sectionHeadings?.technologies || '🛠️ Languages and Tools:'
-          sectionMarkdown += `## ${techHeading}\n`
-          sectionMarkdown += `<p align="left"> `
-          data.technologies.forEach(tech => {
-            const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
-            if (tech.showName) {
-              // Show with name in alt text and tooltip
-              sectionMarkdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
-            } else {
-              // Show only icon, smaller size
-              sectionMarkdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
-            }
-          })
-          sectionMarkdown += `</p>\n\n`
-        }
-        return sectionMarkdown
-      },
-      
-      // Social Links section
-      () => {
-        let sectionMarkdown = ''
-        if (data.socialLinks.length > 0) {
-          const socialHeading = data.sectionHeadings?.socialLinks || '🌐 Connect with me:'
-          sectionMarkdown += `## ${socialHeading}\n`
-          sectionMarkdown += `<p align="left">\n`
-          data.socialLinks.forEach(social => {
-            if (social.username) {
-              const url = social.urlTemplate.replace('{username}', social.username)
-              sectionMarkdown += `<a href="${url}" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform.toLowerCase()}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
-            }
-          })
-          sectionMarkdown += `</p>\n\n`
-        }
-        return sectionMarkdown
-      },
-      
-      // GitHub Stats section
-      () => {
-        let sectionMarkdown = ''
-        if (data.githubStats.username) {
-          const statsHeading = data.sectionHeadings?.githubStats || '📊 GitHub Stats'
-          let hasStats = false
-          
-          if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
-            sectionMarkdown += `## ${statsHeading}\n\n`
-            hasStats = true
-          }
-
-          if (data.githubStats.showGithubStats) {
-            sectionMarkdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></p>\n\n`
-          }
-
-          if (data.githubStats.showStreakStats) {
-            sectionMarkdown += `<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&" alt="${data.githubStats.username}" /></p>\n\n`
-          }
-
-          if (data.githubStats.showTopLanguages) {
-            sectionMarkdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></p>\n\n`
-          }
-
-          if (data.githubStats.showActivityGraph) {
-            sectionMarkdown += `<p><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" /></p>\n\n`
-          }
-        }
-        return sectionMarkdown
-      }
-    ]
-    
-    // Get the section IDs in the order they should appear
-    const sectionOrder = data.sectionOrder || {
-      profile: 0,
-      technologies: 1,
-      socialLinks: 2,
-      githubStats: 3,
-      projects: 4,
-      support: 5,
-      contact: 6
+      })
+      markdown += `</p>\n\n`
     }
-    
-    // Generate the profile section first (always at the top)
-    markdown += sectionGenerators[0]()
-    
-    // Create a map of section generators for all sections
-    const allSectionGenerators = {
-      // Skip profile as we already added it
-      technologies: () => sectionGenerators[1](),
-      socialLinks: () => sectionGenerators[2](),
-      githubStats: () => sectionGenerators[3](),
-      projects: () => {
-        let sectionMarkdown = ''
-        if (data.projects.length > 0) {
-          const projectsHeading = data.sectionHeadings?.projects || '🚀 Featured Projects:'
-          sectionMarkdown += `## ${projectsHeading}\n\n`
-          data.projects.forEach(project => {
-            if (project.title) {
-              sectionMarkdown += `### [${project.title}](${project.link || '#'})\n`
-              if (project.description) {
-                sectionMarkdown += `${project.description}\n`
-              }
-              if (project.repo) {
-                sectionMarkdown += `**Repository:** [${project.repo}](${project.repo})\n`
-              }
-              sectionMarkdown += `\n`
-            }
-          })
-        }
-        return sectionMarkdown
-      },
-      support: () => {
-        let sectionMarkdown = ''
-        if (data.support.buyMeCoffee || data.support.kofi) {
-          const supportHeading = data.sectionHeadings?.support || '☕ Support Me:'
-          sectionMarkdown += `## ${supportHeading}\n\n`
-          if (data.support.buyMeCoffee) {
-            sectionMarkdown += `<p><a href="https://www.buymeacoffee.com/${data.support.buyMeCoffee}"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="${data.support.buyMeCoffee}" /></a></p><br><br>\n\n`
-          }
-          if (data.support.kofi) {
-            sectionMarkdown += `<p><a href="https://ko-fi.com/${data.support.kofi}"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="${data.support.kofi}" /></a></p><br><br>\n\n`
-          }
-        }
-        return sectionMarkdown
-      },
-      contact: () => {
-        let sectionMarkdown = ''
-        if (data.contact.email) {
-          const contactHeading = data.sectionHeadings?.contact || '📫 How to reach me:'
-          sectionMarkdown += `## ${contactHeading}\n\n`
-          sectionMarkdown += `**Email:** ${data.contact.email}\n\n`
-        }
-        return sectionMarkdown
+
+    // GitHub Stats
+    if (data.githubStats.username) {
+      const statsHeading = data.sectionHeadings?.githubStats || '📊 GitHub Stats'
+      let hasStats = false
+      
+      if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
+        markdown += `## ${statsHeading}\n\n`
+        hasStats = true
+      }
+
+      if (data.githubStats.showGithubStats) {
+        markdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></p>\n\n`
+      }
+
+      if (data.githubStats.showStreakStats) {
+        markdown += `<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&" alt="${data.githubStats.username}" /></p>\n\n`
+      }
+
+      if (data.githubStats.showTopLanguages) {
+        markdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></p>\n\n`
+      }
+
+      if (data.githubStats.showActivityGraph) {
+        markdown += `<p><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" /></p>\n\n`
       }
     }
-    
-    // Generate the other sections based on the order
-    const orderedSections = Object.entries(sectionOrder)
-      .filter(([id]) => id !== 'profile') // Skip profile as we already added it
-      .sort((a, b) => a[1] - b[1]) // Sort by order value
-      .map(([id]) => id) // Get just the section ID
-    
-    for (const sectionId of orderedSections) {
-      if (sectionId in allSectionGenerators) {
-        markdown += allSectionGenerators[sectionId]()
+
+    // Projects
+    if (data.projects.length > 0) {
+      const projectsHeading = data.sectionHeadings?.projects || '🚀 Featured Projects:'
+      markdown += `## ${projectsHeading}\n\n`
+      data.projects.forEach(project => {
+        if (project.title) {
+          markdown += `### [${project.title}](${project.link || '#'})\n`
+          if (project.description) {
+            markdown += `${project.description}\n`
+          }
+          if (project.repo) {
+            markdown += `**Repository:** [${project.repo}](${project.repo})\n`
+          }
+          markdown += `\n`
+        }
+      })
+    }
+
+    // Support
+    if (data.support.buyMeCoffee || data.support.kofi) {
+      const supportHeading = data.sectionHeadings?.support || '☕ Support Me:'
+      markdown += `## ${supportHeading}\n\n`
+      if (data.support.buyMeCoffee) {
+        markdown += `<p><a href="https://www.buymeacoffee.com/${data.support.buyMeCoffee}"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="${data.support.buyMeCoffee}" /></a></p><br><br>\n\n`
       }
+      if (data.support.kofi) {
+        markdown += `<p><a href="https://ko-fi.com/${data.support.kofi}"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="${data.support.kofi}" /></a></p><br><br>\n\n`
+      }
+    }
+
+    // Contact
+    if (data.contact.email) {
+      const contactHeading = data.sectionHeadings?.contact || '📫 How to reach me:'
+      markdown += `## ${contactHeading}\n\n`
+      markdown += `**Email:** ${data.contact.email}\n\n`
     }
 
     return markdown
@@ -203,14 +137,7 @@ export default function PreviewReadme({ data }) {
 
     // Profile Introduction
     if (data.profile.name) {
-      if (data.profile.useAboutMeHeading) {
-        // Use "About Me" as heading with name underneath
-        html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">About Me</h1>\n`
-        html += `<p class="mb-4 text-lg">${data.profile.name}</p>\n`
-      } else {
-        // Use name directly as heading
-        html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${data.profile.name}</h1>\n`
-      }
+      html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${data.profile.name}</h1>\n`
     }
     
     if (data.profile.subtitle) {
