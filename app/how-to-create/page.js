@@ -6,7 +6,7 @@ import { ArrowLeft, Github, Code, FileCode, Lightbulb, CheckCircle2, AlertCircle
 
 export default function HowToCreateGithubProfile() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-6xl overflow-hidden break-words overflow-wrap-anywhere">
+    <div className="container mx-auto px-4 py-12 max-w-6xl overflow-hidden break-words overflow-wrap-break-word">
       <div className="mb-8">
         <Button
           variant="ghost"
@@ -214,7 +214,7 @@ export default function HowToCreateGithubProfile() {
         <div className="grid md:grid-cols-2 gap-6">
           <Button 
             variant="outline" 
-            className="h-auto p-6 flex flex-col items-start gap-2 text-left"
+            className="h-auto p-6 flex flex-col items-start gap-2 text-left break-words overflow-hidden whitespace-normal"
             onClick={() => window.open('https://github.com/abhisheknaiidu', '_blank')}
           >
             <div className="flex items-center gap-2 font-medium">
@@ -222,14 +222,14 @@ export default function HowToCreateGithubProfile() {
               abhisheknaiidu
               <ExternalLink className="w-4 h-4 ml-1" />
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm w-full break-words">
               Features a clean design with tech stack, GitHub stats, and blog posts.
             </p>
           </Button>
           
           <Button 
             variant="outline" 
-            className="h-auto p-6 flex flex-col items-start gap-2 text-left"
+            className="h-auto p-6 flex flex-col items-start gap-2 text-left break-words overflow-hidden whitespace-normal"
             onClick={() => window.open('https://github.com/anuraghazra', '_blank')}
           >
             <div className="flex items-center gap-2 font-medium">
@@ -237,14 +237,14 @@ export default function HowToCreateGithubProfile() {
               anuraghazra
               <ExternalLink className="w-4 h-4 ml-1" />
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm w-full break-words">
               Creator of GitHub Readme Stats with an interactive and visually appealing profile.
             </p>
           </Button>
           
           <Button 
             variant="outline" 
-            className="h-auto p-6 flex flex-col items-start gap-2 text-left"
+            className="h-auto p-6 flex flex-col items-start gap-2 text-left break-words overflow-hidden whitespace-normal"
             onClick={() => window.open('https://github.com/codeSTACKr', '_blank')}
           >
             <div className="flex items-center gap-2 font-medium">
@@ -252,14 +252,14 @@ export default function HowToCreateGithubProfile() {
               codeSTACKr
               <ExternalLink className="w-4 h-4 ml-1" />
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm w-full break-words">
               Includes animated GIFs, social links, and latest YouTube videos.
             </p>
           </Button>
           
           <Button 
             variant="outline" 
-            className="h-auto p-6 flex flex-col items-start gap-2 text-left"
+            className="h-auto p-6 flex flex-col items-start gap-2 text-left break-words overflow-hidden whitespace-normal"
             onClick={() => window.open('https://github.com/DenverCoder1', '_blank')}
           >
             <div className="flex items-center gap-2 font-medium">
@@ -267,7 +267,7 @@ export default function HowToCreateGithubProfile() {
               DenverCoder1
               <ExternalLink className="w-4 h-4 ml-1" />
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm w-full break-words">
               Showcases projects with preview images and features a comprehensive skills section.
             </p>
           </Button>

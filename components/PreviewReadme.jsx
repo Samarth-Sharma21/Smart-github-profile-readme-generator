@@ -47,7 +47,7 @@ export default function PreviewReadme({ data }) {
 
     // Profile Views Badge
     if (data.githubStats.showProfileViews && data.githubStats.username) {
-      markdown += `<p align="left"> <img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat" alt="${data.githubStats.username}" /> </p>\n\n`
+      markdown += `<p align="left"> <img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat&base=1000" alt="${data.githubStats.username}" /> </p>\n\n`
     }
 
     // Social Links
@@ -99,19 +99,19 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.githubStats.showGithubStats) {
-        markdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<p align="center"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></p>\n\n`
       }
 
       if (data.githubStats.showStreakStats) {
-        markdown += `<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<p align="center"><img src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&theme=default" alt="${data.githubStats.username}" /></p>\n\n`
       }
 
       if (data.githubStats.showTopLanguages) {
-        markdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<p align="center"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></p>\n\n`
       }
 
       if (data.githubStats.showActivityGraph) {
-        markdown += `<p><img src="https://github-readme-activity-graph.cyclic.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<p align="center"><img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=minimal" alt="${data.githubStats.username}" /></p>\n\n`
       }
     }
 
@@ -190,7 +190,7 @@ export default function PreviewReadme({ data }) {
 
     // Profile Views Badge
     if (data.githubStats.showProfileViews && data.githubStats.username) {
-      html += `<p class="mb-6"><img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat" alt="${data.githubStats.username}" /></p>\n`
+      html += `<p class="mb-6"><img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat&base=1000" alt="${data.githubStats.username}" /></p>\n`
     }
 
     // Social Links
@@ -251,15 +251,15 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.githubStats.showGithubStats) {
-        html += `<div class="flex justify-center"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></div>\n`
+        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
       }
 
       if (data.githubStats.showStreakStats) {
-        html += `<div class="flex justify-center"><img src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&" alt="${data.githubStats.username}" /></div>\n`
+        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&theme=default" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
       }
 
       if (data.githubStats.showTopLanguages) {
-        html += `<div class="flex justify-center"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></div>\n`
+        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
       }
 
       if (hasStats) {
@@ -267,7 +267,7 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.githubStats.showActivityGraph) {
-        html += `<div class="flex justify-center mb-6"><img src="https://github-readme-activity-graph.cyclic.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
+        html += `<div class="flex justify-center mb-6 overflow-hidden"><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=minimal" alt="${data.githubStats.username}" class="max-w-full w-full" /></div>\n`
       }
     }
 
