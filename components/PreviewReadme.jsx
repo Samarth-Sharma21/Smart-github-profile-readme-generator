@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Copy, Download, Eye } from 'lucide-react'
 import { toast } from 'sonner'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export default function PreviewReadme({ data }) {
   const [copied, setCopied] = useState(false)
@@ -38,11 +40,7 @@ export default function PreviewReadme({ data }) {
       data.socialLinks.forEach(social => {
         if (social.username) {
           const url = social.urlTemplate.replace('{username}', social.username)
-          if (social.showIcon) {
-            markdown += `<a href="${url}" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
-          } else {
-            markdown += `<a href="${url}" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
-          }
+          markdown += `<a href="${url}" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform.toLowerCase()}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
         }
       })
       markdown += `</p>\n\n`
@@ -53,7 +51,8 @@ export default function PreviewReadme({ data }) {
       markdown += `## 🛠️ Languages and Tools:\n`
       markdown += `<p align="left"> `
       data.technologies.forEach(tech => {
-        markdown += `<a href="#" target="_blank" rel="noreferrer"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon.replace('devicon-', '').replace('-plain', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
+        const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+        markdown += `<a href="#" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
       })
       markdown += `</p>\n\n`
     }
@@ -175,24 +174,32 @@ export default function PreviewReadme({ data }) {
         </CardHeader>
         <CardContent>
           <div className="prose prose-sm max-w-none">
-            <div 
-              className="markdown-body bg-white p-6 rounded-lg border"
-              dangerouslySetInnerHTML={{
-                __html: generateMarkdown
-                  .replace(/\n/g, '<br/>')
-                  .replace(/#{1,6}\s(.+)/g, (match, title) => {
-                    const level = match.indexOf(' ') - 1
-                    return `<h${level} class="text-${4-level}xl font-bold mb-4">${title}</h${level}>`
-                  })
-                  .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                  .replace(/\*(.+?)\*/g, '<em>$1</em>')
-                  .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank">$1</a>')
-                  .replace(/<img([^>]*?)>/g, '<img$1 class="inline-block" />')
-                  .replace(/<p><img align="left"([^>]*?)><\/p>/g, '<div class="flex justify-start mb-4"><img$1></div>')
-                  .replace(/<p><img align="center"([^>]*?)><\/p>/g, '<div class="flex justify-center mb-4"><img$1></div>')
-                  .replace(/<p><img([^>]*?)><\/p>/g, '<div class="flex justify-center mb-4"><img$1></div>')
-              }}
-            />
+            <div className="markdown-body bg-white p-6 rounded-lg border min-h-[400px]">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({children}) => <h1 className="text-3xl font-bold mb-4 border-b pb-2">{children}</h1>,
+                  h2: ({children}) => <h2 className="text-2xl font-semibold mb-3 mt-6 border-b pb-1">{children}</h2>,
+                  h3: ({children}) => <h3 className="text-xl font-semibold mb-2 mt-4">{children}</h3>,
+                  p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                  a: ({href, children}) => <a href={href} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{children}</a>,
+                  img: ({src, alt, ...props}) => <img src={src} alt={alt} className="inline-block max-w-full h-auto" {...props} />,
+                  ul: ({children}) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
+                  ol: ({children}) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,
+                  li: ({children}) => <li className="mb-1">{children}</li>,
+                  blockquote: ({children}) => <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4">{children}</blockquote>,
+                  code: ({children, className}) => {
+                    const isInline = !className;
+                    return isInline ? 
+                      <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">{children}</code> :
+                      <code className={className}>{children}</code>
+                  },
+                  pre: ({children}) => <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto mb-4">{children}</pre>
+                }}
+              >
+                {generateMarkdown}
+              </ReactMarkdown>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -203,7 +210,7 @@ export default function PreviewReadme({ data }) {
           <CardTitle>Raw Markdown</CardTitle>
         </CardHeader>
         <CardContent>
-          <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap">
+          <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap max-h-96">
             {generateMarkdown}
           </pre>
         </CardContent>

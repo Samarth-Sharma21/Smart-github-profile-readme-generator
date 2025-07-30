@@ -110,7 +110,7 @@ export default function CreateReadmeForm({ data, onChange }) {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Profile Introduction */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             👋 Profile Introduction
@@ -151,7 +151,7 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Technologies */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             🛠️ Technologies & Skills
@@ -163,7 +163,7 @@ export default function CreateReadmeForm({ data, onChange }) {
               variant="outline" 
               size="sm"
               onClick={() => setTechSearchOpen(true)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-colors"
             >
               <Plus className="w-4 h-4" />
               Add Technology
@@ -173,13 +173,24 @@ export default function CreateReadmeForm({ data, onChange }) {
           {data.technologies.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {data.technologies.map((tech) => (
-                <Badge key={tech.name} variant="secondary" className="flex items-center gap-2">
-                  <i className={`devicon-${tech.icon} text-lg`}></i>
-                  {tech.name}
+                <Badge 
+                  key={tech.name} 
+                  variant="secondary" 
+                  className="flex items-center gap-2 px-3 py-1.5 hover:shadow-md transition-all duration-200"
+                  style={{ 
+                    backgroundColor: tech.bg || '#f1f5f9',
+                    borderColor: tech.color + '40' || '#cbd5e1'
+                  }}
+                >
+                  <i 
+                    className={`${tech.icon} text-lg`}
+                    style={{ color: tech.color || '#64748b' }}
+                  ></i>
+                  <span className="font-medium">{tech.name}</span>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-4 w-4 p-0 hover:bg-destructive hover:text-destructive-foreground"
+                    className="h-4 w-4 p-0 hover:bg-destructive hover:text-destructive-foreground ml-1"
                     onClick={() => removeTechnology(tech.name)}
                   >
                     <X className="w-3 h-3" />
@@ -198,7 +209,7 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Social Links */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             🌐 Social Links
@@ -210,7 +221,7 @@ export default function CreateReadmeForm({ data, onChange }) {
               variant="outline" 
               size="sm"
               onClick={() => setSocialSearchOpen(true)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover:bg-green-50 hover:border-green-300 transition-colors"
             >
               <Plus className="w-4 h-4" />
               Add Social Link
@@ -220,7 +231,7 @@ export default function CreateReadmeForm({ data, onChange }) {
           {data.socialLinks.length > 0 && (
             <div className="space-y-3">
               {data.socialLinks.map((social) => (
-                <div key={social.platform} className="flex items-center gap-3 p-3 border rounded-lg">
+                <div key={social.platform} className="flex items-center gap-3 p-3 border rounded-lg hover:shadow-md transition-shadow duration-200">
                   <i className={social.icon} style={{ color: social.color }}></i>
                   <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
                     <Input
@@ -257,7 +268,7 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* GitHub Stats */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             📊 GitHub Stats
@@ -276,7 +287,7 @@ export default function CreateReadmeForm({ data, onChange }) {
           
           <Separator />
           
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="profile-views"
@@ -326,7 +337,7 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Projects */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             🚀 Featured Projects
@@ -337,7 +348,7 @@ export default function CreateReadmeForm({ data, onChange }) {
             variant="outline" 
             size="sm"
             onClick={addProject}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 hover:bg-purple-50 hover:border-purple-300 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Project
@@ -346,7 +357,7 @@ export default function CreateReadmeForm({ data, onChange }) {
           {data.projects.length > 0 && (
             <div className="space-y-4">
               {data.projects.map((project, index) => (
-                <div key={index} className="p-4 border rounded-lg space-y-3">
+                <div key={index} className="p-4 border rounded-lg space-y-3 hover:shadow-md transition-shadow duration-200">
                   <div className="flex items-center justify-between">
                     <h4 className="font-medium">Project {index + 1}</h4>
                     <Button
@@ -391,7 +402,7 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Support Me */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             ☕ Support Me
@@ -422,7 +433,7 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Contact */}
-      <Card>
+      <Card className="transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             📫 Contact Me

@@ -1,10 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Toggle } from '@/components/ui/toggle'
-import { Star, GitFork, Coffee } from 'lucide-react'
+import { Star, GitFork, Coffee, Eye } from 'lucide-react'
+import { gsap } from 'gsap'
+import Lenis from 'lenis'
 import CreateReadmeForm from '@/components/CreateReadmeForm'
 import PreviewReadme from '@/components/PreviewReadme'
 
@@ -36,9 +38,90 @@ export default function App() {
     }
   })
 
+  const starRef = useRef(null)
+  const forkRef = useRef(null)
+
   const handleDataChange = (newData) => {
     setReadmeData(prev => ({ ...prev, ...newData }))
   }
+
+  const switchToPreview = () => {
+    setCurrentView('preview')
+    // Smooth scroll to top
+    if (typeof window !== 'undefined' && window.lenis) {
+      window.lenis.scrollTo(0)
+    }
+  }
+
+  useEffect(() => {
+    // Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true
+    })
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+
+    // Make lenis available globally
+    window.lenis = lenis
+
+    // GSAP animations for buttons
+    const starIcon = starRef.current?.querySelector('svg')
+    const forkIcon = forkRef.current?.querySelector('svg')
+
+    if (starIcon) {
+      gsap.set(starIcon, { transformOrigin: 'center' })
+      starRef.current.addEventListener('mouseenter', () => {
+        gsap.to(starIcon, {
+          rotation: 360,
+          scale: 1.1,
+          duration: 0.6,
+          ease: 'back.out(1.7)'
+        })
+      })
+      starRef.current.addEventListener('mouseleave', () => {
+        gsap.to(starIcon, {
+          rotation: 0,
+          scale: 1,
+          duration: 0.4,
+          ease: 'power2.out'
+        })
+      })
+    }
+
+    if (forkIcon) {
+      gsap.set(forkIcon, { transformOrigin: 'center' })
+      forkRef.current.addEventListener('mouseenter', () => {
+        gsap.to(forkIcon, {
+          rotation: -15,
+          scale: 1.1,
+          duration: 0.3,
+          ease: 'power2.out',
+          yoyo: true,
+          repeat: 1
+        })
+      })
+      forkRef.current.addEventListener('mouseleave', () => {
+        gsap.to(forkIcon, {
+          rotation: 0,
+          scale: 1,
+          duration: 0.4,
+          ease: 'power2.out'
+        })
+      })
+    }
+
+    return () => {
+      lenis.destroy()
+      if (window.lenis) delete window.lenis
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,21 +135,23 @@ export default function App() {
             
             <div className="flex items-center gap-3">
               <Button 
+                ref={starRef}
                 variant="outline" 
                 size="sm"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 hover:bg-yellow-50 hover:border-yellow-300 transition-colors"
                 onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-gh-profile-readme-generator', '_blank')}
               >
-                <Star className="w-4 h-4" />
+                <Star className="w-4 h-4 text-yellow-500" />
                 Star Repo
               </Button>
               <Button 
+                ref={forkRef}
                 variant="outline" 
                 size="sm"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-colors"
                 onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-gh-profile-readme-generator', '_blank')}
               >
-                <GitFork className="w-4 h-4" />
+                <GitFork className="w-4 h-4 text-blue-500" />
                 Fork Repo
               </Button>
             </div>
@@ -78,7 +163,7 @@ export default function App() {
       <div className="border-b bg-muted/30">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-center">
-            <div className="flex items-center bg-background rounded-lg p-1 border">
+            <div className="flex items-center bg-background rounded-lg p-1 border shadow-sm">
               <Button
                 variant={currentView === 'create' ? 'default' : 'ghost'}
                 size="sm"
@@ -103,10 +188,24 @@ export default function App() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         {currentView === 'create' ? (
-          <CreateReadmeForm 
-            data={readmeData} 
-            onChange={handleDataChange}
-          />
+          <>
+            <CreateReadmeForm 
+              data={readmeData} 
+              onChange={handleDataChange}
+            />
+            
+            {/* Preview Redirect Button */}
+            <div className="flex justify-center mt-12 pt-8 border-t">
+              <Button
+                onClick={switchToPreview}
+                size="lg"
+                className="flex items-center gap-3 px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              >
+                <Eye className="w-5 h-5" />
+                Preview My README
+              </Button>
+            </div>
+          </>
         ) : (
           <PreviewReadme 
             data={readmeData}
@@ -124,10 +223,10 @@ export default function App() {
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover:bg-orange-50 hover:border-orange-300 transition-colors"
               onClick={() => window.open('https://www.buymeacoffee.com/yourusername', '_blank')}
             >
-              <Coffee className="w-4 h-4" />
+              <Coffee className="w-4 h-4 text-orange-500" />
               Buy me a coffee
             </Button>
           </div>
