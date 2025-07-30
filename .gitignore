@@ -83,6 +83,3 @@ node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 # Lighthouse reports
 *.lighthouse.json
 lighthouse-*.json
-
-# Workflow artifacts
-.github/workflows/artifacts/

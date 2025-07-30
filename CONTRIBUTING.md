@@ -1,50 +1,41 @@
 # Contributing to GitHub Profile README Generator
 
-Thank you for considering contributing to the GitHub Profile README Generator! This document outlines the guidelines for contributing to this project.
+Thank you for considering contributing to this project! Your help is essential for making this tool better for everyone.
 
 ## Code of Conduct
 
-By participating in this project, you agree to abide by our Code of Conduct. Please read it before contributing.
-
-- Be respectful and inclusive
-- Be patient and welcoming
-- Be thoughtful
-- Be collaborative
-- When disagreeing, try to understand why
+By participating in this project, you agree to maintain a respectful and inclusive environment for everyone. Please be kind and considerate in your interactions with others.
 
 ## How Can I Contribute?
 
 ### Reporting Bugs
 
-Before creating bug reports, please check the issue list as you might find that the bug has already been reported. When you are creating a bug report, please include as many details as possible:
+Before creating a bug report, please check the existing issues to see if the problem has already been reported. If it hasn't, create a new issue with a clear title and description, including:
 
-- Use a clear and descriptive title
-- Describe the exact steps to reproduce the problem
-- Provide specific examples to demonstrate the steps
-- Describe the behavior you observed after following the steps
-- Explain which behavior you expected to see instead and why
-- Include screenshots if possible
-- Include your environment details (OS, browser, etc.)
+- Steps to reproduce the bug
+- Expected behavior
+- Actual behavior
+- Screenshots (if applicable)
+- Browser and operating system information
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion, please include:
+Enhancement suggestions are tracked as issues. When creating an enhancement suggestion, please include:
 
-- Use a clear and descriptive title
-- Provide a step-by-step description of the suggested enhancement
-- Provide specific examples to demonstrate the steps
-- Describe the current behavior and explain which behavior you expected to see instead
-- Explain why this enhancement would be useful to most users
-- List some other applications where this enhancement exists, if applicable
+- A clear and descriptive title
+- A detailed explanation of the proposed feature
+- Any relevant examples or mockups
+- Why this enhancement would be useful to most users
 
 ### Pull Requests
 
-- Fill in the required template
-- Do not include issue numbers in the PR title
-- Follow the style guide
-- Include screenshots in your pull request whenever possible
-- End all files with a newline
-- Avoid platform-dependent code
+1. Fork the repository
+2. Create a new branch for your feature or bug fix
+3. Make your changes
+4. Ensure your code follows the project's style guidelines
+5. Write tests for your changes if applicable
+6. Update documentation if necessary
+7. Submit a pull request
 
 ## Style Guides
 
@@ -57,84 +48,39 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 ### JavaScript Style Guide
 
-- All JavaScript code is linted with ESLint and formatted with Prettier
-- Prefer the object spread operator (`{...anotherObj}`) to `Object.assign()`
-- Inline `export`s with expressions whenever possible
-  ```js
-  // Use this:
-  export const foo = 'bar';
+- Use 2 spaces for indentation
+- Use semicolons
+- Prefer const over let when the variable won't be reassigned
+- Use camelCase for variables and functions
+- Use PascalCase for classes and React components
+- Add comments for complex logic
 
-  // Instead of:
-  const foo = 'bar';
-  export { foo };
-  ```
-- Place imports in the following order:
-  - External packages
-  - Internal modules
-  - Stylesheets
+### CSS/SCSS Style Guide
 
-### CSS Style Guide
-
-- Use Tailwind CSS utility classes when possible
-- For custom CSS, follow BEM naming convention
-- Use CSS variables for theming and consistent values
-
-### Documentation Style Guide
-
-- Use Markdown for documentation
-- Reference methods and classes in markdown with the custom `{@link}` syntax
+- Use 2 spaces for indentation
+- Use kebab-case for class names
+- Group related properties together
+- Add comments for complex styling
 
 ## Development Workflow
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Clone your fork of the repository
+2. Create a new branch for your feature or bug fix: `git checkout -b feature/your-feature-name`
+3. Install dependencies: `yarn install` or `npm install`
+4. Start the development server: `yarn dev` or `npm run dev`
+5. Make your changes
+6. Test your changes thoroughly
+7. Commit your changes: `git commit -m "Add your feature"`
+8. Push to your fork: `git push origin feature/your-feature-name`
+9. Create a pull request from your fork to the original repository
 
-### Development Setup
+## Issue Labels
 
-```bash
-# Clone your fork
-git clone https://github.com/your-username/github-profile-readme-generator.git
-
-# Navigate to the project directory
-cd github-profile-readme-generator
-
-# Add the original repository as a remote
-git remote add upstream https://github.com/original-owner/github-profile-readme-generator.git
-
-# Install dependencies
-yarn install
-
-# Start the development server
-yarn dev
-```
-
-### Testing
-
-- Write tests for new features
-- Run tests before submitting a PR
-- Ensure all tests pass
-
-```bash
-# Run tests
-yarn test
-```
-
-## Additional Notes
-
-### Issue and Pull Request Labels
-
-This project uses labels to help organize and identify issues and pull requests:
-
-- `bug`: Something isn't working
-- `documentation`: Improvements or additions to documentation
+- `bug`: Something isn't working as expected
 - `enhancement`: New feature or request
+- `documentation`: Improvements or additions to documentation
 - `good first issue`: Good for newcomers
 - `help wanted`: Extra attention is needed
 - `question`: Further information is requested
 
-## Thank You!
-
-Your contributions to open source, large or small, make projects like this possible. Thank you for taking the time to contribute.
+Thank you for contributing to the GitHub Profile README Generator!
