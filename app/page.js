@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Toggle } from '@/components/ui/toggle'
-import { Star, GitFork, Coffee, Eye, Github, ArrowRight } from 'lucide-react'
+import { Star, GitFork, Coffee, Eye, Github, ArrowRight, FileText } from 'lucide-react'
+import Link from 'next/link'
 import { gsap } from 'gsap'
 import Lenis from 'lenis'
 import CreateReadmeForm from '@/components/CreateReadmeForm'
@@ -18,7 +19,8 @@ export default function App() {
     profile: {
       name: '',
       subtitle: '',
-      welcomeMessage: ''
+      welcomeMessage: '',
+      showNameAsHeading: false
     },
     technologies: [],
     socialLinks: [],
@@ -247,34 +249,28 @@ export default function App() {
       </Script>
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50" role="banner">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 max-w-6xl">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <h1 className="text-2xl font-bold text-primary flex items-center gap-2" id="main-heading">
                 <Github className="w-6 h-6" aria-hidden="true" />
-                <span>GitHub Profile README Generator</span>
+                <span>Smart GitHub Profile README Generator</span>
               </h1>
               <p className="text-sm text-muted-foreground">Create beautiful GitHub profile READMEs with ease</p>
-              
-              {/* Breadcrumb navigation for SEO */}
-              <nav aria-label="Breadcrumb" className="mt-2">
-                <ol className="flex items-center space-x-1 text-xs text-muted-foreground" itemScope itemType="https://schema.org/BreadcrumbList">
-                  <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-                    <a href="/" itemProp="item" className="hover:text-primary transition-colors">
-                      <span itemProp="name">Home</span>
-                    </a>
-                    <meta itemProp="position" content="1" />
-                  </li>
-                  <li className="px-1">/</li>
-                  <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
-                    <span itemProp="name" className="font-medium">README Generator</span>
-                    <meta itemProp="position" content="2" />
-                  </li>
-                </ol>
-              </nav>
             </div>
             
             <div className="flex items-center gap-3">
+              <Button 
+                 variant="ghost" 
+                 size="sm"
+                 className="flex items-center gap-2"
+                 asChild
+               >
+                 <Link href="/how-to-create">
+                   <FileText className="mr-1 h-4 w-4" />
+                   How to Create
+                 </Link>
+               </Button>
               <Button 
                 ref={starRef}
                 variant="outline" 
@@ -304,7 +300,7 @@ export default function App() {
 
       {/* Toggle Section */}
       <nav className="border-b bg-muted/30" aria-label="View selection">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 max-w-6xl">
           <div className="flex justify-center">
             <div 
               className="flex items-center bg-background rounded-lg p-1 border shadow-sm relative overflow-hidden"
@@ -353,7 +349,7 @@ export default function App() {
       </nav>
 
       {/* Main Content */}
-      <main ref={mainContentRef} className="container mx-auto px-4 py-8" id="main-content" role="main" aria-labelledby="main-heading">
+      <main ref={mainContentRef} className="container mx-auto px-4 py-8 max-w-6xl" id="main-content" role="main" aria-labelledby="main-heading">
         {currentView === 'create' ? (
           <div 
             role="tabpanel" 
@@ -393,10 +389,10 @@ export default function App() {
 
       {/* FAQ Section */}
       <section className="py-12 bg-muted/20" aria-labelledby="faq-heading">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-6xl">
           <h2 id="faq-heading" className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
           
-          <div className="max-w-3xl mx-auto" itemScope itemType="https://schema.org/FAQPage">
+          <div className="max-w-5xl mx-auto" itemScope itemType="https://schema.org/FAQPage">
             <div className="mb-6" itemScope itemType="https://schema.org/Question">
               <h3 itemProp="name" className="text-lg font-semibold mb-2">What is a GitHub Profile README?</h3>
               <div itemScope itemType="https://schema.org/Answer">
@@ -430,10 +426,10 @@ export default function App() {
       {/* Footer */}
       {/* Related Links Section */}
       <section className="py-8 bg-muted/10" aria-labelledby="related-links-heading">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-6xl">
           <h2 id="related-links-heading" className="text-xl font-bold mb-6 text-center">Related Resources</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
               <h3 className="font-semibold mb-2">GitHub Profile Tips</h3>
               <p className="text-sm text-muted-foreground mb-3">Learn how to make your GitHub profile stand out with these expert tips and best practices.</p>
@@ -462,7 +458,7 @@ export default function App() {
       </section>
       
       <footer className="border-t bg-muted/30 py-8" role="contentinfo">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 max-w-6xl text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
             <span>Built with ❤️ by developers, for developers</span>
           </div>
@@ -486,6 +482,8 @@ export default function App() {
               <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
               <span>|</span>
               <a href="/terms" className="hover:text-primary transition-colors">Terms of Service</a>
+              <span>|</span>
+              <a href="https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/issues/new" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">Report Bug</a>
             </div>
           </div>
         </div>

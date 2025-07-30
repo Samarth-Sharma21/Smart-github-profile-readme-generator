@@ -13,10 +13,23 @@ module.exports = {
     		center: true,
     		padding: '2rem',
     		screens: {
-    			'2xl': '1400px'
+    			'sm': '640px',
+    			'md': '768px',
+    			'lg': '1024px',
+    			'xl': '1280px',
+    			'2xl': '1536px'
     		}
     	},
     	extend: {
+            utilities: {
+                '.break-words': {
+                    'word-wrap': 'break-word',
+                    'overflow-wrap': 'break-word'
+                },
+                '.overflow-wrap-anywhere': {
+                    'overflow-wrap': 'anywhere'
+                }
+            },
     		colors: {
     			border: 'hsl(var(--border))',
     			input: 'hsl(var(--input))',

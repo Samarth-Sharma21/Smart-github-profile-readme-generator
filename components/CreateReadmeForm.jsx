@@ -28,13 +28,8 @@ export default function CreateReadmeForm({ data, onChange }) {
     { id: 'contact', title: '📫 Contact Me' }
   ])
 
-  // Initialize showNameAsHeading only
+  // Initialize default values
   useEffect(() => {
-    // Initialize showNameAsHeading if it doesn't exist
-    if (data.profile.showNameAsHeading === undefined) {
-      handleProfileChange('showNameAsHeading', true)
-    }
-    
     // Only set default greeting if name is completely empty
     if (!data.profile.name) {
       // Set default greeting if name is empty
@@ -204,7 +199,7 @@ export default function CreateReadmeForm({ data, onChange }) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-5xl mx-auto space-y-8">
       <div className="space-y-8">
         {sections.map((section, index) => (
           <div key={section.id} className="relative">

@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="public/og-image.svg" alt="GitHub Profile README Generator" width="600" />
-  <h1>GitHub Profile README Generator</h1>
+  <img src="public/og-image.svg" alt="Smart GitHub Profile README Generator" width="600" />
+  <h1>Smart GitHub Profile README Generator</h1>
   <p>Create stunning GitHub profile pages in minutes</p>
   
   [![Netlify Status](https://api.netlify.com/api/v1/badges/your-netlify-id/deploy-status)](https://app.netlify.com/sites/github-profile-readme-generator/deploys)

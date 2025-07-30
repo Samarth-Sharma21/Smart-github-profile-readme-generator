@@ -9,7 +9,7 @@ import { ArrowLeft, ArrowRight, Github, Star, GitFork, Code, Lightbulb, Image, L
 
 export default function GitHubProfileTips() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
+    <div className="container mx-auto px-4 py-12 max-w-6xl">
       <div className="mb-8">
         <Button
           variant="ghost"

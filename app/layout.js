@@ -5,23 +5,23 @@ import Script from 'next/script'
 
 export const metadata = {
   metadataBase: new URL('https://github-profile-readme-generator.vercel.app'),
-  title: 'GitHub Profile README Generator | Create Stunning GitHub Profile Pages',
-  description: 'Free GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.',
+  title: 'Smart GitHub Profile README Generator | Create Stunning GitHub Profile Pages',
+  description: 'Free Smart GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.',
   keywords: ['github profile', 'readme generator', 'github readme', 'profile generator', 'markdown generator', 'github stats', 'developer profile', 'github bio', 'github profile readme', 'github profile readme generator', 'github profile markdown', 'github profile template', 'github profile page', 'github profile badges', 'github profile stats', 'github profile customization', 'github profile design', 'github profile layout', 'github profile showcase'],
-  authors: [{ name: 'GitHub Profile README Generator' }],
-  creator: 'GitHub Profile README Generator',
-  publisher: 'GitHub Profile README Generator',
+  authors: [{ name: 'Smart GitHub Profile README Generator' }],
+  creator: 'Smart GitHub Profile README Generator',
+  publisher: 'Smart GitHub Profile README Generator',
   openGraph: {
-    title: 'GitHub Profile README Generator | Create Stunning GitHub Profile Pages',
-    description: 'Free GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.',
-    url: 'https://github-profile-readme-generator.vercel.app/',
-    siteName: 'GitHub Profile README Generator',
+    title: 'Smart GitHub Profile README Generator | Create Stunning GitHub Profile Pages',
+    description: 'Free Smart GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.',
+    url: 'https://github-profile-readme-generator.vercel.app',
+    siteName: 'Smart GitHub Profile README Generator',
     images: [
       {
-        url: '/images/og-image.svg',
+        url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'GitHub Profile README Generator',
+        alt: 'Smart GitHub Profile README Generator',
       },
     ],
     locale: 'en_US',
@@ -29,9 +29,10 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GitHub Profile README Generator | Create Stunning GitHub Profile Pages',
-    description: 'Free GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.',
-    images: ['/images/og-image.svg'],
+    title: 'Smart GitHub Profile README Generator | Create Stunning GitHub Profile Pages',
+    description: 'Free Smart GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.',
+    creator: '@github',
+    images: ['/og-image.svg'],
   },
   robots: {
     index: true,
@@ -57,7 +58,7 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="GitHub Profile README Generator" />
+        <meta name="apple-mobile-web-app-title" content="Smart GitHub Profile README Generator" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,11 +81,11 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          "name": "GitHub Profile README Generator",
-          "alternateName": "GitHub Profile Generator",
+          "name": "Smart GitHub Profile README Generator",
+          "alternateName": "Smart GitHub Profile Generator",
           "url": "https://github-profile-readme-generator.vercel.app/",
           "logo": "https://github-profile-readme-generator.vercel.app/favicon.svg",
-          "description": "Free GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.",
+          "description": "Free Smart GitHub Profile README Generator to create beautiful, customized GitHub profile pages with technologies, stats, projects, social links, and more. Stand out with a professional GitHub presence.",
           "applicationCategory": "DeveloperApplication",
           "applicationSubCategory": "ProfileGenerator",
           "operatingSystem": "Any",
@@ -104,7 +105,7 @@ export default function RootLayout({ children }) {
           },
           "author": {
             "@type": "Organization",
-            "name": "GitHub Profile README Generator",
+            "name": "Smart GitHub Profile README Generator",
             "url": "https://github-profile-readme-generator.vercel.app/"
           },
           "datePublished": "2023-01-01",
