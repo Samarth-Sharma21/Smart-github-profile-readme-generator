@@ -1,0 +1,90 @@
+name: Browser Compatibility Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 6' # Run once a week at midnight on Saturday
+
+jobs:
+  browser-compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: npm run start & npx wait-on http://localhost:3000
+
+      - name: Install compatibility tools
+        run: npm install -g browserslist
+
+      - name: Check browserslist configuration
+        run: |
+          echo "Current browserslist configuration:"
+          npx browserslist
+          
+          echo "\nBrowsers coverage:"
+          npx browserslist --coverage
+          
+          echo "\nBrowsers coverage in the US:"
+          npx browserslist --coverage=US
+          
+          echo "\nBrowsers coverage in the world:"
+          npx browserslist --coverage=alt-ww
+
+      - name: Run compatibility tests with Playwright
+        run: |
+          # Install Playwright
+          npm install -D @playwright/test
+          npx playwright install --with-deps
+          
+          # Create a simple test file
+          cat > browser-test.js << 'EOL'
+          const { test, expect } = require('@playwright/test');
+          
+          test('homepage loads in different browsers', async ({ page }) => {
+            await page.goto('http://localhost:3000');
+            await expect(page).toHaveTitle(/GitHub Profile README Generator/);
+            await expect(page.locator('h1')).toBeVisible();
+            
+            // Take a screenshot
+            await page.screenshot({ path: `screenshot-${test.info().project.name}.png` });
+          });
+          EOL
+          
+          # Create playwright config
+          cat > playwright.config.js << 'EOL'
+          module.exports = {
+            projects: [
+              { name: 'chromium', use: { browserName: 'chromium' } },
+              { name: 'firefox', use: { browserName: 'firefox' } },
+              { name: 'webkit', use: { browserName: 'webkit' } },
+            ],
+          };
+          EOL
+          
+          # Run the tests
+          npx playwright test browser-test.js
+
+      - name: Upload browser test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: browser-compatibility-report
+          path: |
+            screenshot-*.png
+            playwright-report/

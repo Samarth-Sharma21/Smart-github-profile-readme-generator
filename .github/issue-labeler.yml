@@ -1,0 +1,150 @@
+# Add 'bug' label to issues with bug-related keywords
+bug:
+  - '\bbug\b'
+  - '\berror\b'
+  - '\bfail(s|ed|ing|ure)?\b'
+  - '\bcrash(es|ed|ing)?\b'
+  - '\bfix\b'
+  - '\bissue\b'
+  - '\bproblem\b'
+  - '\bwrong\b'
+  - '\bbroken\b'
+
+# Add 'enhancement' label to issues with feature-related keywords
+enhancement:
+  - '\bfeature\b'
+  - '\benhancement\b'
+  - '\bimprovement\b'
+  - '\badd\b'
+  - '\bnew\b'
+  - '\bupdate\b'
+  - '\bupgrade\b'
+  - '\bimprove\b'
+
+# Add 'documentation' label to issues with documentation-related keywords
+documentation:
+  - '\bdoc(s|umentation)?\b'
+  - '\btypo\b'
+  - '\bspelling\b'
+  - '\bgrammar\b'
+  - '\bexample\b'
+  - '\btutorial\b'
+  - '\bguide\b'
+  - '\bREADME\b'
+
+# Add 'question' label to issues with question-related keywords
+question:
+  - '\bquestion\b'
+  - '\bhow\b'
+  - '\bwhat\b'
+  - '\bwhy\b'
+  - '\bwhen\b'
+  - '\bwhere\b'
+  - '\bwho\b'
+  - '\bwhich\b'
+  - '\bhelp\b'
+  - '\bsupport\b'
+
+# Add 'accessibility' label to issues with accessibility-related keywords
+accessibility:
+  - '\ba11y\b'
+  - '\baccessibility\b'
+  - '\baria\b'
+  - '\bscreen reader\b'
+  - '\bkeyboard\b'
+  - '\bnavigation\b'
+  - '\bfocus\b'
+  - '\bcontrast\b'
+  - '\bcolor blind\b'
+  - '\bWCAG\b'
+
+# Add 'performance' label to issues with performance-related keywords
+performance:
+  - '\bperformance\b'
+  - '\bslow\b'
+  - '\bfast\b'
+  - '\bspeed\b'
+  - '\boptimiz(e|ation)\b'
+  - '\befficiency\b'
+  - '\bresponsive\b'
+  - '\blag\b'
+  - '\bdelay\b'
+  - '\blatency\b'
+
+# Add 'seo' label to issues with SEO-related keywords
+seo:
+  - '\bseo\b'
+  - '\bsearch engine\b'
+  - '\bmetadata\b'
+  - '\bstructured data\b'
+  - '\bschema\b'
+  - '\bjson-ld\b'
+  - '\bsitemap\b'
+  - '\brobot\b'
+  - '\bcanonical\b'
+  - '\branking\b'
+
+# Add 'ui' label to issues with UI-related keywords
+ui:
+  - '\bui\b'
+  - '\buser interface\b'
+  - '\bdesign\b'
+  - '\blayout\b'
+  - '\bstyle\b'
+  - '\bcss\b'
+  - '\bvisual\b'
+  - '\bappearance\b'
+  - '\btheme\b'
+  - '\bcolor\b'
+
+# Add 'ux' label to issues with UX-related keywords
+ux:
+  - '\bux\b'
+  - '\buser experience\b'
+  - '\busability\b'
+  - '\bflow\b'
+  - '\binteraction\b'
+  - '\bjourney\b'
+  - '\bfeedback\b'
+  - '\bfriction\b'
+  - '\bintuitiv(e|ity)\b'
+  - '\bsatisfaction\b'
+
+# Add 'security' label to issues with security-related keywords
+security:
+  - '\bsecurity\b'
+  - '\bvulnerability\b'
+  - '\bexploit\b'
+  - '\bhack\b'
+  - '\bauth(entication|orization)?\b'
+  - '\bpermission\b'
+  - '\baccess\b'
+  - '\bprivacy\b'
+  - '\bdata leak\b'
+  - '\bencryption\b'
+
+# Add 'dependencies' label to issues with dependency-related keywords
+dependencies:
+  - '\bdependenc(y|ies)\b'
+  - '\bpackage\b'
+  - '\bnpm\b'
+  - '\byarn\b'
+  - '\bupdate\b'
+  - '\bversion\b'
+  - '\bupgrade\b'
+  - '\bdowngrade\b'
+  - '\binstall\b'
+  - '\bmodule\b'
+
+# Add 'good first issue' label to issues with beginner-friendly keywords
+'good first issue':
+  - '\bbeginner\b'
+  - '\beasy\b'
+  - '\bsimple\b'
+  - '\bstraightforward\b'
+  - '\bquick\b'
+  - '\bsmall\b'
+  - '\btrivial\b'
+  - '\bstarter\b'
+  - '\bfirst time\b'
+  - '\bgood first issue\b'

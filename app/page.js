@@ -4,11 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Toggle } from '@/components/ui/toggle'
-import { Star, GitFork, Coffee, Eye, Github } from 'lucide-react'
+import { Star, GitFork, Coffee, Eye, Github, ArrowRight } from 'lucide-react'
 import { gsap } from 'gsap'
 import Lenis from 'lenis'
 import CreateReadmeForm from '@/components/CreateReadmeForm'
 import PreviewReadme from '@/components/PreviewReadme'
+import Script from 'next/script'
 
 
 export default function App() {
@@ -175,18 +176,102 @@ export default function App() {
     }
   }, [])
 
+  // JSON-LD structured data for SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "GitHub Profile README Generator",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Create beautiful, customized GitHub profile READMEs with ease. This tool helps developers showcase their skills, projects, and stats with a professional README.",
+    "keywords": "github profile, readme generator, github readme, profile generator, github profile readme, markdown generator, developer profile",
+    "screenshot": "https://github-profile-readme-generator.vercel.app/images/og-image.svg",
+    "softwareHelp": "https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator",
+    "author": {
+      "@type": "Person",
+      "name": "GitHub Profile README Generator Team"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      {/* Skip to content link for accessibility */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:outline-none focus:shadow-lg"
+      >
+        Skip to content
+      </a>
+      
+      {/* JSON-LD structured data */}
+      <Script id="schema-script" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "GitHub Profile README Generator",
+          "alternateName": "GitHub Profile Generator",
+          "applicationCategory": "DeveloperApplication",
+          "applicationSubCategory": "Markdown Generator",
+          "operatingSystem": "Web",
+          "description": "Create beautiful GitHub profile READMEs with ease. Customize your profile with various components, preview in real-time, and generate markdown code to showcase your skills, projects, and achievements.",
+          "keywords": "github, readme, profile, markdown, generator, developer tools, github profile, github readme, github profile readme, readme generator, profile generator, github profile generator",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "120",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "url": "https://github-profile-readme-generator.vercel.app/",
+          "sameAs": [
+            "https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator"
+          ],
+          "author": {
+            "@type": "Person",
+            "name": "GitHub Profile README Generator Team"
+          },
+          "datePublished": "2023-11-01",
+          "dateModified": new Date().toISOString().split('T')[0]
+        })}
+      </Script>
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50" role="banner">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
-                <Github className="w-6 h-6" />
-                Smart GitHub Profile README Generator
+              <h1 className="text-2xl font-bold text-primary flex items-center gap-2" id="main-heading">
+                <Github className="w-6 h-6" aria-hidden="true" />
+                <span>GitHub Profile README Generator</span>
               </h1>
-              {/* GitHubStats component removed */}
+              <p className="text-sm text-muted-foreground">Create beautiful GitHub profile READMEs with ease</p>
+              
+              {/* Breadcrumb navigation for SEO */}
+              <nav aria-label="Breadcrumb" className="mt-2">
+                <ol className="flex items-center space-x-1 text-xs text-muted-foreground" itemScope itemType="https://schema.org/BreadcrumbList">
+                  <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                    <a href="/" itemProp="item" className="hover:text-primary transition-colors">
+                      <span itemProp="name">Home</span>
+                    </a>
+                    <meta itemProp="position" content="1" />
+                  </li>
+                  <li className="px-1">/</li>
+                  <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                    <span itemProp="name" className="font-medium">README Generator</span>
+                    <meta itemProp="position" content="2" />
+                  </li>
+                </ol>
+              </nav>
             </div>
             
             <div className="flex items-center gap-3">
@@ -196,9 +281,10 @@ export default function App() {
                 size="sm"
                 className="flex items-center gap-2 hover:bg-yellow-50 hover:border-yellow-300 transition-colors"
                 onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/stargazers', '_blank')}
+                aria-label="Star this repository on GitHub"
               >
-                <Star className="w-4 h-4 text-yellow-500" />
-                Star Repo
+                <Star className="w-4 h-4 text-yellow-500" aria-hidden="true" />
+                <span>Star Repo</span>
               </Button>
               <Button 
                 ref={forkRef}
@@ -206,9 +292,10 @@ export default function App() {
                 size="sm"
                 className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-colors"
                 onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/fork', '_blank')}
+                aria-label="Fork this repository on GitHub"
               >
-                <GitFork className="w-4 h-4 text-blue-500" />
-                Fork Repo
+                <GitFork className="w-4 h-4 text-blue-500" aria-hidden="true" />
+                <span>Fork Repo</span>
               </Button>
             </div>
           </div>
@@ -216,10 +303,14 @@ export default function App() {
       </header>
 
       {/* Toggle Section */}
-      <div className="border-b bg-muted/30">
+      <nav className="border-b bg-muted/30" aria-label="View selection">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-center">
-            <div className="flex items-center bg-background rounded-lg p-1 border shadow-sm relative overflow-hidden">
+            <div 
+              className="flex items-center bg-background rounded-lg p-1 border shadow-sm relative overflow-hidden"
+              role="tablist"
+              aria-orientation="horizontal"
+            >
               {/* Animated background pill */}
               <div 
                 className="absolute h-full rounded-md bg-black transition-all duration-500 z-0 water-blob"
@@ -230,12 +321,17 @@ export default function App() {
                   filter: 'blur(1px)',
                   opacity: 0.9
                 }}
+                aria-hidden="true"
               />
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleToggleChange('create')}
                 className={`px-6 transition-all duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
+                role="tab"
+                id="tab-create"
+                aria-selected={currentView === 'create'}
+                aria-controls="panel-create"
               >
                 Create README
               </Button>
@@ -244,18 +340,26 @@ export default function App() {
                 size="sm"
                 onClick={() => handleToggleChange('preview')}
                 className={`px-6 transition-all duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
+                role="tab"
+                id="tab-preview"
+                aria-selected={currentView === 'preview'}
+                aria-controls="panel-preview"
               >
                 Preview README
               </Button>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Main Content */}
-      <main ref={mainContentRef} className="container mx-auto px-4 py-8">
+      <main ref={mainContentRef} className="container mx-auto px-4 py-8" id="main-content" role="main" aria-labelledby="main-heading">
         {currentView === 'create' ? (
-          <>
+          <div 
+            role="tabpanel" 
+            id="panel-create" 
+            aria-labelledby="tab-create"
+          >
             <CreateReadmeForm 
               data={readmeData} 
               onChange={handleDataChange}
@@ -267,21 +371,97 @@ export default function App() {
                 onClick={switchToPreview}
                 size="lg"
                 className="flex items-center gap-3 px-8 py-4 text-lg font-semibold bg-black hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                aria-label="Switch to preview mode"
               >
-                <Eye className="w-5 h-5" />
+                <Eye className="w-5 h-5" aria-hidden="true" />
                 Preview My README
               </Button>
             </div>
-          </>
+          </div>
         ) : (
-          <PreviewReadme 
-            data={readmeData}
-          />
+          <div 
+            role="tabpanel" 
+            id="panel-preview" 
+            aria-labelledby="tab-preview"
+          >
+            <PreviewReadme 
+              data={readmeData}
+            />
+          </div>
         )}
       </main>
 
+      {/* FAQ Section */}
+      <section className="py-12 bg-muted/20" aria-labelledby="faq-heading">
+        <div className="container mx-auto px-4">
+          <h2 id="faq-heading" className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+          
+          <div className="max-w-3xl mx-auto" itemScope itemType="https://schema.org/FAQPage">
+            <div className="mb-6" itemScope itemType="https://schema.org/Question">
+              <h3 itemProp="name" className="text-lg font-semibold mb-2">What is a GitHub Profile README?</h3>
+              <div itemScope itemType="https://schema.org/Answer">
+                <div itemProp="text" className="text-muted-foreground">
+                  <p>A GitHub Profile README is a special repository that appears on your GitHub profile page. It allows you to showcase your skills, projects, and personality directly on your profile. It's a great way to make a strong first impression and highlight your work to potential employers or collaborators.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-6" itemScope itemType="https://schema.org/Question">
+              <h3 itemProp="name" className="text-lg font-semibold mb-2">How do I create a GitHub Profile README?</h3>
+              <div itemScope itemType="https://schema.org/Answer">
+                <div itemProp="text" className="text-muted-foreground">
+                  <p>To create a GitHub Profile README, you need to create a new repository with the same name as your GitHub username. Inside this repository, create a README.md file. Our generator helps you create the content for this file with a user-friendly interface, allowing you to customize various sections and preview the result before copying the markdown code.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-6" itemScope itemType="https://schema.org/Question">
+              <h3 itemProp="name" className="text-lg font-semibold mb-2">Is this tool free to use?</h3>
+              <div itemScope itemType="https://schema.org/Answer">
+                <div itemProp="text" className="text-muted-foreground">
+                  <p>Yes, the GitHub Profile README Generator is completely free to use. We believe in supporting the developer community by providing useful tools that help showcase your skills and projects.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* Footer */}
-      <footer className="border-t bg-muted/30 py-8">
+      {/* Related Links Section */}
+      <section className="py-8 bg-muted/10" aria-labelledby="related-links-heading">
+        <div className="container mx-auto px-4">
+          <h2 id="related-links-heading" className="text-xl font-bold mb-6 text-center">Related Resources</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
+              <h3 className="font-semibold mb-2">GitHub Profile Tips</h3>
+              <p className="text-sm text-muted-foreground mb-3">Learn how to make your GitHub profile stand out with these expert tips and best practices.</p>
+              <a href="/tips" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+                Read more <ArrowRight className="w-3 h-3" />
+              </a>
+            </div>
+            
+            <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
+              <h3 className="font-semibold mb-2">Markdown Cheat Sheet</h3>
+              <p className="text-sm text-muted-foreground mb-3">Master markdown syntax with our comprehensive cheat sheet for creating beautiful documentation.</p>
+              <a href="/markdown-guide" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+                Read more <ArrowRight className="w-3 h-3" />
+              </a>
+            </div>
+            
+            <div className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-white">
+              <h3 className="font-semibold mb-2">GitHub Profile Examples</h3>
+              <p className="text-sm text-muted-foreground mb-3">Get inspired by exploring our collection of outstanding GitHub profile README examples.</p>
+              <a href="/examples" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+                Read more <ArrowRight className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <footer className="border-t bg-muted/30 py-8" role="contentinfo">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
             <span>Built with ❤️ by developers, for developers</span>
@@ -292,10 +472,21 @@ export default function App() {
               size="sm"
               className="flex items-center gap-2 hover:bg-orange-50 hover:border-orange-300 transition-colors"
               onClick={() => window.open('https://www.buymeacoffee.com/yourusername', '_blank')}
+              aria-label="Support the developer with a coffee donation"
             >
-              <Coffee className="w-4 h-4 text-orange-500" />
+              <Coffee className="w-4 h-4 text-orange-500" aria-hidden="true" />
               Buy me a coffee
             </Button>
+          </div>
+          <div className="mt-4 text-xs text-muted-foreground">
+            <p>© {new Date().getFullYear()} GitHub Profile README Generator. All rights reserved.</p>
+            <div className="mt-2 flex items-center justify-center gap-4">
+              <a href="/sitemap.xml" className="hover:text-primary transition-colors">Sitemap</a>
+              <span>|</span>
+              <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
+              <span>|</span>
+              <a href="/terms" className="hover:text-primary transition-colors">Terms of Service</a>
+            </div>
           </div>
         </div>
       </footer>

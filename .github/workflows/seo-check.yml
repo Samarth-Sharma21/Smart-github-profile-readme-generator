@@ -1,0 +1,79 @@
+name: SEO Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 4' # Run once a week at midnight on Thursday
+
+jobs:
+  seo-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: npm run start & npx wait-on http://localhost:3000
+
+      - name: Install SEO tools
+        run: npm install -g lighthouse-ci seo-checker
+
+      - name: Run SEO checks
+        run: |
+          # Check meta tags
+          echo "Checking meta tags..."
+          curl -s http://localhost:3000 | grep -i "<meta" > meta-tags.txt
+          cat meta-tags.txt
+          
+          # Check structured data
+          echo "\nChecking structured data..."
+          curl -s http://localhost:3000 | grep -i "application/ld+json" -A 50 > structured-data.txt
+          cat structured-data.txt
+          
+          # Check sitemap
+          echo "\nChecking sitemap..."
+          curl -s http://localhost:3000/sitemap.xml > sitemap.xml
+          grep -c "<url>" sitemap.xml
+          
+          # Check robots.txt
+          echo "\nChecking robots.txt..."
+          curl -s http://localhost:3000/robots.txt
+          
+          # Run Lighthouse SEO audit
+          echo "\nRunning Lighthouse SEO audit..."
+          lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-seo.json --only-categories=seo --chrome-flags="--headless --no-sandbox --disable-gpu"
+          
+          # Extract SEO score
+          SEO_SCORE=$(cat ./lighthouse-seo.json | jq '.categories.seo.score * 100')
+          echo "SEO Score: $SEO_SCORE"
+          
+          # Fail if SEO score is below threshold
+          if (( $(echo "$SEO_SCORE < 90" | bc -l) )); then
+            echo "SEO score is below threshold of 90"
+            exit 1
+          fi
+
+      - name: Upload SEO results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: seo-report
+          path: |
+            meta-tags.txt
+            structured-data.txt
+            sitemap.xml
+            lighthouse-seo.json

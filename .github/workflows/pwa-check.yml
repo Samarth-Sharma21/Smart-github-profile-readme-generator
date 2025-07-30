@@ -1,0 +1,65 @@
+name: PWA Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 5' # Run once a week at midnight on Friday
+
+jobs:
+  pwa-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: npm run start & npx wait-on http://localhost:3000
+
+      - name: Install Lighthouse
+        run: npm install -g lighthouse
+
+      - name: Run Lighthouse PWA audit
+        run: |
+          lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-pwa.json --only-categories=pwa --chrome-flags="--headless --no-sandbox --disable-gpu"
+          
+          # Extract PWA score
+          PWA_SCORE=$(cat ./lighthouse-pwa.json | jq '.categories.pwa.score * 100')
+          echo "PWA Score: $PWA_SCORE"
+          
+          # Check manifest.json
+          echo "\nChecking manifest.json..."
+          curl -s http://localhost:3000/manifest.json > manifest.json
+          cat manifest.json
+          
+          # Check service worker
+          echo "\nChecking service worker..."
+          curl -s http://localhost:3000/sw.js > sw.js
+          cat sw.js
+          
+          # Check offline capability
+          echo "\nChecking offline capability..."
+          grep -c "urlsToCache" sw.js
+
+      - name: Upload PWA results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pwa-report
+          path: |
+            lighthouse-pwa.json
+            manifest.json
+            sw.js

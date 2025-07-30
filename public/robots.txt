@@ -1,0 +1,33 @@
+# GitHub Profile README Generator - Robots.txt
+# https://github-profile-readme-generator.vercel.app/
+
+# Allow all web crawlers
+User-agent: *
+Allow: /
+
+# Disallow access to any temporary files or directories
+Disallow: /temp/
+Disallow: /*.tmp$
+Disallow: /*.bak$
+
+# Crawl delay directive for bots to prevent server overload
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://github-profile-readme-generator.vercel.app/sitemap.xml
+
+# Additional sitemaps if needed in the future
+# Sitemap: https://github-profile-readme-generator.vercel.app/sitemap-blog.xml
+
+# Google-specific crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /favicon.svg
+Allow: /*.svg$
+
+# Bing-specific crawlers
+User-agent: Bingbot
+Allow: /

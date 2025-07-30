@@ -1,0 +1,73 @@
+{
+  "categories": [
+    {
+      "title": "🚀 Features",
+      "labels": ["enhancement", "feature"]
+    },
+    {
+      "title": "🐛 Bug Fixes",
+      "labels": ["bug", "fix"]
+    },
+    {
+      "title": "📝 Documentation",
+      "labels": ["documentation"]
+    },
+    {
+      "title": "⚡ Performance",
+      "labels": ["performance"]
+    },
+    {
+      "title": "🔍 SEO",
+      "labels": ["seo"]
+    },
+    {
+      "title": "🧩 Dependencies",
+      "labels": ["dependencies"]
+    },
+    {
+      "title": "🔒 Security",
+      "labels": ["security"]
+    },
+    {
+      "title": "🎨 UI/UX",
+      "labels": ["ui", "ux"]
+    },
+    {
+      "title": "♿ Accessibility",
+      "labels": ["accessibility", "a11y"]
+    },
+    {
+      "title": "🧪 Tests",
+      "labels": ["test"]
+    },
+    {
+      "title": "🔧 Maintenance",
+      "labels": ["maintenance", "refactor", "chore"]
+    }
+  ],
+  "template": "# {{name}} {{tag}} ({{date}})\n\n{{#each categories}}\n## {{title}}\n\n{{#each commits}}\n- {{message}} ([{{sha}}]({{url}}))\n{{/each}}\n\n{{/each}}\n\n## Contributors\n\n{{#each contributors}}\n- [{{name}}]({{url}})\n{{/each}}\n",
+  "sort": "ASC",
+  "changelogFilename": "CHANGELOG.md",
+  "dataSource": "commits",
+  "ignoreCommitsWithoutLabel": false,
+  "ignoreCommitsWithoutBody": false,
+  "removeSourceBranch": false,
+  "skipReleaseBody": false,
+  "skipTag": false,
+  "skipTitle": false,
+  "skipPreReleases": false,
+  "ignoreIssuesWith": ["wontfix", "duplicate"],
+  "groupBy": {
+    "🚀 Features": ["enhancement", "feature"],
+    "🐛 Bug Fixes": ["bug", "fix"],
+    "📝 Documentation": ["documentation"],
+    "⚡ Performance": ["performance"],
+    "🔍 SEO": ["seo"],
+    "🧩 Dependencies": ["dependencies"],
+    "🔒 Security": ["security"],
+    "🎨 UI/UX": ["ui", "ux"],
+    "♿ Accessibility": ["accessibility", "a11y"],
+    "🧪 Tests": ["test"],
+    "🔧 Maintenance": ["maintenance", "refactor", "chore"]
+  }
+}

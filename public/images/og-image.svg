@@ -1,0 +1,14 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0D1117"/>
+  
+  <!-- GitHub Logo -->
+  <path d="M600 150C495.6 150 410 235.6 410 340C410 423.6 465.4 494.8 542 518.4C552 520 555.6 514 555.6 508.8C555.6 504.2 555.4 489.4 555.4 472.2C500 483.8 487.6 458.2 483.6 446.6C481.4 440.8 471 422 460 417.4C451 413.8 441 402.2 459.8 402C477.6 401.8 490.4 419 495 425C515 458.4 546.8 447.4 556.4 442.2C558 427.4 563.2 417.4 569 411.8C524.6 406.2 478 388.4 478 315C478 293.8 486 276.6 495.4 263.4C493.6 258.4 486.4 236 497.4 207.6C497.4 207.6 515.8 202.4 555.6 229.2C570.4 224.8 586.2 222.6 602 222.6C617.8 222.6 633.6 224.8 648.4 229.2C688.2 202.2 706.6 207.6 706.6 207.6C717.6 236 710.4 258.4 708.6 263.4C718 276.6 726 293.6 726 315C726 388.8 679.2 406.2 634.8 411.8C642.2 418.8 648.6 432.2 648.6 453C648.6 483 648.4 502.2 648.4 508.8C648.4 514 652 520.2 662 518.4C738.6 494.8 794 423.4 794 340C794 235.6 708.4 150 600 150Z" fill="white"/>
+  
+  <!-- Title -->
+  <text x="600" y="400" font-family="Inter, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">Smart GitHub Profile</text>
+  <text x="600" y="470" font-family="Inter, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">README Generator</text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="530" font-family="Inter, sans-serif" font-size="30" fill="#8B949E" text-anchor="middle">Create beautiful GitHub profile READMEs with ease</text>
+</svg>

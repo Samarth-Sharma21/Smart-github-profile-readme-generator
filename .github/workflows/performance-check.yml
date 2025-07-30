@@ -1,0 +1,95 @@
+name: Performance Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 1' # Run once a week at midnight on Monday
+
+jobs:
+  performance-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: npm run start & npx wait-on http://localhost:3000
+
+      - name: Install performance tools
+        run: npm install -g lighthouse webpagetest-api bundlesize
+
+      - name: Run Lighthouse performance audit
+        run: |
+          lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-performance.json --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-gpu"
+          
+          # Extract performance score
+          PERF_SCORE=$(cat ./lighthouse-performance.json | jq '.categories.performance.score * 100')
+          echo "Performance Score: $PERF_SCORE"
+          
+          # Check key metrics
+          FCP=$(cat ./lighthouse-performance.json | jq '.audits["first-contentful-paint"].numericValue')
+          LCP=$(cat ./lighthouse-performance.json | jq '.audits["largest-contentful-paint"].numericValue')
+          TTI=$(cat ./lighthouse-performance.json | jq '.audits["interactive"].numericValue')
+          TBT=$(cat ./lighthouse-performance.json | jq '.audits["total-blocking-time"].numericValue')
+          CLS=$(cat ./lighthouse-performance.json | jq '.audits["cumulative-layout-shift"].numericValue')
+          
+          echo "First Contentful Paint: $FCP ms"
+          echo "Largest Contentful Paint: $LCP ms"
+          echo "Time to Interactive: $TTI ms"
+          echo "Total Blocking Time: $TBT ms"
+          echo "Cumulative Layout Shift: $CLS"
+
+      - name: Check bundle size
+        run: |
+          # Create bundlesize config
+          echo '{"files":[{"path":"./public/**/*.js","maxSize":"100kB"},{"path":"./public/**/*.css","maxSize":"50kB"}]}' > bundlesize.json
+          
+          # Run bundlesize
+          npx bundlesize
+
+      - name: Check image optimization
+        run: |
+          echo "Checking image sizes..."
+          find ./public -type f -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.gif" | xargs ls -lh
+          
+          # Check if any images are over 200KB
+          LARGE_IMAGES=$(find ./public -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.gif" \) -size +200k | wc -l)
+          echo "Number of images over 200KB: $LARGE_IMAGES"
+          
+          if [ "$LARGE_IMAGES" -gt 0 ]; then
+            echo "Warning: Found $LARGE_IMAGES images over 200KB. Consider optimizing them."
+            find ./public -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.gif" \) -size +200k
+          fi
+
+      - name: Check for render-blocking resources
+        run: |
+          RENDER_BLOCKING=$(cat ./lighthouse-performance.json | jq '.audits["render-blocking-resources"].details.items | length')
+          echo "Number of render-blocking resources: $RENDER_BLOCKING"
+          
+          if [ "$RENDER_BLOCKING" -gt 0 ]; then
+            echo "Warning: Found $RENDER_BLOCKING render-blocking resources. Consider optimizing them."
+            cat ./lighthouse-performance.json | jq '.audits["render-blocking-resources"].details.items'
+          fi
+
+      - name: Upload performance results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-report
+          path: |
+            lighthouse-performance.json
+            bundlesize.json
