@@ -2,10 +2,6 @@ import './globals.css'
 import 'github-markdown-css/github-markdown-light.css'
 import { Toaster } from '@/components/ui/sonner'
 import Script from 'next/script'
-import { FeedbackButton } from '@/components/FeedbackButton'
-import { PerformanceOptimizer } from '@/components/PerformanceOptimizer'
-import PerformanceBooster from '@/components/PerformanceBooster'
-import MediaOptimizer from '@/components/MediaOptimizer'
 
 export const metadata = {
   metadataBase: new URL('https://github-profile-readme-generator.vercel.app'),
@@ -69,14 +65,8 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
-        <PerformanceOptimizer />
-        <PerformanceBooster />
-        <MediaOptimizer />
         {children}
-        <FeedbackButton />
         <Toaster />
-        <Script src="/js/analytics.js" strategy="afterInteractive" />
-        <Script src="/js/sw-register.js" strategy="afterInteractive" />
       </body>
     </html>
   )

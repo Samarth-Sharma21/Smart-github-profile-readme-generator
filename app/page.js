@@ -9,7 +9,7 @@ import { gsap } from 'gsap'
 import Lenis from 'lenis'
 import CreateReadmeForm from '@/components/CreateReadmeForm'
 import PreviewReadme from '@/components/PreviewReadme'
-import { GitHubStats } from '@/components/GitHubStats'
+
 
 export default function App() {
   const [currentView, setCurrentView] = useState('create')
@@ -44,6 +44,15 @@ export default function App() {
       projects: '🚀 Featured Projects',
       support: '☕ Support Me',
       contact: '📫 Contact Me'
+    },
+    sectionOrder: {
+      profile: 0,
+      technologies: 1,
+      socialLinks: 2,
+      githubStats: 3,
+      projects: 4,
+      support: 5,
+      contact: 6
     }
   })
 
@@ -186,7 +195,6 @@ export default function App() {
                 <Github className="w-6 h-6" />
                 Smart GitHub Profile README Generator
               </h1>
-              <GitHubStats />
             </div>
             
             <div className="flex items-center gap-3">
@@ -215,37 +223,60 @@ export default function App() {
         </div>
       </header>
 
-      {/* Toggle Section */}
-      <div className="border-b bg-muted/30">
-        <div className="container mx-auto px-4 py-4">
+      {/* Modern Toggle Section */}
+      <div className="border-b bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex justify-center">
-            <div className="flex items-center bg-background rounded-lg p-1 border shadow-sm relative overflow-hidden">
-              {/* Animated background pill */}
+            <div className="relative flex items-center justify-center bg-white dark:bg-gray-900 rounded-full p-1.5 border border-gray-200 dark:border-gray-800 shadow-lg overflow-hidden w-80">
+              {/* Animated background glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-purple-100/50 dark:from-blue-900/30 dark:to-purple-900/30 blur-md opacity-70" />
+              
+              {/* Animated slider pill */}
               <div 
-                className="absolute h-full rounded-md bg-black transition-all duration-500 z-0 water-blob"
+                className="absolute h-full w-1/2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-500 ease-out-expo z-0"
                 style={{
-                  width: '50%',
                   left: currentView === 'create' ? '0%' : '50%',
-                  transform: 'scale(0.95)',
-                  filter: 'blur(1px)',
-                  opacity: 0.9
+                  boxShadow: '0 0 15px rgba(120, 120, 255, 0.5)',
                 }}
-              />
+              >
+                {/* Inner glow effect */}
+                <div className="absolute inset-0 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-sm" />
+              </div>
+              
+              {/* Create Button */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleToggleChange('create')}
-                className={`px-6 transition-all duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
+                className={`relative px-8 py-5 rounded-full transition-all duration-300 z-10 ${currentView === 'create' 
+                  ? 'text-white font-medium' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'}`}
               >
-                Create README
+                <span className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  Create
+                </span>
               </Button>
+              
+              {/* Preview Button */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleToggleChange('preview')}
-                className={`px-6 transition-all duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
+                className={`relative px-8 py-5 rounded-full transition-all duration-300 z-10 ${currentView === 'preview' 
+                  ? 'text-white font-medium' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'}`}
               >
-                Preview README
+                <span className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  Preview
+                </span>
               </Button>
             </div>
           </div>

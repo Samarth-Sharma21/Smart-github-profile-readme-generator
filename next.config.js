@@ -5,9 +5,9 @@ const nextConfig = {
   },
   basePath: process.env.NODE_ENV === 'production' ? '/Smart-github-profile-readme-generator' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/Smart-github-profile-readme-generator/' : '',
+  // Remove MongoDB from external packages as it's not needed for static export
   experimental: {
-    // Remove if not using Server Components
-    serverComponentsExternalPackages: ['mongodb'],
+    esmExternals: 'loose',
   },
   webpack(config, { dev }) {
     if (dev) {

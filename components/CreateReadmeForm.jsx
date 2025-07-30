@@ -19,7 +19,7 @@ export default function CreateReadmeForm({ data, onChange }) {
   const [socialSearchOpen, setSocialSearchOpen] = useState(false)
   const [editingHeading, setEditingHeading] = useState(null)
   const [sections, setSections] = useState([
-    { id: 'profile', title: '👋 Profile Introduction' },
+    { id: 'profile', title: '👋 About Me' },
     { id: 'technologies', title: '🛠️ Technologies & Skills' },
     { id: 'socialLinks', title: '🌐 Social Links' },
     { id: 'githubStats', title: '📊 GitHub Stats' },
@@ -32,6 +32,10 @@ export default function CreateReadmeForm({ data, onChange }) {
   useEffect(() => {
     if (data.profile.name === '') {
       handleProfileChange('name', 'Hi 👋, I am ')
+    }
+    // Initialize useAboutMeHeading if it doesn't exist
+    if (data.profile.useAboutMeHeading === undefined) {
+      handleProfileChange('useAboutMeHeading', true)
     }
   }, [])
 
@@ -151,6 +155,17 @@ export default function CreateReadmeForm({ data, onChange }) {
     items.splice(result.destination.index, 0, reorderedItem);
     
     setSections(items);
+    
+    // Update the sectionOrder in the parent component
+    const newSectionOrder = {};
+    items.forEach((section, index) => {
+      newSectionOrder[section.id] = index;
+    });
+    
+    // Call the onChange prop with the updated sectionOrder
+    onChange({
+      sectionOrder: newSectionOrder
+    });
   };
 
   const EditableHeading = ({ headingKey, defaultText, className = "" }) => {
@@ -235,6 +250,18 @@ export default function CreateReadmeForm({ data, onChange }) {
                                 />
                               </div>
                             </div>
+                            
+                            <div className="flex items-center space-x-2">
+                              <Checkbox 
+                                id="useAboutMeHeading" 
+                                checked={data.profile.useAboutMeHeading} 
+                                onCheckedChange={(checked) => handleProfileChange('useAboutMeHeading', checked)}
+                              />
+                              <Label htmlFor="useAboutMeHeading" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                Use "About Me" as heading (uncheck to use name as heading)
+                              </Label>
+                            </div>
+                            
                             <div className="space-y-2">
                               <Label htmlFor="welcome">Custom Welcome Message</Label>
                               <Textarea

@@ -74,6 +74,7 @@ const CATEGORIES = [...new Set(TECHNOLOGIES.map(tech => tech.category))]
 export default function TechSearch({ open, onOpenChange, onSelect }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedTechs, setSelectedTechs] = useState([])
 
   const filteredTechnologies = useMemo(() => {
     return TECHNOLOGIES.filter(tech => {
@@ -84,7 +85,24 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
   }, [searchTerm, selectedCategory])
 
   const handleSelect = (tech) => {
-    onSelect(tech)
+    // Check if tech is already selected
+    const isSelected = selectedTechs.some(t => t.name === tech.name)
+    
+    if (isSelected) {
+      // Remove from selection
+      setSelectedTechs(selectedTechs.filter(t => t.name !== tech.name))
+    } else {
+      // Add to selection
+      setSelectedTechs([...selectedTechs, tech])
+    }
+  }
+  
+  const handleApply = () => {
+    // Add all selected technologies
+    selectedTechs.forEach(tech => onSelect(tech))
+    
+    // Reset state
+    setSelectedTechs([])
     setSearchTerm('')
     onOpenChange(false)
   }
@@ -132,24 +150,36 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
           {/* Technology Grid */}
           <ScrollArea className="h-96">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {filteredTechnologies.map(tech => (
-                <Button
-                  key={tech.name}
-                  variant="outline"
-                  className="flex items-center gap-2 h-12 justify-start hover:shadow-md transition-all duration-200"
-                  style={{ 
-                    backgroundColor: tech.bg,
-                    borderColor: tech.color + '30'
-                  }}
-                  onClick={() => handleSelect(tech)}
-                >
-                  <i 
-                    className={`${tech.icon} text-xl`}
-                    style={{ color: tech.color }}
-                  ></i>
-                  <span className="text-sm font-medium">{tech.name}</span>
-                </Button>
-              ))}
+              {filteredTechnologies.map(tech => {
+                const isSelected = selectedTechs.some(t => t.name === tech.name);
+                return (
+                  <Button
+                    key={tech.name}
+                    variant="outline"
+                    className={`flex items-center gap-2 h-12 justify-start hover:shadow-md transition-all duration-200 ${isSelected ? 'ring-2 ring-primary' : ''}`}
+                    style={{ 
+                      backgroundColor: isSelected ? tech.color + '30' : tech.bg,
+                      borderColor: tech.color + '30'
+                    }}
+                    onClick={() => handleSelect(tech)}
+                  >
+                    <div className="flex items-center gap-2 flex-1">
+                      <i 
+                        className={`${tech.icon} text-xl`}
+                        style={{ color: tech.color }}
+                      ></i>
+                      <span className="text-sm font-medium">{tech.name}</span>
+                    </div>
+                    {isSelected && (
+                      <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </div>
+                    )}
+                  </Button>
+                );
+              })}
             </div>
             
             {filteredTechnologies.length === 0 && (
@@ -158,6 +188,27 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
               </div>
             )}
           </ScrollArea>
+          
+          {/* Action Buttons */}
+          <div className="flex justify-between items-center pt-4 border-t">
+            <div className="text-sm text-muted-foreground">
+              {selectedTechs.length} technologies selected
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => {
+                setSelectedTechs([]);
+                onOpenChange(false);
+              }}>
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleApply}
+                disabled={selectedTechs.length === 0}
+              >
+                Apply
+              </Button>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
