@@ -54,7 +54,13 @@ export default function PreviewReadme({ data }) {
       markdown += `<p align="left"> `
       data.technologies.forEach(tech => {
         const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
-        markdown += `<a href="#" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
+        if (tech.showName) {
+          // Show with name in alt text and tooltip
+          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
+        } else {
+          // Show only icon, smaller size
+          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
+        }
       })
       markdown += `</p>\n\n`
     }
