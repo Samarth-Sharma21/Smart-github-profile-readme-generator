@@ -35,21 +35,71 @@ export default function App() {
     },
     contact: {
       email: ''
+    },
+    sectionHeadings: {
+      technologies: '🛠️ Technologies & Skills',
+      socialLinks: '🌐 Social Links', 
+      githubStats: '📊 GitHub Stats',
+      projects: '🚀 Featured Projects',
+      support: '☕ Support Me',
+      contact: '📫 Contact Me'
     }
   })
 
   const starRef = useRef(null)
   const forkRef = useRef(null)
+  const mainContentRef = useRef(null)
 
   const handleDataChange = (newData) => {
     setReadmeData(prev => ({ ...prev, ...newData }))
   }
 
   const switchToPreview = () => {
-    setCurrentView('preview')
+    // Animate page transition
+    gsap.to(mainContentRef.current, {
+      x: -50,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power2.out',
+      onComplete: () => {
+        setCurrentView('preview')
+        gsap.fromTo(mainContentRef.current, 
+          { x: 50, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }
+        )
+      }
+    })
+    
     // Smooth scroll to top
     if (typeof window !== 'undefined' && window.lenis) {
       window.lenis.scrollTo(0)
+    }
+  }
+
+  const switchToCreate = () => {
+    // Animate page transition
+    gsap.to(mainContentRef.current, {
+      x: 50,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power2.out',
+      onComplete: () => {
+        setCurrentView('create')
+        gsap.fromTo(mainContentRef.current, 
+          { x: -50, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }
+        )
+      }
+    })
+  }
+
+  const handleToggleChange = (view) => {
+    if (view !== currentView) {
+      if (view === 'preview') {
+        switchToPreview()
+      } else {
+        switchToCreate()
+      }
     }
   }
 
@@ -167,7 +217,7 @@ export default function App() {
               <Button
                 variant={currentView === 'create' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setCurrentView('create')}
+                onClick={() => handleToggleChange('create')}
                 className="px-6"
               >
                 Create README
@@ -175,7 +225,7 @@ export default function App() {
               <Button
                 variant={currentView === 'preview' ? 'default' : 'ghost'}
                 size="sm"
-                onClick={() => setCurrentView('preview')}
+                onClick={() => handleToggleChange('preview')}
                 className="px-6"
               >
                 Preview README
@@ -186,7 +236,7 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main ref={mainContentRef} className="container mx-auto px-4 py-8">
         {currentView === 'create' ? (
           <>
             <CreateReadmeForm 

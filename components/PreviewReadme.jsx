@@ -4,13 +4,13 @@ import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Copy, Download, Eye } from 'lucide-react'
+import { Copy, Download, Eye, Code2, X } from 'lucide-react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { toast } from 'sonner'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 
 export default function PreviewReadme({ data }) {
   const [copied, setCopied] = useState(false)
+  const [showRawCode, setShowRawCode] = useState(false)
 
   const generateMarkdown = useMemo(() => {
     let markdown = ''
@@ -35,7 +35,8 @@ export default function PreviewReadme({ data }) {
 
     // Social Links
     if (data.socialLinks.length > 0) {
-      markdown += `## 🌐 Connect with me:\n`
+      const socialHeading = data.sectionHeadings?.socialLinks || '🌐 Connect with me:'
+      markdown += `## ${socialHeading}\n`
       markdown += `<p align="left">\n`
       data.socialLinks.forEach(social => {
         if (social.username) {
@@ -48,7 +49,8 @@ export default function PreviewReadme({ data }) {
 
     // Technologies
     if (data.technologies.length > 0) {
-      markdown += `## 🛠️ Languages and Tools:\n`
+      const techHeading = data.sectionHeadings?.technologies || '🛠️ Languages and Tools:'
+      markdown += `## ${techHeading}\n`
       markdown += `<p align="left"> `
       data.technologies.forEach(tech => {
         const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
@@ -59,6 +61,14 @@ export default function PreviewReadme({ data }) {
 
     // GitHub Stats
     if (data.githubStats.username) {
+      const statsHeading = data.sectionHeadings?.githubStats || '📊 GitHub Stats'
+      let hasStats = false
+      
+      if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
+        markdown += `## ${statsHeading}\n\n`
+        hasStats = true
+      }
+
       if (data.githubStats.showGithubStats) {
         markdown += `<p><img align="left" src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></p>\n\n`
       }
@@ -78,7 +88,8 @@ export default function PreviewReadme({ data }) {
 
     // Projects
     if (data.projects.length > 0) {
-      markdown += `## 🚀 Featured Projects:\n\n`
+      const projectsHeading = data.sectionHeadings?.projects || '🚀 Featured Projects:'
+      markdown += `## ${projectsHeading}\n\n`
       data.projects.forEach(project => {
         if (project.title) {
           markdown += `### [${project.title}](${project.link || '#'})\n`
@@ -95,7 +106,8 @@ export default function PreviewReadme({ data }) {
 
     // Support
     if (data.support.buyMeCoffee || data.support.kofi) {
-      markdown += `## ☕ Support Me:\n\n`
+      const supportHeading = data.sectionHeadings?.support || '☕ Support Me:'
+      markdown += `## ${supportHeading}\n\n`
       if (data.support.buyMeCoffee) {
         markdown += `<p><a href="https://www.buymeacoffee.com/${data.support.buyMeCoffee}"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="${data.support.buyMeCoffee}" /></a></p><br><br>\n\n`
       }
@@ -106,11 +118,137 @@ export default function PreviewReadme({ data }) {
 
     // Contact
     if (data.contact.email) {
-      markdown += `## 📫 How to reach me:\n\n`
+      const contactHeading = data.sectionHeadings?.contact || '📫 How to reach me:'
+      markdown += `## ${contactHeading}\n\n`
       markdown += `**Email:** ${data.contact.email}\n\n`
     }
 
     return markdown
+  }, [data])
+
+  const generateHTML = useMemo(() => {
+    let html = ''
+
+    // Profile Introduction
+    if (data.profile.name) {
+      html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${data.profile.name}</h1>\n`
+    }
+    
+    if (data.profile.subtitle) {
+      html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
+    }
+
+    if (data.profile.welcomeMessage) {
+      html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
+    }
+
+    // Profile Views Badge
+    if (data.githubStats.showProfileViews && data.githubStats.username) {
+      html += `<p class="mb-6"><img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat" alt="${data.githubStats.username}" /></p>\n`
+    }
+
+    // Social Links
+    if (data.socialLinks.length > 0) {
+      const socialHeading = data.sectionHeadings?.socialLinks || '🌐 Connect with me:'
+      html += `<h2 class="text-2xl font-semibold mb-3 mt-6 border-b pb-1">${socialHeading}</h2>\n`
+      html += `<div class="flex flex-wrap gap-2 mb-6">\n`
+      data.socialLinks.forEach(social => {
+        if (social.username) {
+          const url = social.urlTemplate.replace('{username}', social.username)
+          html += `<a href="${url}" target="_blank" class="hover:scale-110 transition-transform"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform.toLowerCase()}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
+        }
+      })
+      html += `</div>\n`
+    }
+
+    // Technologies
+    if (data.technologies.length > 0) {
+      const techHeading = data.sectionHeadings?.technologies || '🛠️ Languages and Tools:'
+      html += `<h2 class="text-2xl font-semibold mb-3 mt-6 border-b pb-1">${techHeading}</h2>\n`
+      html += `<div class="flex flex-wrap gap-3 mb-6">\n`
+      data.technologies.forEach(tech => {
+        const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+        html += `<div class="flex items-center gap-2 px-3 py-2 rounded-lg border" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="24" height="24" />
+          <span class="text-sm font-medium">${tech.name}</span>
+        </div>\n`
+      })
+      html += `</div>\n`
+    }
+
+    // GitHub Stats
+    if (data.githubStats.username) {
+      const statsHeading = data.sectionHeadings?.githubStats || '📊 GitHub Stats'
+      let hasStats = false
+      
+      if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
+        html += `<h2 class="text-2xl font-semibold mb-4 mt-6 border-b pb-1">${statsHeading}</h2>\n`
+        html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">\n`
+        hasStats = true
+      }
+
+      if (data.githubStats.showGithubStats) {
+        html += `<div class="flex justify-center"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></div>\n`
+      }
+
+      if (data.githubStats.showStreakStats) {
+        html += `<div class="flex justify-center"><img src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&" alt="${data.githubStats.username}" /></div>\n`
+      }
+
+      if (data.githubStats.showTopLanguages) {
+        html += `<div class="flex justify-center"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></div>\n`
+      }
+
+      if (hasStats) {
+        html += `</div>\n`
+      }
+
+      if (data.githubStats.showActivityGraph) {
+        html += `<div class="flex justify-center mb-6"><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
+      }
+    }
+
+    // Projects
+    if (data.projects.length > 0) {
+      const projectsHeading = data.sectionHeadings?.projects || '🚀 Featured Projects:'
+      html += `<h2 class="text-2xl font-semibold mb-4 mt-6 border-b pb-1">${projectsHeading}</h2>\n`
+      data.projects.forEach(project => {
+        if (project.title) {
+          html += `<div class="mb-4 p-4 border rounded-lg">\n`
+          html += `<h3 class="text-lg font-semibold mb-2"><a href="${project.link || '#'}" class="text-blue-600 hover:underline" target="_blank">${project.title}</a></h3>\n`
+          if (project.description) {
+            html += `<p class="text-gray-700 mb-2">${project.description}</p>\n`
+          }
+          if (project.repo) {
+            html += `<p class="text-sm"><strong>Repository:</strong> <a href="${project.repo}" class="text-blue-600 hover:underline" target="_blank">${project.repo}</a></p>\n`
+          }
+          html += `</div>\n`
+        }
+      })
+    }
+
+    // Support
+    if (data.support.buyMeCoffee || data.support.kofi) {
+      const supportHeading = data.sectionHeadings?.support || '☕ Support Me:'
+      html += `<h2 class="text-2xl font-semibold mb-4 mt-6 border-b pb-1">${supportHeading}</h2>\n`
+      html += `<div class="flex flex-wrap gap-4 mb-6">\n`
+      if (data.support.buyMeCoffee) {
+        html += `<a href="https://www.buymeacoffee.com/${data.support.buyMeCoffee}" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="${data.support.buyMeCoffee}" /></a>\n`
+      }
+      if (data.support.kofi) {
+        html += `<a href="https://ko-fi.com/${data.support.kofi}" target="_blank"><img src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="${data.support.kofi}" /></a>\n`
+      }
+      html += `</div>\n`
+    }
+
+    // Contact
+    if (data.contact.email) {
+      const contactHeading = data.sectionHeadings?.contact || '📫 How to reach me:'
+      html += `<h2 class="text-2xl font-semibold mb-4 mt-6 border-b pb-1">${contactHeading}</h2>\n`
+      html += `<p class="mb-4"><strong>Email:</strong> <a href="mailto:${data.contact.email}" class="text-blue-600 hover:underline">${data.contact.email}</a></p>\n`
+    }
+
+    return html
   }, [data])
 
   const copyToClipboard = async () => {
@@ -149,6 +287,15 @@ export default function PreviewReadme({ data }) {
           <Button
             variant="outline"
             size="sm"
+            onClick={() => setShowRawCode(true)}
+            className="flex items-center gap-2"
+          >
+            <Code2 className="w-4 h-4" />
+            Show Code
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
             onClick={copyToClipboard}
             className="flex items-center gap-2"
           >
@@ -162,7 +309,7 @@ export default function PreviewReadme({ data }) {
             className="flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
-            Download
+            Download README
           </Button>
         </div>
       </div>
@@ -174,47 +321,43 @@ export default function PreviewReadme({ data }) {
         </CardHeader>
         <CardContent>
           <div className="prose prose-sm max-w-none">
-            <div className="markdown-body bg-white p-6 rounded-lg border min-h-[400px]">
-              <ReactMarkdown 
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h1: ({children}) => <h1 className="text-3xl font-bold mb-4 border-b pb-2">{children}</h1>,
-                  h2: ({children}) => <h2 className="text-2xl font-semibold mb-3 mt-6 border-b pb-1">{children}</h2>,
-                  h3: ({children}) => <h3 className="text-xl font-semibold mb-2 mt-4">{children}</h3>,
-                  p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
-                  a: ({href, children}) => <a href={href} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">{children}</a>,
-                  img: ({src, alt, ...props}) => <img src={src} alt={alt} className="inline-block max-w-full h-auto" {...props} />,
-                  ul: ({children}) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
-                  ol: ({children}) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,
-                  li: ({children}) => <li className="mb-1">{children}</li>,
-                  blockquote: ({children}) => <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4">{children}</blockquote>,
-                  code: ({children, className}) => {
-                    const isInline = !className;
-                    return isInline ? 
-                      <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">{children}</code> :
-                      <code className={className}>{children}</code>
-                  },
-                  pre: ({children}) => <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto mb-4">{children}</pre>
-                }}
-              >
-                {generateMarkdown}
-              </ReactMarkdown>
-            </div>
+            <div 
+              className="bg-white p-6 rounded-lg border min-h-[400px]"
+              dangerouslySetInnerHTML={{ __html: generateHTML }}
+            />
           </div>
         </CardContent>
       </Card>
 
-      {/* Raw Markdown */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Raw Markdown</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <pre className="bg-muted p-4 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap max-h-96">
-            {generateMarkdown}
-          </pre>
-        </CardContent>
-      </Card>
+      {/* Raw Code Modal */}
+      <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
+        <DialogContent className="max-w-4xl max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Code2 className="w-5 h-5" />
+                Raw Markdown Code
+              </span>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={copyToClipboard}
+                  className="flex items-center gap-2"
+                >
+                  <Copy className="w-4 h-4" />
+                  {copied ? 'Copied!' : 'Copy'}
+                </Button>
+              </div>
+            </DialogTitle>
+          </DialogHeader>
+          <div className="overflow-auto max-h-96">
+            <pre className="bg-muted p-4 rounded-lg text-sm whitespace-pre-wrap">
+              {generateMarkdown}
+            </pre>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

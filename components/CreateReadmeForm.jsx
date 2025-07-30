@@ -9,19 +9,29 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Search, Plus, X, Coffee, Heart } from 'lucide-react'
+import { Search, Plus, X, Coffee, Heart, Edit2 } from 'lucide-react'
 import TechSearch from '@/components/TechSearch'
 import SocialSearch from '@/components/SocialSearch'
 
 export default function CreateReadmeForm({ data, onChange }) {
   const [techSearchOpen, setTechSearchOpen] = useState(false)
   const [socialSearchOpen, setSocialSearchOpen] = useState(false)
+  const [editingHeading, setEditingHeading] = useState(null)
 
   const handleProfileChange = (field, value) => {
     onChange({
       profile: {
         ...data.profile,
         [field]: value
+      }
+    })
+  }
+
+  const handleHeadingChange = (headingKey, value) => {
+    onChange({
+      sectionHeadings: {
+        ...data.sectionHeadings,
+        [headingKey]: value
       }
     })
   }
@@ -107,10 +117,42 @@ export default function CreateReadmeForm({ data, onChange }) {
     })
   }
 
+  const EditableHeading = ({ headingKey, defaultText, className = "" }) => {
+    const isEditing = editingHeading === headingKey
+    const currentText = data.sectionHeadings[headingKey] || defaultText
+
+    if (isEditing) {
+      return (
+        <Input
+          value={currentText}
+          onChange={(e) => handleHeadingChange(headingKey, e.target.value)}
+          onBlur={() => setEditingHeading(null)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              setEditingHeading(null)
+            }
+          }}
+          className={`font-semibold text-lg bg-transparent border-dashed ${className}`}
+          autoFocus
+        />
+      )
+    }
+
+    return (
+      <div 
+        className={`flex items-center gap-2 cursor-pointer hover:bg-muted/50 p-1 rounded ${className}`}
+        onClick={() => setEditingHeading(headingKey)}
+      >
+        <span className="font-semibold text-lg">{currentText}</span>
+        <Edit2 className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Profile Introduction */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             👋 Profile Introduction
@@ -151,10 +193,10 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Technologies */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            🛠️ Technologies & Skills
+          <CardTitle>
+            <EditableHeading headingKey="technologies" defaultText="🛠️ Technologies & Skills" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -209,10 +251,10 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Social Links */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            🌐 Social Links
+          <CardTitle>
+            <EditableHeading headingKey="socialLinks" defaultText="🌐 Social Links" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -268,10 +310,10 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* GitHub Stats */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            📊 GitHub Stats
+          <CardTitle>
+            <EditableHeading headingKey="githubStats" defaultText="📊 GitHub Stats" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -337,10 +379,10 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Projects */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            🚀 Featured Projects
+          <CardTitle>
+            <EditableHeading headingKey="projects" defaultText="🚀 Featured Projects" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -402,10 +444,10 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Support Me */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            ☕ Support Me
+          <CardTitle>
+            <EditableHeading headingKey="support" defaultText="☕ Support Me" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -433,10 +475,10 @@ export default function CreateReadmeForm({ data, onChange }) {
       </Card>
 
       {/* Contact */}
-      <Card className="transform hover:shadow-lg transition-shadow duration-200">
+      <Card className="group transform hover:shadow-lg transition-shadow duration-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            📫 Contact Me
+          <CardTitle>
+            <EditableHeading headingKey="contact" defaultText="📫 Contact Me" />
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
