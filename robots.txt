@@ -1,0 +1,5 @@
+# Allow all web crawlers
+User-agent: *
+Allow: /
+
+Sitemap: https://github-profile-readme-generator.vercel.app/sitemap.xml
