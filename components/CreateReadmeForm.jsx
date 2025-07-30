@@ -48,9 +48,17 @@ export default function CreateReadmeForm({ data, onChange }) {
   const addTechnology = (tech) => {
     if (!data.technologies.find(t => t.name === tech.name)) {
       onChange({
-        technologies: [...data.technologies, tech]
+        technologies: [...data.technologies, { ...tech, showName: true }] // Default to showing name
       })
     }
+  }
+
+  const updateTechnology = (techName, field, value) => {
+    onChange({
+      technologies: data.technologies.map(t => 
+        t.name === techName ? { ...t, [field]: value } : t
+      )
+    })
   }
 
   const removeTechnology = (techName) => {
