@@ -1,5 +1,6 @@
 import './globals.css'
 import 'github-markdown-css/github-markdown-light.css'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata = {
   title: 'Smart GitHub Profile README Generator',
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-sans antialiased">
         {children}
+        <Toaster />
       </body>
     </html>
   )
