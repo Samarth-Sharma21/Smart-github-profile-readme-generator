@@ -3,8 +3,48 @@ import 'github-markdown-css/github-markdown-light.css'
 import { Toaster } from '@/components/ui/sonner'
 
 export const metadata = {
-  title: 'Smart GitHub Profile README Generator',
-  description: 'Create beautiful GitHub profile README files with interactive forms and live preview',
+  title: 'Smart GitHub Profile README Generator | Create Beautiful GitHub READMEs',
+  description: 'Create beautiful GitHub profile README files with interactive forms and live preview. Customize your GitHub profile with technologies, stats, projects and more.',
+  keywords: ['github profile', 'readme generator', 'github readme', 'profile generator', 'markdown generator', 'github stats', 'developer profile', 'github bio'],
+  authors: [{ name: 'Smart GitHub Profile README Generator' }],
+  creator: 'Smart GitHub Profile README Generator',
+  publisher: 'Smart GitHub Profile README Generator',
+  openGraph: {
+    title: 'Smart GitHub Profile README Generator | Create Beautiful GitHub READMEs',
+    description: 'Create beautiful GitHub profile README files with interactive forms and live preview. Customize your GitHub profile with technologies, stats, projects and more.',
+    url: 'https://github-profile-readme-generator.vercel.app/',
+    siteName: 'Smart GitHub Profile README Generator',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Smart GitHub Profile README Generator',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Smart GitHub Profile README Generator | Create Beautiful GitHub READMEs',
+    description: 'Create beautiful GitHub profile README files with interactive forms and live preview. Customize your GitHub profile with technologies, stats, projects and more.',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://github-profile-readme-generator.vercel.app/',
+  },
 }
 
 export default function RootLayout({ children }) {

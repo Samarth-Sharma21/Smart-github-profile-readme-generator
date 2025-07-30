@@ -1,13 +1,17 @@
 {
-    "name": "nextjs-mongo-template",
-    "version": "0.1.0",
+    "name": "smart-github-profile-readme-generator",
+    "version": "1.0.0",
     "private": true,
+    "homepage": "https://github.com/username/Smart-github-profile-readme-generator",
     "scripts": {
         "dev": "NODE_OPTIONS='--max-old-space-size=512' next dev --hostname 0.0.0.0 --port 3000",
         "dev:no-reload": "next dev --hostname 0.0.0.0 --port 3000",
         "dev:webpack": "next dev --hostname 0.0.0.0 --port 3000",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "export": "next export",
+        "predeploy": "npm run build && npm run export",
+        "deploy": "gh-pages -d out"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.1.1",
@@ -72,6 +76,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.4.19",
+        "gh-pages": "^6.1.1",
         "globals": "^16.2.0",
         "postcss": "^8",
         "tailwindcss": "^3.4.1"

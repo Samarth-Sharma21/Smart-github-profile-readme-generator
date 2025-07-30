@@ -1,8 +1,10 @@
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
     unoptimized: true,
   },
+  basePath: process.env.NODE_ENV === 'production' ? '/Smart-github-profile-readme-generator' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Smart-github-profile-readme-generator/' : '',
   experimental: {
     // Remove if not using Server Components
     serverComponentsExternalPackages: ['mongodb'],
