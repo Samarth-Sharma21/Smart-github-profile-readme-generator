@@ -195,7 +195,7 @@ export default function App() {
                 variant="outline" 
                 size="sm"
                 className="flex items-center gap-2 hover:bg-yellow-50 hover:border-yellow-300 transition-colors"
-                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/star', '_self')}
+                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/stargazers', '_blank')}
               >
                 <Star className="w-4 h-4 text-yellow-500" />
                 Star Repo
@@ -205,7 +205,7 @@ export default function App() {
                 variant="outline" 
                 size="sm"
                 className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-colors"
-                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/fork', '_self')}
+                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/fork', '_blank')}
               >
                 <GitFork className="w-4 h-4 text-blue-500" />
                 Fork Repo

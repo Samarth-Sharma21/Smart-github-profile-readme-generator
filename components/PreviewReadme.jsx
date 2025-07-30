@@ -345,8 +345,8 @@ export default function PreviewReadme({ data }) {
 
       {/* Raw Code Modal */}
       <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
-          <DialogHeader className="flex-shrink-0">
+        <DialogContent className="max-w-4xl max-h-[80vh]">
+          <DialogHeader>
             <DialogTitle className="flex items-center justify-between pr-8">
               <span className="flex items-center gap-2">
                 <Code2 className="w-5 h-5" />
@@ -365,7 +365,7 @@ export default function PreviewReadme({ data }) {
               </div>
             </DialogTitle>
           </DialogHeader>
-          <div className="flex-grow overflow-y-auto custom-scrollbar" style={{ maxHeight: 'calc(80vh - 120px)' }}>
+          <div className="overflow-auto max-h-96">
             <pre className="bg-muted p-4 rounded-lg text-sm whitespace-pre-wrap">
               {generateMarkdown}
             </pre>
