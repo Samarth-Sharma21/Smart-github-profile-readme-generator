@@ -94,9 +94,10 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
   }
   
   const handleDone = () => {
-    // Send all selected technologies to parent component
+    // Send all selected technologies to parent component at once
     if (selectedTechs.length > 0) {
-      selectedTechs.forEach(tech => onSelect(tech))
+      // Call onSelect with all selected technologies as an array
+      onSelect(selectedTechs)
       setSelectedTechs([])
       setSearchTerm('')
       onOpenChange(false)

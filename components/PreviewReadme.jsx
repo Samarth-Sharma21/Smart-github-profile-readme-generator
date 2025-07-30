@@ -32,17 +32,16 @@ export default function PreviewReadme({ data }) {
       const aboutMeHeading = data.sectionHeadings?.profile || '👋 About Me'
       markdown += `# ${aboutMeHeading}\n\n`
       
+      if (data.profile.name) {
+        markdown += `**${data.profile.name}**\n\n`
+      }
+      
       if (data.profile.subtitle) {
         markdown += `### ${data.profile.subtitle}\n\n`
       }
 
       if (data.profile.welcomeMessage) {
         markdown += `${data.profile.welcomeMessage}\n\n`
-      }
-
-      // Add name separately if it exists
-      if (data.profile.name) {
-        markdown += `**${data.profile.name}**\n\n`
       }
     }
 
@@ -59,7 +58,13 @@ export default function PreviewReadme({ data }) {
       data.socialLinks.forEach(social => {
         if (social.username) {
           const url = social.urlTemplate.replace('{username}', social.username)
-          markdown += `<a href="${url}" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform.toLowerCase()}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
+          if (social.showIcon) {
+            // Show icon only
+            markdown += `<a href="${url}" target="blank"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color};"></i></a>\n`
+          } else {
+            // Show icon with platform name
+            markdown += `<a href="${url}" target="blank" style="text-decoration: none; margin: 0 10px;"><i class="${social.icon}" style="font-size: 30px; margin-right: 5px; color: ${social.color};"></i><span style="color: ${social.color}; font-weight: bold;">${social.platform}</span></a>\n`
+          }
         }
       })
       markdown += `</p>\n\n`
@@ -106,7 +111,7 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.githubStats.showActivityGraph) {
-        markdown += `<p><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<p><img src="https://github-readme-activity-graph.cyclic.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" /></p>\n\n`
       }
     }
 
@@ -170,17 +175,16 @@ export default function PreviewReadme({ data }) {
       const aboutMeHeading = data.sectionHeadings?.profile || '👋 About Me'
       html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${aboutMeHeading}</h1>\n`
       
+      if (data.profile.name) {
+        html += `<p class="mb-6 text-gray-700 leading-relaxed"><strong>${data.profile.name}</strong></p>\n`
+      }
+      
       if (data.profile.subtitle) {
         html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
       }
 
       if (data.profile.welcomeMessage) {
         html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
-      }
-
-      // Add name separately if it exists
-      if (data.profile.name) {
-        html += `<p class="mb-6 text-gray-700 leading-relaxed"><strong>${data.profile.name}</strong></p>\n`
       }
     }
 
@@ -197,7 +201,16 @@ export default function PreviewReadme({ data }) {
       data.socialLinks.forEach(social => {
         if (social.username) {
           const url = social.urlTemplate.replace('{username}', social.username)
-          html += `<a href="${url}" target="_blank" class="hover:scale-110 transition-transform"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/${social.platform.toLowerCase()}.svg" alt="${social.username}" height="30" width="40" /></a>\n`
+          if (social.showIcon) {
+            // Show icon only
+            html += `<a href="${url}" target="_blank" class="hover:scale-110 transition-transform"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color};"></i></a>\n`
+          } else {
+            // Show icon with platform name
+            html += `<a href="${url}" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg border hover:scale-105 transition-transform" style="border-color: ${social.color}40">\n`
+            html += `  <i class="${social.icon}" style="font-size: 24px; color: ${social.color};"></i>\n`
+            html += `  <span class="text-sm font-medium" style="color: ${social.color};">${social.platform}</span>\n`
+            html += `</a>\n`
+          }
         }
       })
       html += `</div>\n`
@@ -254,7 +267,7 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.githubStats.showActivityGraph) {
-        html += `<div class="flex justify-center mb-6"><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
+        html += `<div class="flex justify-center mb-6"><img src="https://github-readme-activity-graph.cyclic.app/graph?username=${data.githubStats.username}&theme=github-compact" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
       }
     }
 

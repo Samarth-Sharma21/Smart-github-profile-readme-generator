@@ -28,16 +28,19 @@ export default function CreateReadmeForm({ data, onChange }) {
     { id: 'contact', title: '📫 Contact Me' }
   ])
 
-  // Set default 'Hi, I am' message if name is empty
+  // Initialize showNameAsHeading only
   useEffect(() => {
-    if (data.profile.name === '') {
-      handleProfileChange('name', 'Hi 👋, I am ')
-    }
     // Initialize showNameAsHeading if it doesn't exist
     if (data.profile.showNameAsHeading === undefined) {
       handleProfileChange('showNameAsHeading', true)
     }
-  }, [])
+    
+    // Only set default greeting if name is completely empty
+    if (!data.profile.name) {
+      // Set default greeting if name is empty
+      handleProfileChange('name', 'Hi 👋, I\'m ')
+    }
+  }, []) // Empty dependency array to run only once on mount
 
   const handleProfileChange = (field, value) => {
     onChange({
@@ -66,10 +69,18 @@ export default function CreateReadmeForm({ data, onChange }) {
     })
   }
 
-  const addTechnology = (tech) => {
-    if (!data.technologies.find(t => t.name === tech.name)) {
+  const addTechnology = (techsToAdd) => {
+    // Handle both single tech object and array of techs
+    const techArray = Array.isArray(techsToAdd) ? techsToAdd : [techsToAdd];
+    
+    // Filter out techs that already exist
+    const newTechs = techArray.filter(tech => 
+      !data.technologies.find(t => t.name === tech.name)
+    ).map(tech => ({ ...tech, showName: true })); // Default to showing name
+    
+    if (newTechs.length > 0) {
       onChange({
-        technologies: [...data.technologies, { ...tech, showName: true }] // Default to showing name
+        technologies: [...data.technologies, ...newTechs]
       })
     }
   }
@@ -89,10 +100,22 @@ export default function CreateReadmeForm({ data, onChange }) {
   }
 
   const addSocialLink = (social) => {
-    if (!data.socialLinks.find(s => s.platform === social.platform)) {
-      onChange({
-        socialLinks: [...data.socialLinks, social]
-      })
+    // Check if social is an array or a single object
+    if (Array.isArray(social)) {
+      // Filter out platforms that already exist
+      const newSocialLinks = social.filter(s => !data.socialLinks.find(existing => existing.platform === s.platform));
+      if (newSocialLinks.length > 0) {
+        onChange({
+          socialLinks: [...data.socialLinks, ...newSocialLinks]
+        });
+      }
+    } else {
+      // Handle single social link (for backward compatibility)
+      if (!data.socialLinks.find(s => s.platform === social.platform)) {
+        onChange({
+          socialLinks: [...data.socialLinks, social]
+        });
+      }
     }
   }
 
@@ -196,10 +219,10 @@ export default function CreateReadmeForm({ data, onChange }) {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Name/Title</Label>
+                      <Label htmlFor="name">Name</Label>
                       <Input
                         id="name"
-                        placeholder="Hi 👋, I'm "
+                        placeholder="Hi 👋, I'm"
                         value={data.profile.name}
                         onChange={(e) => handleProfileChange('name', e.target.value)}
                       />
@@ -230,7 +253,7 @@ export default function CreateReadmeForm({ data, onChange }) {
                       checked={data.profile.showNameAsHeading}
                       onCheckedChange={(checked) => handleProfileChange('showNameAsHeading', checked)}
                     />
-                    <Label htmlFor="showNameAsHeading" className="cursor-pointer">Show name as heading (uncheck to use About Me as heading)</Label>
+                    <Label htmlFor="showNameAsHeading" className="cursor-pointer">Use name as heading</Label>
                   </div>
                 </CardContent>
               </Card>
@@ -327,7 +350,9 @@ export default function CreateReadmeForm({ data, onChange }) {
                     <div className="space-y-3">
                       {data.socialLinks.map((social) => (
                         <div key={social.platform} className="flex items-center gap-3 p-3 border rounded-lg hover:shadow-md transition-shadow duration-200">
-                          <i className={social.icon} style={{ color: social.color }}></i>
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full" style={{ backgroundColor: `${social.color}20` }}>
+                            <i className={social.icon} style={{ color: social.color, fontSize: '1.5rem' }}></i>
+                          </div>
                           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
                             <Input
                               placeholder="Username/Handle"

@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Search } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 
 // Popular social platforms with their details
 const SOCIAL_PLATFORMS = [
@@ -188,6 +188,7 @@ const SOCIAL_PLATFORMS = [
 
 export default function SocialSearch({ open, onOpenChange, onSelect }) {
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedPlatforms, setSelectedPlatforms] = useState([])
 
   const filteredPlatforms = useMemo(() => {
     return SOCIAL_PLATFORMS.filter(platform =>
@@ -196,13 +197,29 @@ export default function SocialSearch({ open, onOpenChange, onSelect }) {
   }, [searchTerm])
 
   const handleSelect = (platform) => {
-    onSelect({
-      ...platform,
-      username: '',
-      showIcon: false
-    })
-    setSearchTerm('')
-    onOpenChange(false)
+    // Check if platform is already selected
+    const isSelected = selectedPlatforms.some(p => p.platform === platform.platform)
+    
+    if (isSelected) {
+      setSelectedPlatforms(selectedPlatforms.filter(p => p.platform !== platform.platform))
+    } else {
+      setSelectedPlatforms([...selectedPlatforms, {
+        ...platform,
+        username: '',
+        showIcon: true
+      }])
+    }
+  }
+  
+  const handleDone = () => {
+    // Send all selected platforms to parent component at once
+    if (selectedPlatforms.length > 0) {
+      // Call onSelect with all selected platforms as an array
+      onSelect(selectedPlatforms)
+      setSelectedPlatforms([])
+      setSearchTerm('')
+      onOpenChange(false)
+    }
   }
 
   return (
@@ -224,23 +241,56 @@ export default function SocialSearch({ open, onOpenChange, onSelect }) {
             />
           </div>
 
+          {/* Selected Platforms */}
+          {selectedPlatforms.length > 0 && (
+            <div className="mb-4">
+              <div className="text-sm font-medium mb-2">Selected ({selectedPlatforms.length}):</div>
+              <div className="flex flex-wrap gap-2">
+                {selectedPlatforms.map(platform => (
+                  <div 
+                    key={platform.platform}
+                    className="flex items-center gap-2 bg-muted rounded-full pl-3 pr-2 py-1"
+                  >
+                    <div className="flex items-center justify-center w-6 h-6 rounded-full" style={{ backgroundColor: `${platform.color}20` }}>
+                      <i className={platform.icon} style={{ color: platform.color }}></i>
+                    </div>
+                    <span className="text-sm">{platform.platform}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-5 w-5 p-0 rounded-full"
+                      onClick={() => handleSelect(platform)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Platform Grid */}
-          <ScrollArea className="h-96">
+          <ScrollArea className="h-72">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {filteredPlatforms.map(platform => (
-                <Button
-                  key={platform.platform}
-                  variant="outline"
-                  className="flex items-center gap-3 h-12 justify-start"
-                  onClick={() => handleSelect(platform)}
-                >
-                  <i 
-                    className={platform.icon} 
-                    style={{ color: platform.color }}
-                  ></i>
-                  <span>{platform.platform}</span>
-                </Button>
-              ))}
+              {filteredPlatforms.map(platform => {
+                const isSelected = selectedPlatforms.some(p => p.platform === platform.platform);
+                return (
+                  <Button
+                    key={platform.platform}
+                    variant={isSelected ? "default" : "outline"}
+                    className={`flex items-center gap-3 h-12 justify-start ${isSelected ? 'bg-primary/10 border-primary' : ''}`}
+                    onClick={() => handleSelect(platform)}
+                  >
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full" style={{ backgroundColor: `${platform.color}20` }}>
+                      <i 
+                        className={platform.icon} 
+                        style={{ color: platform.color, fontSize: '1.2rem' }}
+                      ></i>
+                    </div>
+                    <span>{platform.platform}</span>
+                  </Button>
+                );
+              })}
             </div>
             
             {filteredPlatforms.length === 0 && (
@@ -249,6 +299,15 @@ export default function SocialSearch({ open, onOpenChange, onSelect }) {
               </div>
             )}
           </ScrollArea>
+
+          {/* Done Button */}
+          {selectedPlatforms.length > 0 && (
+            <div className="flex justify-end">
+              <Button onClick={handleDone}>
+                Add {selectedPlatforms.length} {selectedPlatforms.length === 1 ? 'Platform' : 'Platforms'}
+              </Button>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

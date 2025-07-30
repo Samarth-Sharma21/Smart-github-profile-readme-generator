@@ -266,7 +266,7 @@ export default function App() {
               <Button
                 onClick={switchToPreview}
                 size="lg"
-                className="flex items-center gap-3 px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                className="flex items-center gap-3 px-8 py-4 text-lg font-semibold bg-black hover:bg-gray-800 transform hover:scale-105 transition-all duration-200 shadow-lg"
               >
                 <Eye className="w-5 h-5" />
                 Preview My README
