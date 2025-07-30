@@ -202,7 +202,7 @@ export default function CreateReadmeForm({ data, onChange }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         <Droppable droppableId="sections">
           {(provided) => (
             <div
