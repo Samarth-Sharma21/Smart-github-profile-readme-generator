@@ -4,11 +4,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Github, Star, GitFork, Code, Lightbulb, Image, Layout, Sparkles } from 'lucide-react';
 
-export const metadata = {
-  title: 'GitHub Profile Tips | Optimize Your GitHub Profile README',
-  description: 'Expert tips and best practices for creating an impressive GitHub profile README that showcases your skills and attracts more followers.',
-  keywords: 'github profile tips, github readme optimization, github profile best practices, improve github profile, github readme ideas',
-};
+// Metadata moved to layout.js
+// Client components cannot export metadata
 
 export default function GitHubProfileTips() {
   return (

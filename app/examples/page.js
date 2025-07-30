@@ -5,11 +5,8 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
-export const metadata = {
-  title: 'GitHub Profile README Examples | GitHub Profile README Generator',
-  description: 'Get inspired by our collection of outstanding GitHub profile README examples. See how developers showcase their skills, projects, and personality.',
-  keywords: 'github profile examples, github readme examples, github profile inspiration, github readme templates, github profile showcase',
-};
+// Metadata moved to layout.js
+// Client components cannot export metadata
 
 export default function ExamplesPage() {
   const [activeTab, setActiveTab] = useState('minimal');
