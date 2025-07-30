@@ -347,7 +347,7 @@ export default function PreviewReadme({ data }) {
       <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
         <DialogContent className="max-w-4xl max-h-[80vh]">
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
+            <DialogTitle className="flex items-center justify-between pr-8">
               <span className="flex items-center gap-2">
                 <Code2 className="w-5 h-5" />
                 Raw Markdown Code

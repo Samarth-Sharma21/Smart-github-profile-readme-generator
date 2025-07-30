@@ -106,7 +106,7 @@ export default function App() {
   useEffect(() => {
     // Initialize Lenis smooth scroll with faster settings
     const lenis = new Lenis({
-      duration: 0.8,  // Reduced from 1.2 to 0.8 for faster scrolling
+      duration: 0.5,  // Reduced for faster scrolling
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       smoothTouch: false // Disable on touch devices for better performance

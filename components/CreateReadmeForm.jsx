@@ -172,7 +172,7 @@ export default function CreateReadmeForm({ data, onChange }) {
               <Label htmlFor="name">Name/Title</Label>
               <Input
                 id="name"
-                placeholder="Hi 👋, I'm Samarth"
+                placeholder="Hi 👋, I'm "
                 value={data.profile.name}
                 onChange={(e) => handleProfileChange('name', e.target.value)}
               />
