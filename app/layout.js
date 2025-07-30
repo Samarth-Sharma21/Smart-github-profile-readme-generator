@@ -65,11 +65,13 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
+        {/* Removed undefined components:
         <PerformanceOptimizer />
         <PerformanceBooster />
         <MediaOptimizer />
+        */}
         {children}
-        <FeedbackButton />
+        {/* Removed undefined component: <FeedbackButton /> */}
         <Toaster />
         <Script src="/js/analytics.js" strategy="afterInteractive" />
         <Script src="/js/sw-register.js" strategy="afterInteractive" />

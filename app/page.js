@@ -186,7 +186,7 @@ export default function App() {
                 <Github className="w-6 h-6" />
                 Smart GitHub Profile README Generator
               </h1>
-              <GitHubStats />
+              {/* GitHubStats component removed */}
             </div>
             
             <div className="flex items-center gap-3">

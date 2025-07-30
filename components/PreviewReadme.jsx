@@ -15,17 +15,35 @@ export default function PreviewReadme({ data }) {
   const generateMarkdown = useMemo(() => {
     let markdown = ''
 
-    // Profile Introduction
-    if (data.profile.name) {
+    // About Me section
+    if (data.profile.showNameAsHeading !== false && data.profile.name) {
+      // Show name as heading (default behavior)
       markdown += `# ${data.profile.name}\n\n`
-    }
-    
-    if (data.profile.subtitle) {
-      markdown += `### ${data.profile.subtitle}\n\n`
-    }
+      
+      if (data.profile.subtitle) {
+        markdown += `### ${data.profile.subtitle}\n\n`
+      }
 
-    if (data.profile.welcomeMessage) {
-      markdown += `${data.profile.welcomeMessage}\n\n`
+      if (data.profile.welcomeMessage) {
+        markdown += `${data.profile.welcomeMessage}\n\n`
+      }
+    } else {
+      // Show About Me as heading
+      const aboutMeHeading = data.sectionHeadings?.profile || '👋 About Me'
+      markdown += `# ${aboutMeHeading}\n\n`
+      
+      if (data.profile.subtitle) {
+        markdown += `### ${data.profile.subtitle}\n\n`
+      }
+
+      if (data.profile.welcomeMessage) {
+        markdown += `${data.profile.welcomeMessage}\n\n`
+      }
+
+      // Add name separately if it exists
+      if (data.profile.name) {
+        markdown += `**${data.profile.name}**\n\n`
+      }
     }
 
     // Profile Views Badge
@@ -135,17 +153,35 @@ export default function PreviewReadme({ data }) {
   const generateHTML = useMemo(() => {
     let html = ''
 
-    // Profile Introduction
-    if (data.profile.name) {
+    // About Me section
+    if (data.profile.showNameAsHeading !== false && data.profile.name) {
+      // Show name as heading (default behavior)
       html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${data.profile.name}</h1>\n`
-    }
-    
-    if (data.profile.subtitle) {
-      html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
-    }
+      
+      if (data.profile.subtitle) {
+        html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
+      }
 
-    if (data.profile.welcomeMessage) {
-      html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
+      if (data.profile.welcomeMessage) {
+        html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
+      }
+    } else {
+      // Show About Me as heading
+      const aboutMeHeading = data.sectionHeadings?.profile || '👋 About Me'
+      html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${aboutMeHeading}</h1>\n`
+      
+      if (data.profile.subtitle) {
+        html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
+      }
+
+      if (data.profile.welcomeMessage) {
+        html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
+      }
+
+      // Add name separately if it exists
+      if (data.profile.name) {
+        html += `<p class="mb-6 text-gray-700 leading-relaxed"><strong>${data.profile.name}</strong></p>\n`
+      }
     }
 
     // Profile Views Badge

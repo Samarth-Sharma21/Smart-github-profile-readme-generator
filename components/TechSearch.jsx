@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Search } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 
 // Popular technologies with their Devicon classes and colors
 const TECHNOLOGIES = [
@@ -74,6 +74,7 @@ const CATEGORIES = [...new Set(TECHNOLOGIES.map(tech => tech.category))]
 export default function TechSearch({ open, onOpenChange, onSelect }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedTechs, setSelectedTechs] = useState([])
 
   const filteredTechnologies = useMemo(() => {
     return TECHNOLOGIES.filter(tech => {
@@ -84,9 +85,22 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
   }, [searchTerm, selectedCategory])
 
   const handleSelect = (tech) => {
-    onSelect(tech)
-    setSearchTerm('')
-    onOpenChange(false)
+    // Toggle selection
+    if (selectedTechs.some(t => t.name === tech.name)) {
+      setSelectedTechs(selectedTechs.filter(t => t.name !== tech.name))
+    } else {
+      setSelectedTechs([...selectedTechs, tech])
+    }
+  }
+  
+  const handleDone = () => {
+    // Send all selected technologies to parent component
+    if (selectedTechs.length > 0) {
+      selectedTechs.forEach(tech => onSelect(tech))
+      setSelectedTechs([])
+      setSearchTerm('')
+      onOpenChange(false)
+    }
   }
 
   return (
@@ -129,27 +143,63 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
             ))}
           </div>
 
+          {/* Selected Technologies */}
+          {selectedTechs.length > 0 && (
+            <div className="mb-4">
+              <div className="text-sm font-medium mb-2">Selected ({selectedTechs.length}):</div>
+              <div className="flex flex-wrap gap-2">
+                {selectedTechs.map(tech => (
+                  <Badge 
+                    key={tech.name} 
+                    variant="outline"
+                    className="flex items-center gap-1 px-2 py-1"
+                    style={{ 
+                      backgroundColor: tech.bg,
+                      borderColor: tech.color + '30'
+                    }}
+                  >
+                    <i 
+                      className={`${tech.icon} text-sm`}
+                      style={{ color: tech.color }}
+                    ></i>
+                    <span>{tech.name}</span>
+                    <X 
+                      className="w-3 h-3 ml-1 cursor-pointer" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedTechs(selectedTechs.filter(t => t.name !== tech.name));
+                      }}
+                    />
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Technology Grid */}
           <ScrollArea className="h-96">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {filteredTechnologies.map(tech => (
-                <Button
-                  key={tech.name}
-                  variant="outline"
-                  className="flex items-center gap-2 h-12 justify-start hover:shadow-md transition-all duration-200"
-                  style={{ 
-                    backgroundColor: tech.bg,
-                    borderColor: tech.color + '30'
-                  }}
-                  onClick={() => handleSelect(tech)}
-                >
-                  <i 
-                    className={`${tech.icon} text-xl`}
-                    style={{ color: tech.color }}
-                  ></i>
-                  <span className="text-sm font-medium">{tech.name}</span>
-                </Button>
-              ))}
+              {filteredTechnologies.map(tech => {
+                const isSelected = selectedTechs.some(t => t.name === tech.name);
+                return (
+                  <Button
+                    key={tech.name}
+                    variant={isSelected ? "default" : "outline"}
+                    className={`flex items-center gap-2 h-12 justify-start hover:shadow-md transition-all duration-200 ${isSelected ? 'border-2' : ''}`}
+                    style={{ 
+                      backgroundColor: isSelected ? tech.color + '30' : tech.bg,
+                      borderColor: tech.color + (isSelected ? '60' : '30')
+                    }}
+                    onClick={() => handleSelect(tech)}
+                  >
+                    <i 
+                      className={`${tech.icon} text-xl`}
+                      style={{ color: tech.color }}
+                    ></i>
+                    <span className="text-sm font-medium">{tech.name}</span>
+                  </Button>
+                );
+              })}
             </div>
             
             {filteredTechnologies.length === 0 && (
@@ -158,6 +208,17 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
               </div>
             )}
           </ScrollArea>
+          
+          {/* Done Button */}
+          <div className="flex justify-end mt-4">
+            <Button 
+              onClick={handleDone}
+              disabled={selectedTechs.length === 0}
+              className="px-6"
+            >
+              Add Selected ({selectedTechs.length})
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
