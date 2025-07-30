@@ -168,10 +168,18 @@ export default function PreviewReadme({ data }) {
       html += `<div class="flex flex-wrap gap-3 mb-6">\n`
       data.technologies.forEach(tech => {
         const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
-        html += `<div class="flex items-center gap-2 px-3 py-2 rounded-lg border" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40">
-          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="24" height="24" />
-          <span class="text-sm font-medium">${tech.name}</span>
-        </div>\n`
+        if (tech.showName) {
+          // Show icon + name
+          html += `<div class="flex items-center gap-2 px-3 py-2 rounded-lg border" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40">
+            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="24" height="24" />
+            <span class="text-sm font-medium">${tech.name}</span>
+          </div>\n`
+        } else {
+          // Show only icon
+          html += `<div class="p-2 rounded-lg border hover:scale-110 transition-transform" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40" title="${tech.name}">
+            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="32" height="32" />
+          </div>\n`
+        }
       })
       html += `</div>\n`
     }
