@@ -13,7 +13,7 @@
 
 A powerful tool to create beautiful, customized GitHub profile READMEs with an interactive form and live preview. Stand out in the GitHub community with a professional profile page that showcases your skills, projects, and personality.
 
-### [✨ Live Demo](https://smart-github-profile-readme-generator/netlify.com)
+### [✨ Live Demo](https://smart-github-profile-readme-generator.netlify.app/)
 
 ![Screenshot](public/screenshot.svg)
 
