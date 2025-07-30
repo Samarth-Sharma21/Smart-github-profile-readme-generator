@@ -1,6 +1,6 @@
 import './globals.css'
 import 'github-markdown-css/github-markdown-light.css'
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata = {
   title: 'Smart GitHub Profile README Generator',
