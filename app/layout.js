@@ -63,6 +63,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         {/* Removed undefined components:
@@ -73,8 +74,15 @@ export default function RootLayout({ children }) {
         {children}
         {/* Removed undefined component: <FeedbackButton /> */}
         <Toaster />
-        <Script src="/js/analytics.js" strategy="afterInteractive" />
-        <Script src="/js/sw-register.js" strategy="afterInteractive" />
+        <Script
+          src="/js/analytics.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="/js/sw-register.js"
+          strategy="afterInteractive"
+        />
+        <Script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" strategy="afterInteractive" integrity="sha512-yFjZbTYRCJodnuyGlsKamNE/LlEaEAxSUDe5+u61mV8zzqJVFOH7TnULE2/PP/l5vKWpUNnF4VGVkXh3MjgLsg==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </body>
     </html>
   )

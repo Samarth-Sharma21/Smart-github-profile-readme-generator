@@ -39,7 +39,26 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 ## Deployment
 
-This project is configured for GitHub Pages deployment. When you push to the main branch, the GitHub Actions workflow will automatically build and deploy the site.
+This project is configured for deployment on Netlify or Vercel.
+
+### Netlify Deployment
+
+1. Push your code to GitHub
+2. Log in to Netlify
+3. Click "New site from Git"
+4. Select your repository
+5. Build command: `yarn build`
+6. Publish directory: `out`
+7. Click "Deploy site"
+
+### Vercel Deployment
+
+1. Push your code to GitHub
+2. Log in to Vercel
+3. Click "New Project"
+4. Import your repository
+5. Keep the default settings (Vercel detects Next.js automatically)
+6. Click "Deploy"
 
 ### Manual Deployment
 
