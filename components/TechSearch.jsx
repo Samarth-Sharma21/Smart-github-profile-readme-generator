@@ -11,7 +11,9 @@ import { Toggle } from '@/components/ui/toggle'
 
 // Icon libraries with their display names
 const ICON_LIBRARIES = {
-  devicon: 'Devicon'
+  devicon: 'Devicon',
+  simpleicons: 'Simple Icons',
+  reacticons: 'React Icons'
 }
 
 // Popular technologies with their icon classes and colors
@@ -73,7 +75,43 @@ const TECHNOLOGIES = [
   { name: 'GraphQL', icon: 'devicon-graphql-plain', category: 'API', color: '#E10098', bg: '#E1009820', library: 'devicon' },
   { name: 'Webpack', icon: 'devicon-webpack-plain', category: 'Build Tools', color: '#8DD6F9', bg: '#8DD6F920', library: 'devicon' },
   { name: 'Vite', icon: 'devicon-vitejs-plain', category: 'Build Tools', color: '#646CFF', bg: '#646CFF20', library: 'devicon' },
-  { name: 'Jest', icon: 'devicon-jest-plain', category: 'Testing', color: '#C21325', bg: '#C2132520', library: 'devicon' }
+  { name: 'Jest', icon: 'devicon-jest-plain', category: 'Testing', color: '#C21325', bg: '#C2132520', library: 'devicon' },
+  
+  // Simple Icons technologies
+  { name: 'Vercel', icon: 'si-vercel', category: 'Cloud', color: '#000000', bg: '#00000020', library: 'simpleicons' },
+  { name: 'Netlify', icon: 'si-netlify', category: 'Cloud', color: '#00C7B7', bg: '#00C7B720', library: 'simpleicons' },
+  { name: 'Heroku', icon: 'si-heroku', category: 'Cloud', color: '#430098', bg: '#43009820', library: 'simpleicons' },
+  { name: 'Cloudflare', icon: 'si-cloudflare', category: 'Cloud', color: '#F38020', bg: '#F3802020', library: 'simpleicons' },
+  { name: 'Supabase', icon: 'si-supabase', category: 'Backend', color: '#3ECF8E', bg: '#3ECF8E20', library: 'simpleicons' },
+  { name: 'Prisma', icon: 'si-prisma', category: 'Database', color: '#2D3748', bg: '#2D374820', library: 'simpleicons' },
+  { name: 'Astro', icon: 'si-astro', category: 'Framework', color: '#FF5D01', bg: '#FF5D0120', library: 'simpleicons' },
+  { name: 'Remix', icon: 'si-remix', category: 'Framework', color: '#000000', bg: '#00000020', library: 'simpleicons' },
+  { name: 'Solid.js', icon: 'si-solid', category: 'Framework', color: '#2C4F7C', bg: '#2C4F7C20', library: 'simpleicons' },
+  { name: 'Deno', icon: 'si-deno', category: 'Runtime', color: '#000000', bg: '#00000020', library: 'simpleicons' },
+  { name: 'Svelte', icon: 'si-svelte', category: 'Framework', color: '#FF3E00', bg: '#FF3E0020', library: 'simpleicons' },
+  { name: 'Vuepress', icon: 'si-vuepress', category: 'Framework', color: '#3EAF7C', bg: '#3EAF7C20', library: 'simpleicons' },
+  { name: 'Gatsby', icon: 'si-gatsby', category: 'Framework', color: '#663399', bg: '#66339920', library: 'simpleicons' },
+  { name: 'Strapi', icon: 'si-strapi', category: 'CMS', color: '#4945FF', bg: '#4945FF20', library: 'simpleicons' },
+  { name: 'Contentful', icon: 'si-contentful', category: 'CMS', color: '#2478CC', bg: '#2478CC20', library: 'simpleicons' },
+  { name: 'Sanity', icon: 'si-sanity', category: 'CMS', color: '#F03E2F', bg: '#F03E2F20', library: 'simpleicons' },
+  { name: 'Algolia', icon: 'si-algolia', category: 'Search', color: '#5468FF', bg: '#5468FF20', library: 'simpleicons' },
+  { name: 'Stripe', icon: 'si-stripe', category: 'Payment', color: '#008CDD', bg: '#008CDD20', library: 'simpleicons' },
+  { name: 'Auth0', icon: 'si-auth0', category: 'Auth', color: '#EB5424', bg: '#EB542420', library: 'simpleicons' },
+  { name: 'Clerk', icon: 'si-clerk', category: 'Auth', color: '#6C47FF', bg: '#6C47FF20', library: 'simpleicons' },
+  
+  // React Icons technologies
+  { name: 'Bun', icon: 'ri-bun', category: 'Runtime', color: '#FBF0DF', bg: '#FBF0DF20', library: 'reacticons' },
+  { name: 'Tauri', icon: 'ri-tauri', category: 'Framework', color: '#FFC131', bg: '#FFC13120', library: 'reacticons' },
+  { name: 'Electron', icon: 'ri-electron', category: 'Framework', color: '#47848F', bg: '#47848F20', library: 'reacticons' },
+  { name: 'Storybook', icon: 'ri-storybook', category: 'Tools', color: '#FF4785', bg: '#FF478520', library: 'reacticons' },
+  { name: 'Playwright', icon: 'ri-playwright', category: 'Testing', color: '#2EAD33', bg: '#2EAD3320', library: 'reacticons' },
+  { name: 'Cypress', icon: 'ri-cypress', category: 'Testing', color: '#17202C', bg: '#17202C20', library: 'reacticons' },
+  { name: 'Vitest', icon: 'ri-vitest', category: 'Testing', color: '#6E9F18', bg: '#6E9F1820', library: 'reacticons' },
+  { name: 'Nuxt.js', icon: 'ri-nuxt', category: 'Framework', color: '#00DC82', bg: '#00DC8220', library: 'reacticons' },
+  { name: 'Qwik', icon: 'ri-qwik', category: 'Framework', color: '#AC7EF4', bg: '#AC7EF420', library: 'reacticons' },
+  { name: 'Turborepo', icon: 'ri-turborepo', category: 'Build Tools', color: '#EF4444', bg: '#EF444420', library: 'reacticons' },
+  { name: 'Nx', icon: 'ri-nx', category: 'Build Tools', color: '#143055', bg: '#14305520', library: 'reacticons' },
+  { name: 'pnpm', icon: 'ri-pnpm', category: 'Package Manager', color: '#F69220', bg: '#F6922020', library: 'reacticons' }
 ]
 
 const CATEGORIES = [...new Set(TECHNOLOGIES.map(tech => tech.category))]
@@ -84,32 +122,21 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
   const [selectedTechs, setSelectedTechs] = useState([])
   const [activeLibrary, setActiveLibrary] = useState('devicon')
 
-  // Filter technologies based on search term, active library, and selected category
   const filteredTechnologies = useMemo(() => {
     return TECHNOLOGIES.filter(tech => {
-      // Filter by library
-      if (activeLibrary !== 'all' && tech.library !== activeLibrary) return false;
-      
-      // Filter by category
-      if (selectedCategory !== 'All' && tech.category !== selectedCategory) return false;
-      
-      // Filter by search term
-      if (searchTerm && !tech.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-      
-      return true;
-    });
-  }, [searchTerm, activeLibrary, selectedCategory]);
+      const matchesSearch = tech.name.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = selectedCategory === 'All' || tech.category === selectedCategory
+      const matchesLibrary = tech.library === activeLibrary
+      return matchesSearch && matchesCategory && matchesLibrary
+    })
+  }, [searchTerm, selectedCategory, activeLibrary])
 
   const handleSelect = (tech) => {
-    // Check if already selected
-    const isSelected = selectedTechs.some(t => t.name === tech.name);
-    
-    if (isSelected) {
-      // Remove from selection
-      setSelectedTechs(selectedTechs.filter(t => t.name !== tech.name));
+    // Toggle selection
+    if (selectedTechs.some(t => t.name === tech.name)) {
+      setSelectedTechs(selectedTechs.filter(t => t.name !== tech.name))
     } else {
-      // Add to selection
-      setSelectedTechs([...selectedTechs, tech]);
+      setSelectedTechs([...selectedTechs, tech])
     }
   }
   
@@ -144,9 +171,9 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
           </div>
 
           {/* Icon Library Toggle */}
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-2">
             <div className="text-sm font-medium whitespace-nowrap">Icon Library:</div>
-            <div className="flex gap-0.5">
+            <div className="flex gap-1">
               {Object.entries(ICON_LIBRARIES).map(([key, label]) => (
                 <Toggle
                   key={key}
@@ -154,7 +181,7 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
                   onPressedChange={() => setActiveLibrary(key)}
                   variant="outline"
                   size="sm"
-                  className={`px-1.5 py-0 text-xs ${activeLibrary === key ? 'bg-primary/10 border-primary/30' : ''}`}
+                  className={`px-2 py-0.5 text-xs ${activeLibrary === key ? 'bg-primary/10 border-primary/30' : ''}`}
                 >
                   {label}
                 </Toggle>

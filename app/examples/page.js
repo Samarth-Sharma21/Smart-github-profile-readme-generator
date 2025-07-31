@@ -2,15 +2,17 @@
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, ArrowRight, ExternalLink, Shuffle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 // Metadata moved to layout.js
 // Client components cannot export metadata
 
 export default function ExamplesPage() {
   const [activeTab, setActiveTab] = useState('minimal');
+  const [shuffledExamples, setShuffledExamples] = useState({});
   
+  // Define examples data
   const examples = {
     minimal: [
       {
@@ -103,11 +105,61 @@ export default function ExamplesPage() {
         profileUrl: 'https://github.com/bdougie',
         previewImage: 'https://opengraph.githubassets.com/1/bdougie/bdougie',
       },
+      {
+        username: 'rahuldkjain',
+        description: 'Creator of the popular GitHub Profile README Generator with a visually stunning profile.',
+        features: ['Dynamic badges', 'Animated elements', 'Visitor counter', 'Social media links'],
+        profileUrl: 'https://github.com/rahuldkjain',
+        previewImage: 'https://opengraph.githubassets.com/1/rahuldkjain/rahuldkjain',
+      },
+      {
+        username: 'Raymo111',
+        description: 'Dynamic profile with real-time metrics, animated typing effect, and visitor counter.',
+        features: ['Animated typing', 'Dynamic metrics', 'Visitor counter', 'Workflow automation'],
+        profileUrl: 'https://github.com/Raymo111',
+        previewImage: 'https://opengraph.githubassets.com/1/Raymo111/Raymo111',
+      },
+      {
+        username: 'sudnyeshtalekar',
+        description: 'Visually appealing profile with animated GIFs, custom badges, and social media links.',
+        features: ['Animated GIFs', 'Custom badges', 'Social media links', 'Skills showcase'],
+        profileUrl: 'https://github.com/sudnyeshtalekar',
+        previewImage: 'https://opengraph.githubassets.com/1/sudnyeshtalekar/sudnyeshtalekar',
+      },
     ],
   };
 
+  // Function to shuffle an array using Fisher-Yates algorithm
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
+  
+  // Shuffle examples when tab changes or shuffle button is clicked
+  const shuffleExamples = () => {
+    const shuffled = {};
+    Object.keys(examples).forEach(category => {
+      shuffled[category] = shuffleArray(examples[category]);
+    });
+    setShuffledExamples(shuffled);
+  };
+
+  // Initialize shuffled examples on first load
+  useEffect(() => {
+    shuffleExamples();
+  }, []);
+  
+  // Get the current examples to display (shuffled or original)
+  const currentExamples = Object.keys(shuffledExamples).length > 0 ? 
+    shuffledExamples[activeTab] : 
+    examples[activeTab];
+
   return (
-    <div className="container mx-auto px-4 py-12 max-w-6xl">
+    <div className="container mx-auto px-4 py-12">
       <div className="mb-8">
         <Button
           variant="ghost"
@@ -144,22 +196,33 @@ export default function ExamplesPage() {
       
       {/* Category Tabs */}
       <div className="mb-8">
-        <div className="flex flex-wrap gap-2 border-b">
-          {Object.keys(examples).map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveTab(category)}
-              className={`px-4 py-2 text-sm font-medium capitalize transition-colors ${activeTab === category ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground hover:text-foreground'}`}
-            >
-              {category}
-            </button>
-          ))}
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-wrap gap-2 border-b">
+            {Object.keys(examples).map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveTab(category)}
+                className={`px-4 py-2 text-sm font-medium capitalize transition-colors ${activeTab === category ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={shuffleExamples}
+            className="flex items-center gap-2"
+          >
+            <Shuffle className="w-4 h-4" />
+            Shuffle Examples
+          </Button>
         </div>
       </div>
       
       {/* Examples Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {examples[activeTab].map((example, index) => (
+        {currentExamples.map((example, index) => (
           <div key={index} className="border rounded-lg overflow-hidden flex flex-col h-full">
             <div className="aspect-video bg-muted relative overflow-hidden">
               <img 

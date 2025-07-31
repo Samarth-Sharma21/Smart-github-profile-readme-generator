@@ -339,7 +339,7 @@ export default function PreviewReadme({ data }) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       {/* Action Buttons */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">

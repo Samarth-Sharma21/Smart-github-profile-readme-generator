@@ -100,6 +100,40 @@ code {
         monospace;
 }
 
+/* Coffee button animation styles */
+.coffee-btn {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.coffee-btn:hover {
+    width: 180px;
+    border-radius: 25px;
+    padding: 0 16px;
+}
+
+.coffee-btn .coffee-icon {
+    margin: 0;
+    transition: margin 0.3s ease-in-out;
+}
+
+.coffee-btn:hover .coffee-icon {
+    margin-right: 8px;
+}
+
+.coffee-btn .coffee-text {
+    max-width: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out;
+}
+
+.coffee-btn:hover .coffee-text {
+    max-width: 150px;
+    opacity: 1;
+}
+
 .App {
     text-align: center;
 }

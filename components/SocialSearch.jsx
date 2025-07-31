@@ -277,8 +277,8 @@ export default function SocialSearch({ open, onOpenChange, onSelect }) {
                 return (
                   <Button
                     key={platform.platform}
-                    variant={isSelected ? "default" : "outline"}
-                    className={`flex items-center gap-3 h-12 justify-start ${isSelected ? 'bg-primary/10 border-primary' : ''}`}
+                    variant="outline"
+                    className={`flex items-center gap-3 h-12 justify-start ${isSelected ? 'border-primary text-primary' : ''}`}
                     onClick={() => handleSelect(platform)}
                   >
                     <div className="flex items-center justify-center w-8 h-8 rounded-full" style={{ backgroundColor: `${platform.color}20` }}>

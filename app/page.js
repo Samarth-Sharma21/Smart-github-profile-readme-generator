@@ -257,7 +257,7 @@ export default function App() {
       </Script>
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50" role="banner">
-        <div className="container mx-auto px-4 py-4 max-w-6xl">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <h1 className="text-2xl font-bold text-primary flex items-center gap-2" id="main-heading">
@@ -308,13 +308,13 @@ export default function App() {
 
       {/* Toggle Section */}
       <nav className="border-b bg-muted/30" aria-label="View selection">
-        <div className="container mx-auto px-4 py-4 max-w-6xl">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex justify-center">
             <div 
               className="relative flex border border-gray-300 rounded-md overflow-hidden"
               role="tablist"
               aria-orientation="horizontal"
-              style={{ width: '320px', display: 'inline-flex', height: '40px' }}
+              style={{ width: '320px' }}
             >
               {/* Sliding background */}
               <div 
@@ -327,10 +327,9 @@ export default function App() {
               />
               <button
                 onClick={() => handleToggleChange('create')}
-                className={`flex-1 px-3 py-0 transition-colors duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
+                className={`flex-1 px-4 py-3 text-sm transition-colors duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
                 style={{ 
-                  fontWeight: currentView === 'create' ? '500' : '400',
-                  fontSize: '0.875rem'
+                  fontWeight: currentView === 'create' ? '500' : '400'
                 }}
                 role="tab"
                 id="tab-create"
@@ -341,10 +340,9 @@ export default function App() {
               </button>
               <button
                 onClick={() => handleToggleChange('preview')}
-                className={`flex-1 px-3 py-0 transition-colors duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
+                className={`flex-1 px-4 py-3 text-sm transition-colors duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
                 style={{ 
-                  fontWeight: currentView === 'preview' ? '500' : '400',
-                  fontSize: '0.875rem'
+                  fontWeight: currentView === 'preview' ? '500' : '400'
                 }}
                 role="tab"
                 id="tab-preview"
@@ -359,7 +357,7 @@ export default function App() {
       </nav>
 
       {/* Main Content */}
-      <main ref={mainContentRef} className="container mx-auto px-4 py-8 max-w-6xl custom-scrollbar" id="main-content" role="main" aria-labelledby="main-heading">
+      <main ref={mainContentRef} className="container mx-auto px-4 py-8 custom-scrollbar" id="main-content" role="main" aria-labelledby="main-heading">
         {currentView === 'create' ? (
           <div 
             role="tabpanel" 
@@ -399,7 +397,7 @@ export default function App() {
 
       {/* FAQ Section */}
       <section className="py-12 bg-muted/20 custom-scrollbar" aria-labelledby="faq-heading">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4">
           <h2 id="faq-heading" className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
           
           <div className="max-w-5xl mx-auto" itemScope itemType="https://schema.org/FAQPage">
@@ -436,7 +434,7 @@ export default function App() {
       {/* Footer */}
       {/* Related Links Section */}
       <section className="py-8 bg-muted/10 custom-scrollbar" aria-labelledby="related-links-heading">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4">
           <h2 id="related-links-heading" className="text-xl font-bold mb-6 text-center">Related Resources</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -468,7 +466,7 @@ export default function App() {
       </section>
       
       <footer className="border-t bg-muted/30 py-8 custom-scrollbar" role="contentinfo">
-        <div className="container mx-auto px-4 max-w-6xl text-center">
+        <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
             <span>Built with ❤️ by developers, for developers</span>
           </div>
@@ -477,17 +475,37 @@ export default function App() {
               variant="outline"
               size="sm"
               className="flex items-center gap-2 hover:bg-orange-50 hover:border-orange-300 transition-colors"
-              onClick={() => window.open('https://www.buymeacoffee.com/yourusername', '_blank')}
+              onClick={() => window.open('https://www.buymeacoffee.com/Samarthsharma21', '_blank')}
               aria-label="Support the developer with a coffee donation"
             >
               <Coffee className="w-4 h-4 text-orange-500" aria-hidden="true" />
               Buy me a coffee
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-colors"
+              onClick={() => window.open('https://ko-fi.com/Samarthsharma21', '_blank')}
+              aria-label="Support the developer on Ko-fi"
+            >
+              <i className="fas fa-mug-hot text-blue-500 w-4 h-4" aria-hidden="true" />
+              Ko-fi
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2 hover:bg-gray-50 hover:border-gray-300 transition-colors"
+              onClick={() => window.open('https://github.com/Samarth-Sharma21', '_blank')}
+              aria-label="View project on GitHub"
+            >
+              <Github className="w-4 h-4 text-gray-700" aria-hidden="true" />
+              GitHub
+            </Button>
           </div>
           <div className="mt-4 text-xs text-muted-foreground">
             <p>© {new Date().getFullYear()} GitHub Profile README Generator. All rights reserved.</p>
             <div className="mt-2 flex items-center justify-center gap-4">
-              <a href="/sitemap.xml" className="hover:text-primary transition-colors">Sitemap</a>
+              <a href="/sitemap" className="hover:text-primary transition-colors">Sitemap</a>
               <span>|</span>
               <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
               <span>|</span>
@@ -498,6 +516,23 @@ export default function App() {
           </div>
         </div>
       </footer>
+      
+      {/* Floating Buy Me a Coffee Button */}
+      <div className="fixed bottom-10 right-10 z-50">
+        <button
+          onClick={() => window.open('https://www.buymeacoffee.com/Samarthsharma21', '_blank')}
+          aria-label="Support the developer with a coffee donation"
+          className="coffee-btn flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded-full shadow-lg transition-all duration-300 overflow-hidden"
+        >
+          <img 
+            src="/images/coffee-cup.svg" 
+            alt="Coffee cup" 
+            className="w-5 h-5 coffee-icon" 
+            aria-hidden="true" 
+          />
+          <span className="coffee-text font-medium text-white whitespace-nowrap opacity-0">Buy me a coffee</span>
+        </button>
+      </div>
     </div>
   )
 }

@@ -15,8 +15,8 @@ A powerful tool to create beautiful, customized GitHub profile READMEs with an i
 
 If you find this tool helpful, consider supporting the project:
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/)
-[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/Samarthsharma21)
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/Samarthsharma21)
 [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white&labelColor=blue)](https://paypal.me/)
 
 ### [✨ Live Demo](https://smart-github-profile-readme-generator.netlify.app/)
@@ -85,7 +85,7 @@ If you find this tool helpful, consider supporting the project:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/github-profile-readme-generator.git
+git clone https://github.com/Samarthsharma21/github-profile-readme-generator.git
 cd github-profile-readme-generator
 
 # Install dependencies
