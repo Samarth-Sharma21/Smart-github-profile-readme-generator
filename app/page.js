@@ -3,14 +3,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Toggle } from '@/components/ui/toggle'
 import { Star, GitFork, Coffee, Eye, Github, ArrowRight, FileText } from 'lucide-react'
 import Link from 'next/link'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import Lenis from 'lenis'
 import CreateReadmeForm from '@/components/CreateReadmeForm'
 import PreviewReadme from '@/components/PreviewReadme'
 import Script from 'next/script'
+import { Toaster } from '@/components/ui/toaster'
 
 
 export default function App() {
@@ -108,12 +110,18 @@ export default function App() {
   }
 
   useEffect(() => {
+    // Register GSAP plugins
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    
     // Initialize Lenis smooth scroll with faster settings
     const lenis = new Lenis({
       duration: 0.5,  // Reduced for faster scrolling
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
       smooth: true,
-      smoothTouch: false // Disable on touch devices for better performance
+      smoothTouch: false, // Disable on touch devices for better performance
+      touchMultiplier: 2
     })
 
     function raf(time) {
@@ -220,7 +228,7 @@ export default function App() {
           "applicationCategory": "DeveloperApplication",
           "applicationSubCategory": "Markdown Generator",
           "operatingSystem": "Web",
-          "description": "Create beautiful GitHub profile READMEs with ease. Customize your profile with various components, preview in real-time, and generate markdown code to showcase your skills, projects, and achievements.",
+          "description": "Customize your GitHub profile with various components, preview in real-time, and generate markdown code to showcase your skills, projects, and achievements.",
           "keywords": "github, readme, profile, markdown, generator, developer tools, github profile, github readme, github profile readme, readme generator, profile generator, github profile generator",
           "offers": {
             "@type": "Offer",
@@ -256,7 +264,7 @@ export default function App() {
                 <Github className="w-6 h-6" aria-hidden="true" />
                 <span>Smart GitHub Profile README Generator</span>
               </h1>
-              <p className="text-sm text-muted-foreground">Create beautiful GitHub profile READMEs with ease</p>
+              {/* Removed the tagline as requested */}
             </div>
             
             <div className="flex items-center gap-3">
@@ -272,16 +280,16 @@ export default function App() {
                  </Link>
                </Button>
               <Button 
-                ref={starRef}
-                variant="outline" 
-                size="sm"
-                className="flex items-center gap-2 hover:bg-yellow-50 hover:border-yellow-300 transition-colors"
-                onClick={() => window.open('https://github.com/Samarth-Sharma21/Smart-github-profile-readme-generator/stargazers', '_blank')}
-                aria-label="Star this repository on GitHub"
-              >
-                <Star className="w-4 h-4 text-yellow-500" aria-hidden="true" />
-                <span>Star Repo</span>
-              </Button>
+                 ref={starRef}
+                 variant="outline" 
+                 size="sm"
+                 className="flex items-center gap-2 hover:bg-yellow-50 hover:border-yellow-300 transition-colors"
+                 onClick={() => window.open('https://github.com/samarthsharma21/Smart-github-profile-readme-generator/stargazers', '_blank')}
+                 aria-label="Star this repository on GitHub"
+               >
+                 <Star className="w-4 h-4 text-yellow-500" aria-hidden="true" />
+                 <span>Star Repo</span>
+               </Button>
               <Button 
                 ref={forkRef}
                 variant="outline" 
@@ -303,53 +311,53 @@ export default function App() {
         <div className="container mx-auto px-4 py-4 max-w-6xl">
           <div className="flex justify-center">
             <div 
-              className="flex items-center bg-background rounded-lg p-1 border shadow-sm relative overflow-hidden"
+              className="relative flex border border-gray-300 rounded-md overflow-hidden"
               role="tablist"
               aria-orientation="horizontal"
+              style={{ width: '320px' }}
             >
-              {/* Animated background pill */}
+              {/* Sliding background */}
               <div 
-                className="absolute h-full rounded-md bg-black transition-all duration-500 z-0 water-blob"
-                style={{
-                  width: '50%',
+                className="absolute bg-black h-full transition-all duration-300 ease-in-out rounded-sm" 
+                style={{ 
+                  width: '50%', 
                   left: currentView === 'create' ? '0%' : '50%',
-                  transform: 'scale(0.95)',
-                  filter: 'blur(1px)',
-                  opacity: 0.9
+                  zIndex: 1
                 }}
-                aria-hidden="true"
               />
-              <Button
-                variant="ghost"
-                size="sm"
+              <button
                 onClick={() => handleToggleChange('create')}
-                className={`px-6 transition-all duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
+                className={`flex-1 px-6 py-2 transition-colors duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
+                style={{ 
+                  fontWeight: currentView === 'create' ? '500' : '400'
+                }}
                 role="tab"
                 id="tab-create"
                 aria-selected={currentView === 'create'}
                 aria-controls="panel-create"
               >
                 Create README
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
+              </button>
+              <button
                 onClick={() => handleToggleChange('preview')}
-                className={`px-6 transition-all duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
+                className={`flex-1 px-6 py-2 transition-colors duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
+                style={{ 
+                  fontWeight: currentView === 'preview' ? '500' : '400'
+                }}
                 role="tab"
                 id="tab-preview"
                 aria-selected={currentView === 'preview'}
                 aria-controls="panel-preview"
               >
                 Preview README
-              </Button>
+              </button>
             </div>
           </div>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main ref={mainContentRef} className="container mx-auto px-4 py-8 max-w-6xl" id="main-content" role="main" aria-labelledby="main-heading">
+      <main ref={mainContentRef} className="container mx-auto px-4 py-8 max-w-6xl custom-scrollbar" id="main-content" role="main" aria-labelledby="main-heading">
         {currentView === 'create' ? (
           <div 
             role="tabpanel" 
@@ -388,7 +396,7 @@ export default function App() {
       </main>
 
       {/* FAQ Section */}
-      <section className="py-12 bg-muted/20" aria-labelledby="faq-heading">
+      <section className="py-12 bg-muted/20 custom-scrollbar" aria-labelledby="faq-heading">
         <div className="container mx-auto px-4 max-w-6xl">
           <h2 id="faq-heading" className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
           
@@ -425,7 +433,7 @@ export default function App() {
       
       {/* Footer */}
       {/* Related Links Section */}
-      <section className="py-8 bg-muted/10" aria-labelledby="related-links-heading">
+      <section className="py-8 bg-muted/10 custom-scrollbar" aria-labelledby="related-links-heading">
         <div className="container mx-auto px-4 max-w-6xl">
           <h2 id="related-links-heading" className="text-xl font-bold mb-6 text-center">Related Resources</h2>
           
@@ -457,7 +465,7 @@ export default function App() {
         </div>
       </section>
       
-      <footer className="border-t bg-muted/30 py-8" role="contentinfo">
+      <footer className="border-t bg-muted/30 py-8 custom-scrollbar" role="contentinfo">
         <div className="container mx-auto px-4 max-w-6xl text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
             <span>Built with ❤️ by developers, for developers</span>

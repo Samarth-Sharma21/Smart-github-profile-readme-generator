@@ -21,7 +21,7 @@ export default function PreviewReadme({ data }) {
       markdown += `# ${data.profile.name}\n\n`
       
       if (data.profile.subtitle) {
-        markdown += `### ${data.profile.subtitle}\n\n`
+        markdown += `## ${data.profile.subtitle}\n\n`
       }
 
       if (data.profile.welcomeMessage) {
@@ -37,7 +37,7 @@ export default function PreviewReadme({ data }) {
       }
       
       if (data.profile.subtitle) {
-        markdown += `### ${data.profile.subtitle}\n\n`
+        markdown += `*${data.profile.subtitle}*\n\n`
       }
 
       if (data.profile.welcomeMessage) {
@@ -60,10 +60,10 @@ export default function PreviewReadme({ data }) {
           const url = social.urlTemplate.replace('{username}', social.username)
           if (social.showIcon) {
             // Show icon only
-            markdown += `<a href="${url}" target="blank"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color};"></i></a>\n`
+            markdown += `<a href="${url}" target="blank"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color}; background-color: #ffffff; padding: 5px; border-radius: 5px;"></i></a>\n`
           } else {
             // Show icon with platform name
-            markdown += `<a href="${url}" target="blank" style="text-decoration: none; margin: 0 10px;"><i class="${social.icon}" style="font-size: 30px; margin-right: 5px; color: ${social.color};"></i><span style="color: ${social.color}; font-weight: bold;">${social.platform}</span></a>\n`
+            markdown += `<a href="${url}" target="blank" style="text-decoration: none; margin: 0 10px; background-color: #ffffff; padding: 5px; border-radius: 5px; display: inline-block;"><i class="${social.icon}" style="font-size: 30px; margin-right: 5px; color: ${social.color};"></i><span style="color: ${social.color}; font-weight: bold;">${social.platform}</span></a>\n`
           }
         }
       })
@@ -79,10 +79,10 @@ export default function PreviewReadme({ data }) {
         const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
         if (tech.showName) {
           // Show with name in alt text and tooltip
-          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
+          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40" style="background-color: #ffffff; padding: 2px; border-radius: 5px;"/> </a> `
         } else {
           // Show only icon, smaller size
-          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40"/> </a> `
+          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40" style="background-color: #ffffff; padding: 2px; border-radius: 5px;"/> </a> `
         }
       })
       markdown += `</p>\n\n`
@@ -164,7 +164,7 @@ export default function PreviewReadme({ data }) {
       html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${data.profile.name}</h1>\n`
       
       if (data.profile.subtitle) {
-        html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
+        html += `<p class="text-lg font-medium mb-4 text-gray-600">${data.profile.subtitle}</p>\n`
       }
 
       if (data.profile.welcomeMessage) {
@@ -180,7 +180,7 @@ export default function PreviewReadme({ data }) {
       }
       
       if (data.profile.subtitle) {
-        html += `<h3 class="text-xl font-semibold mb-4 text-gray-600">${data.profile.subtitle}</h3>\n`
+        html += `<p class="text-lg font-medium mb-4 text-gray-600">${data.profile.subtitle}</p>\n`
       }
 
       if (data.profile.welcomeMessage) {
@@ -203,10 +203,10 @@ export default function PreviewReadme({ data }) {
           const url = social.urlTemplate.replace('{username}', social.username)
           if (social.showIcon) {
             // Show icon only
-            html += `<a href="${url}" target="_blank" class="hover:scale-110 transition-transform"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color};"></i></a>\n`
+            html += `<a href="${url}" target="_blank" class="hover:scale-110 transition-transform"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color}; background-color: #ffffff; padding: 5px; border-radius: 5px;"></i></a>\n`
           } else {
             // Show icon with platform name
-            html += `<a href="${url}" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg border hover:scale-105 transition-transform" style="border-color: ${social.color}40">\n`
+            html += `<a href="${url}" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg border hover:scale-105 transition-transform" style="border-color: ${social.color}40; background-color: #ffffff;">\n`
             html += `  <i class="${social.icon}" style="font-size: 24px; color: ${social.color};"></i>\n`
             html += `  <span class="text-sm font-medium" style="color: ${social.color};">${social.platform}</span>\n`
             html += `</a>\n`
@@ -226,13 +226,13 @@ export default function PreviewReadme({ data }) {
         if (tech.showName) {
           // Show icon + name
           html += `<div class="flex items-center gap-2 px-3 py-2 rounded-lg border" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="24" height="24" />
+            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="24" height="24" style="background-color: #ffffff; padding: 2px; border-radius: 5px;" />
             <span class="text-sm font-medium">${tech.name}</span>
           </div>\n`
         } else {
           // Show only icon
           html += `<div class="p-2 rounded-lg border hover:scale-110 transition-transform" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40" title="${tech.name}">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="32" height="32" />
+            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="32" height="32" style="background-color: #ffffff; padding: 2px; border-radius: 5px;" />
           </div>\n`
         }
       })
@@ -348,13 +348,13 @@ export default function PreviewReadme({ data }) {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="outline"
+            variant="default"
             size="sm"
             onClick={() => setShowRawCode(true)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-primary hover:bg-primary/90"
           >
             <Code2 className="w-4 h-4" />
-            Show Code
+            View Markdown
           </Button>
           <Button
             variant="outline"
@@ -392,32 +392,80 @@ export default function PreviewReadme({ data }) {
         </CardContent>
       </Card>
 
-      {/* Raw Code Modal */}
+      {/* Markdown Code Modal */}
       <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
-        <DialogContent className="max-w-4xl max-h-[80vh]">
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-visible">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between pr-8">
               <span className="flex items-center gap-2">
                 <Code2 className="w-5 h-5" />
-                Raw Markdown Code
+                Markdown Code
               </span>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={copyToClipboard}
-                  className="flex items-center gap-2"
-                >
-                  <Copy className="w-4 h-4" />
-                  {copied ? 'Copied!' : 'Copy'}
-                </Button>
-              </div>
             </DialogTitle>
           </DialogHeader>
-          <div className="overflow-auto max-h-96">
-            <pre className="bg-muted p-4 rounded-lg text-sm whitespace-pre-wrap">
-              {generateMarkdown}
-            </pre>
+          <div className="relative rounded-lg border-2 border-muted-foreground/10 mb-4 overflow-hidden">
+            <div 
+              className="overflow-y-scroll overflow-x-hidden max-h-[60vh]" 
+              style={{ 
+                display: 'block', 
+                position: 'relative', 
+                zIndex: 60, 
+                scrollbarWidth: 'auto', /* Always show scrollbar in Firefox */
+                scrollbarColor: 'rgba(0, 0, 0, 0.8) transparent',
+                overflowY: 'scroll', /* Force scrollbar to always show */
+              }}
+            >
+              <style jsx>{`
+                /* Custom scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
+                div::-webkit-scrollbar {
+                  width: 12px;
+                  height: 12px;
+                  display: block;
+                }
+                
+                div::-webkit-scrollbar-track {
+                  background: transparent;
+                  border-radius: 8px;
+                }
+                
+                div::-webkit-scrollbar-thumb {
+                  background-color: rgba(0, 0, 0, 0.8);
+                  border-radius: 8px;
+                  border: 2px solid rgba(255, 255, 255, 0.2);
+                  min-height: 40px;
+                }
+                
+                div::-webkit-scrollbar-thumb:hover {
+                  background-color: rgba(0, 0, 0, 1);
+                }
+                
+                /* Ensure scrollbar is always visible in WebKit */
+                div::-webkit-scrollbar-thumb:vertical {
+                  min-height: 30px;
+                }
+              `}</style>
+              <pre 
+                className="bg-muted p-4 text-sm whitespace-pre-wrap break-words" 
+                style={{ 
+                  margin: 0, 
+                  userSelect: 'text', /* Ensure text is selectable */
+                  MozUserSelect: 'text',
+                  WebkitUserSelect: 'text',
+                  msUserSelect: 'text',
+                }}
+              >
+                {generateMarkdown}
+              </pre>
+            </div>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={copyToClipboard}
+              className="absolute top-4 right-4 flex items-center gap-2 bg-primary hover:bg-primary/90 z-70"
+            >
+              <Copy className="w-4 h-4" />
+              {copied ? 'Copied!' : 'Copy Code'}
+            </Button>
           </div>
         </DialogContent>
       </Dialog>

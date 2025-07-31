@@ -178,8 +178,8 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
           )}
 
           {/* Technology Grid */}
-          <ScrollArea className="h-96">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <ScrollArea className="h-96 custom-scrollbar pr-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 px-2">
               {filteredTechnologies.map(tech => {
                 const isSelected = selectedTechs.some(t => t.name === tech.name);
                 return (

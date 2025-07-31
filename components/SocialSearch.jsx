@@ -270,8 +270,8 @@ export default function SocialSearch({ open, onOpenChange, onSelect }) {
           )}
 
           {/* Platform Grid */}
-          <ScrollArea className="h-72">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <ScrollArea className="h-72 custom-scrollbar pr-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-1">
               {filteredPlatforms.map(platform => {
                 const isSelected = selectedPlatforms.some(p => p.platform === platform.platform);
                 return (

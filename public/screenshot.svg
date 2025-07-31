@@ -11,10 +11,10 @@
   <text x="1020" y="100" font-family="Arial" font-size="24" text-anchor="middle" fill="white">⑂</text>
   
   <!-- Toggle -->
-  <rect x="400" y="150" width="400" height="50" rx="25" fill="#161B22"/>
-  <rect x="400" y="150" width="200" height="50" rx="25" fill="#238636"/>
-  <text x="500" y="183" font-family="Arial" font-size="20" text-anchor="middle" fill="white">Create README</text>
-  <text x="700" y="183" font-family="Arial" font-size="20" text-anchor="middle" fill="#8B949E">Preview README</text>
+  <rect x="400" y="150" width="360" height="50" rx="6" fill="transparent" stroke="#30363D" stroke-width="2"/>
+  <rect x="400" y="150" width="180" height="50" rx="6" fill="#000000"/>
+  <text x="490" y="183" font-family="Arial" font-size="20" text-anchor="middle" fill="white">Create README</text>
+  <text x="710" y="183" font-family="Arial" font-size="20" text-anchor="middle" fill="#8B949E">Preview README</text>
   
   <!-- Form -->
   <rect x="100" y="220" width="450" height="360" rx="8" fill="#161B22"/>

@@ -4,16 +4,24 @@
   <p>Create stunning GitHub profile pages in minutes</p>
   
   [![Netlify Status](https://api.netlify.com/api/v1/badges/your-netlify-id/deploy-status)](https://app.netlify.com/sites/github-profile-readme-generator/deploys)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Next.js](https://img.shields.io/badge/built%20with-Next.js-000000?style=flat&logo=nextdotjs)](https://nextjs.org/)
-  [![Tailwind CSS](https://img.shields.io/badge/styled%20with-Tailwind-06B6D4?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat&labelColor=yellow&color=yellow)](https://opensource.org/licenses/MIT)
 </div>
 
 ## 📋 Overview
 
 A powerful tool to create beautiful, customized GitHub profile READMEs with an interactive form and live preview. Stand out in the GitHub community with a professional profile page that showcases your skills, projects, and personality.
 
+## ☕ Support
+
+If you find this tool helpful, consider supporting the project:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/)
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/)
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white&labelColor=blue)](https://paypal.me/)
+
 ### [✨ Live Demo](https://smart-github-profile-readme-generator.netlify.app/)
+
+👉 [Try our website](https://smart-github-profile-readme-generator.netlify.app/)
 
 ![Screenshot](public/screenshot.svg)
 
