@@ -294,7 +294,7 @@ export default function CreateReadmeForm({ data, onChange }) {
                               <Checkbox
                                 checked={tech.showName}
                                 onCheckedChange={(checked) => updateTechnology(tech.name, 'showName', checked)}
-                      />
+                              />
                               <span className="text-sm">Show name</span>
                             </div>
                             

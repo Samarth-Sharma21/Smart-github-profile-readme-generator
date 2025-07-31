@@ -314,7 +314,7 @@ export default function App() {
               className="relative flex border border-gray-300 rounded-md overflow-hidden"
               role="tablist"
               aria-orientation="horizontal"
-              style={{ width: '320px' }}
+              style={{ width: '320px', display: 'inline-flex', height: '40px' }}
             >
               {/* Sliding background */}
               <div 
@@ -327,9 +327,10 @@ export default function App() {
               />
               <button
                 onClick={() => handleToggleChange('create')}
-                className={`flex-1 px-6 py-2 transition-colors duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
+                className={`flex-1 px-3 py-0 transition-colors duration-300 z-10 ${currentView === 'create' ? 'text-white' : 'text-foreground'}`}
                 style={{ 
-                  fontWeight: currentView === 'create' ? '500' : '400'
+                  fontWeight: currentView === 'create' ? '500' : '400',
+                  fontSize: '0.875rem'
                 }}
                 role="tab"
                 id="tab-create"
@@ -340,9 +341,10 @@ export default function App() {
               </button>
               <button
                 onClick={() => handleToggleChange('preview')}
-                className={`flex-1 px-6 py-2 transition-colors duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
+                className={`flex-1 px-3 py-0 transition-colors duration-300 z-10 ${currentView === 'preview' ? 'text-white' : 'text-foreground'}`}
                 style={{ 
-                  fontWeight: currentView === 'preview' ? '500' : '400'
+                  fontWeight: currentView === 'preview' ? '500' : '400',
+                  fontSize: '0.875rem'
                 }}
                 role="tab"
                 id="tab-preview"
