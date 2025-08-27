@@ -18,19 +18,19 @@ export default function PreviewReadme({ data }) {
     // About Me section
     if (data.profile.showNameAsHeading !== false && data.profile.name) {
       // Show name as heading (default behavior)
-      markdown += `# ${data.profile.name}\n\n`
+      markdown += `<div style="font-size: 26px; font-weight: bold;">\n  ${data.profile.name} <img src="https://emojis.slackmojis.com/emojis/images/1536351075/4594/blob-wave.gif" width="25" style="vertical-align: middle;" />\n</div>\n\n###\n\n`
       
       if (data.profile.subtitle) {
         markdown += `## ${data.profile.subtitle}\n\n`
       }
 
       if (data.profile.welcomeMessage) {
-        markdown += `${data.profile.welcomeMessage}\n\n`
+        markdown += `<p align="left">\n${data.profile.welcomeMessage}\n</p>\n\n###\n\n`
       }
     } else {
       // Show About Me as heading
       const aboutMeHeading = data.sectionHeadings?.profile || '👋 About Me'
-      markdown += `# ${aboutMeHeading}\n\n`
+      markdown += `<div style="font-size: 26px; font-weight: bold;">\n  ${aboutMeHeading} <img src="https://emojis.slackmojis.com/emojis/images/1536351075/4594/blob-wave.gif" width="25" style="vertical-align: middle;" />\n</div>\n\n###\n\n`
       
       if (data.profile.name) {
         markdown += `**${data.profile.name}**\n\n`
@@ -41,7 +41,7 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.profile.welcomeMessage) {
-        markdown += `${data.profile.welcomeMessage}\n\n`
+        markdown += `<p align="left">\n${data.profile.welcomeMessage}\n</p>\n\n###\n\n`
       }
     }
 
@@ -53,65 +53,79 @@ export default function PreviewReadme({ data }) {
     // Social Links
     if (data.socialLinks.length > 0) {
       const socialHeading = data.sectionHeadings?.socialLinks || '🌐 Connect with me:'
-      markdown += `## ${socialHeading}\n`
-      markdown += `<p align="left">\n`
+      markdown += `<div align="left">\n`
       data.socialLinks.forEach(social => {
         if (social.username) {
           const url = social.urlTemplate.replace('{username}', social.username)
           if (social.showIcon) {
             // Show icon only
-            markdown += `<a href="${url}" target="blank"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color}; background-color: #ffffff; padding: 5px; border-radius: 5px;"></i></a>\n`
+            markdown += `  <a href="${url}" target="_blank">\n    <img src="https://img.shields.io/static/v1?message=${social.platform}&logo=${social.platform.toLowerCase()}&label=&color=${social.color.replace('#', '')}&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="${social.platform.toLowerCase()} logo" />\n  </a>\n`
           } else {
             // Show icon with platform name
-            markdown += `<a href="${url}" target="blank" style="text-decoration: none; margin: 0 10px; background-color: #ffffff; padding: 5px; border-radius: 5px; display: inline-block;"><i class="${social.icon}" style="font-size: 30px; margin-right: 5px; color: ${social.color};"></i><span style="color: ${social.color}; font-weight: bold;">${social.platform}</span></a>\n`
+            markdown += `  <a href="${url}" target="_blank">\n    <img src="https://img.shields.io/static/v1?message=${social.platform}&logo=${social.platform.toLowerCase()}&label=&color=${social.color.replace('#', '')}&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="${social.platform.toLowerCase()} logo" />\n  </a>\n`
           }
         }
       })
-      markdown += `</p>\n\n`
+      markdown += `</div>\n\n###\n\n`
     }
 
     // Technologies
     if (data.technologies.length > 0) {
-      const techHeading = data.sectionHeadings?.technologies || '🛠️ Languages and Tools:'
-      markdown += `## ${techHeading}\n`
-      markdown += `<p align="left"> `
-      data.technologies.forEach(tech => {
-        const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+      const techHeading = data.sectionHeadings?.technologies || '🛠 Language and tools'
+      markdown += `<h3 align="left">${techHeading}</h3>\n\n###\n\n`
+      markdown += `<div align="left">\n`
+      data.technologies.forEach((tech, index) => {
+        // Use the new CDN format for devicon
+        let iconUrl = ''
+        if (tech.icon.includes('devicon-')) {
+          const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+          iconUrl = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${iconName}/${iconName}-original.svg`
+        } else {
+          // Fallback to original URL for other icon types
+          const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+          iconUrl = `https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg`
+        }
+        
         if (tech.showName) {
           // Show with name in alt text and tooltip
-          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40" style="background-color: #ffffff; padding: 2px; border-radius: 5px;"/> </a> `
+          markdown += `  <img src="${iconUrl}" height="40" alt="${tech.name} logo" title="${tech.name}" />\n`
         } else {
-          // Show only icon, smaller size
-          markdown += `<a href="#" target="_blank" rel="noreferrer" title="${tech.name}"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="40" height="40" style="background-color: #ffffff; padding: 2px; border-radius: 5px;"/> </a> `
+          // Show only icon
+          markdown += `  <img src="${iconUrl}" height="40" alt="${tech.name} logo" title="${tech.name}" />\n`
+        }
+        
+        // Add spacing between icons
+        if (index < data.technologies.length - 1) {
+          markdown += `  <img width="12" />\n`
         }
       })
-      markdown += `</p>\n\n`
+      markdown += `</div>\n\n###\n\n`
     }
 
     // GitHub Stats
     if (data.githubStats.username) {
-      const statsHeading = data.sectionHeadings?.githubStats || '📊 GitHub Stats'
+      const statsHeading = data.sectionHeadings?.githubStats || '🔥 My Stats :'
       let hasStats = false
       
       if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
-        markdown += `## ${statsHeading}\n\n`
+        markdown += `<h3 align="left">${statsHeading}</h3>\n\n###\n\n`
         hasStats = true
       }
 
       if (data.githubStats.showGithubStats) {
-        markdown += `<p align="center"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<div align="center">\n  <img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="stats graph" />\n</div>\n\n`
       }
 
       if (data.githubStats.showStreakStats) {
-        markdown += `<p align="center"><img src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&theme=default" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<div align="center">\n  <img src="https://streak-stats.demolab.com?user=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="streak graph" />\n</div>\n\n`
       }
 
       if (data.githubStats.showTopLanguages) {
-        markdown += `<p align="center"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<div align="center">\n  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dark&hide_border=false&border_radius=5&order=2" height="150" alt="languages graph" />\n</div>\n\n`
       }
 
       if (data.githubStats.showActivityGraph) {
-        markdown += `<p align="center"><img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=minimal" alt="${data.githubStats.username}" /></p>\n\n`
+        markdown += `<div align="center">\n  <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=minimal" alt="${data.githubStats.username}" />\n</div>\n\n`
       }
     }
 
@@ -161,19 +175,19 @@ export default function PreviewReadme({ data }) {
     // About Me section
     if (data.profile.showNameAsHeading !== false && data.profile.name) {
       // Show name as heading (default behavior)
-      html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${data.profile.name}</h1>\n`
+      html += `<div class="text-2xl font-bold mb-4 flex items-center gap-2">${data.profile.name} <img src="https://emojis.slackmojis.com/emojis/images/1536351075/4594/blob-wave.gif" width="25" class="inline" /></div>\n`
       
       if (data.profile.subtitle) {
         html += `<p class="text-lg font-medium mb-4 text-gray-600">${data.profile.subtitle}</p>\n`
       }
 
       if (data.profile.welcomeMessage) {
-        html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
+        html += `<div class="mb-6 text-gray-700 leading-relaxed text-left">${data.profile.welcomeMessage}</div>\n`
       }
     } else {
       // Show About Me as heading
       const aboutMeHeading = data.sectionHeadings?.profile || '👋 About Me'
-      html += `<h1 class="text-3xl font-bold mb-4 border-b pb-2">${aboutMeHeading}</h1>\n`
+      html += `<div class="text-2xl font-bold mb-4 flex items-center gap-2">${aboutMeHeading} <img src="https://emojis.slackmojis.com/emojis/images/1536351075/4594/blob-wave.gif" width="25" class="inline" /></div>\n`
       
       if (data.profile.name) {
         html += `<p class="mb-6 text-gray-700 leading-relaxed"><strong>${data.profile.name}</strong></p>\n`
@@ -184,7 +198,7 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.profile.welcomeMessage) {
-        html += `<p class="mb-6 text-gray-700 leading-relaxed">${data.profile.welcomeMessage}</p>\n`
+        html += `<div class="mb-6 text-gray-700 leading-relaxed text-left">${data.profile.welcomeMessage}</div>\n`
       }
     }
 
@@ -196,21 +210,13 @@ export default function PreviewReadme({ data }) {
     // Social Links
     if (data.socialLinks.length > 0) {
       const socialHeading = data.sectionHeadings?.socialLinks || '🌐 Connect with me:'
-      html += `<h2 class="text-2xl font-semibold mb-3 mt-6 border-b pb-1">${socialHeading}</h2>\n`
-      html += `<div class="flex flex-wrap gap-2 mb-6">\n`
+      html += `<div class="mb-6">\n`
       data.socialLinks.forEach(social => {
         if (social.username) {
           const url = social.urlTemplate.replace('{username}', social.username)
-          if (social.showIcon) {
-            // Show icon only
-            html += `<a href="${url}" target="_blank" class="hover:scale-110 transition-transform"><i class="${social.icon}" style="font-size: 30px; margin: 0 5px; color: ${social.color}; background-color: #ffffff; padding: 5px; border-radius: 5px;"></i></a>\n`
-          } else {
-            // Show icon with platform name
-            html += `<a href="${url}" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg border hover:scale-105 transition-transform" style="border-color: ${social.color}40; background-color: #ffffff;">\n`
-            html += `  <i class="${social.icon}" style="font-size: 24px; color: ${social.color};"></i>\n`
-            html += `  <span class="text-sm font-medium" style="color: ${social.color};">${social.platform}</span>\n`
-            html += `</a>\n`
-          }
+          html += `<a href="${url}" target="_blank" class="inline-block mr-2 mb-2">\n`
+          html += `  <img src="https://img.shields.io/static/v1?message=${social.platform}&logo=${social.platform.toLowerCase()}&label=&color=${social.color.replace('#', '')}&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="${social.platform.toLowerCase()} logo" />\n`
+          html += `</a>\n`
         }
       })
       html += `</div>\n`
@@ -218,48 +224,52 @@ export default function PreviewReadme({ data }) {
 
     // Technologies
     if (data.technologies.length > 0) {
-      const techHeading = data.sectionHeadings?.technologies || '🛠️ Languages and Tools:'
-      html += `<h2 class="text-2xl font-semibold mb-3 mt-6 border-b pb-1">${techHeading}</h2>\n`
-      html += `<div class="flex flex-wrap gap-3 mb-6">\n`
+      const techHeading = data.sectionHeadings?.technologies || '🛠 Language and tools'
+      html += `<h3 class="text-xl font-semibold mb-3 mt-6">${techHeading}</h3>\n`
+      html += `<div class="grid grid-cols-8 md:grid-cols-12 lg:grid-cols-16 gap-3 mb-6 items-center">\n`
       data.technologies.forEach(tech => {
-        const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
-        if (tech.showName) {
-          // Show icon + name
-          html += `<div class="flex items-center gap-2 px-3 py-2 rounded-lg border" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="24" height="24" style="background-color: #ffffff; padding: 2px; border-radius: 5px;" />
-            <span class="text-sm font-medium">${tech.name}</span>
-          </div>\n`
+        // Use the new CDN format for devicon
+        let iconUrl = ''
+        if (tech.icon.includes('devicon-')) {
+          const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+          iconUrl = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${iconName}/${iconName}-original.svg`
         } else {
-          // Show only icon
-          html += `<div class="p-2 rounded-lg border hover:scale-110 transition-transform" style="background-color: ${tech.bg || '#f1f5f9'}; border-color: ${tech.color}40" title="${tech.name}">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg" alt="${tech.name}" width="32" height="32" style="background-color: #ffffff; padding: 2px; border-radius: 5px;" />
-          </div>\n`
+          // Fallback to original URL for other icon types
+          const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
+          iconUrl = `https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg`
         }
+        
+        html += `<div class="flex flex-col items-center p-2 hover:scale-110 transition-transform" title="${tech.name}">\n`
+        html += `  <img src="${iconUrl}" alt="${tech.name}" width="40" height="40" class="object-contain" />\n`
+        if (tech.showName) {
+          html += `  <span class="text-xs mt-1 text-center">${tech.name}</span>\n`
+        }
+        html += `</div>\n`
       })
       html += `</div>\n`
     }
 
     // GitHub Stats
     if (data.githubStats.username) {
-      const statsHeading = data.sectionHeadings?.githubStats || '📊 GitHub Stats'
+      const statsHeading = data.sectionHeadings?.githubStats || '🔥 My Stats :'
       let hasStats = false
       
       if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
-        html += `<h2 class="text-2xl font-semibold mb-4 mt-6 border-b pb-1">${statsHeading}</h2>\n`
-        html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">\n`
+        html += `<h3 class="text-xl font-semibold mb-4 mt-6">${statsHeading}</h3>\n`
+        html += `<div class="flex justify-center mb-6">\n`
         hasStats = true
       }
 
       if (data.githubStats.showGithubStats) {
-        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&show_icons=true&locale=en" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
+        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="stats graph" class="max-w-full" /></div>\n`
       }
 
       if (data.githubStats.showStreakStats) {
-        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-streak-stats.herokuapp.com/?user=${data.githubStats.username}&theme=default" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
+        html += `<div class="flex justify-center mb-4"><img src="https://streak-stats.demolab.com?user=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="streak graph" class="max-w-full" /></div>\n`
       }
 
       if (data.githubStats.showTopLanguages) {
-        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&show_icons=true&locale=en&layout=compact" alt="${data.githubStats.username}" class="max-w-full" /></div>\n`
+        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dark&hide_border=false&border_radius=5&order=2" height="150" alt="languages graph" class="max-w-full" /></div>\n`
       }
 
       if (hasStats) {
@@ -394,7 +404,7 @@ export default function PreviewReadme({ data }) {
 
       {/* Markdown Code Modal */}
       <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-visible">
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between pr-8">
               <span className="flex items-center gap-2">
@@ -403,55 +413,55 @@ export default function PreviewReadme({ data }) {
               </span>
             </DialogTitle>
           </DialogHeader>
-          <div className="relative rounded-lg border-2 border-muted-foreground/10 mb-4 overflow-hidden">
+          <div className="relative rounded-lg border-2 border-muted-foreground/10 mb-4 overflow-hidden bg-muted">
             <div 
-              className="overflow-y-scroll overflow-x-hidden max-h-[60vh]" 
+              className="overflow-auto max-h-[60vh] scrollbar-visible" 
               style={{ 
-                display: 'block', 
-                position: 'relative', 
-                zIndex: 60, 
-                scrollbarWidth: 'auto', /* Always show scrollbar in Firefox */
-                scrollbarColor: 'rgba(0, 0, 0, 0.8) transparent',
-                overflowY: 'scroll', /* Force scrollbar to always show */
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#6B7280 #F3F4F6'
               }}
             >
               <style jsx>{`
-                /* Custom scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
-                div::-webkit-scrollbar {
-                  width: 12px;
-                  height: 12px;
-                  display: block;
+                .scrollbar-visible {
+                  scrollbar-width: thin;
+                  scrollbar-color: #6B7280 #F3F4F6;
                 }
                 
-                div::-webkit-scrollbar-track {
-                  background: transparent;
-                  border-radius: 8px;
+                .scrollbar-visible::-webkit-scrollbar {
+                  width: 14px;
+                  height: 14px;
+                  background-color: #F3F4F6;
                 }
                 
-                div::-webkit-scrollbar-thumb {
-                  background-color: rgba(0, 0, 0, 0.8);
-                  border-radius: 8px;
-                  border: 2px solid rgba(255, 255, 255, 0.2);
-                  min-height: 40px;
+                .scrollbar-visible::-webkit-scrollbar-track {
+                  background: #F3F4F6;
+                  border-radius: 10px;
                 }
                 
-                div::-webkit-scrollbar-thumb:hover {
-                  background-color: rgba(0, 0, 0, 1);
+                .scrollbar-visible::-webkit-scrollbar-thumb {
+                  background-color: #6B7280;
+                  border-radius: 10px;
+                  border: 2px solid #F3F4F6;
+                  min-height: 20px;
                 }
                 
-                /* Ensure scrollbar is always visible in WebKit */
-                div::-webkit-scrollbar-thumb:vertical {
-                  min-height: 30px;
+                .scrollbar-visible::-webkit-scrollbar-thumb:hover {
+                  background-color: #4B5563;
+                }
+                
+                .scrollbar-visible::-webkit-scrollbar-corner {
+                  background: #F3F4F6;
                 }
               `}</style>
               <pre 
-                className="bg-muted p-4 text-sm whitespace-pre-wrap break-words" 
+                className="p-4 text-sm whitespace-pre-wrap break-words font-mono bg-muted" 
                 style={{ 
                   margin: 0, 
-                  userSelect: 'text', /* Ensure text is selectable */
-                  MozUserSelect: 'text',
+                  userSelect: 'text',
                   WebkitUserSelect: 'text',
+                  MozUserSelect: 'text',
                   msUserSelect: 'text',
+                  minHeight: '300px'
                 }}
               >
                 {generateMarkdown}
@@ -461,7 +471,7 @@ export default function PreviewReadme({ data }) {
               variant="default"
               size="sm"
               onClick={copyToClipboard}
-              className="absolute top-4 right-4 flex items-center gap-2 bg-primary hover:bg-primary/90 z-70"
+              className="absolute top-4 right-4 flex items-center gap-2 bg-primary hover:bg-primary/90 z-10"
             >
               <Copy className="w-4 h-4" />
               {copied ? 'Copied!' : 'Copy Code'}

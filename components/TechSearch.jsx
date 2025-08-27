@@ -16,66 +16,74 @@ const ICON_LIBRARIES = {
   reacticons: 'React Icons'
 }
 
-// Popular technologies with their icon classes and colors
+// Enhanced technology list with new CDN format
 const TECHNOLOGIES = [
-  // Devicon technologies
-  { name: 'JavaScript', icon: 'devicon-javascript-plain', category: 'Language', color: '#F7DF1E', bg: '#F7DF1E20', library: 'devicon' },
-  { name: 'TypeScript', icon: 'devicon-typescript-plain', category: 'Language', color: '#3178C6', bg: '#3178C620', library: 'devicon' },
-  { name: 'React', icon: 'devicon-react-original', category: 'Framework', color: '#61DAFB', bg: '#61DAFB20', library: 'devicon' },
-  { name: 'Next.js', icon: 'devicon-nextjs-original', category: 'Framework', color: '#000000', bg: '#00000020', library: 'devicon' },
-  { name: 'Vue.js', icon: 'devicon-vuejs-plain', category: 'Framework', color: '#4FC08D', bg: '#4FC08D20', library: 'devicon' },
-  { name: 'Angular', icon: 'devicon-angularjs-plain', category: 'Framework', color: '#DD0031', bg: '#DD003120', library: 'devicon' },
-  { name: 'Svelte', icon: 'devicon-svelte-plain', category: 'Framework', color: '#FF3E00', bg: '#FF3E0020', library: 'devicon' },
-  { name: 'Node.js', icon: 'devicon-nodejs-plain', category: 'Runtime', color: '#339933', bg: '#33993320', library: 'devicon' },
-  { name: 'Python', icon: 'devicon-python-plain', category: 'Language', color: '#3776AB', bg: '#3776AB20', library: 'devicon' },
-  { name: 'Java', icon: 'devicon-java-plain', category: 'Language', color: '#ED8B00', bg: '#ED8B0020', library: 'devicon' },
-  { name: 'C++', icon: 'devicon-cplusplus-plain', category: 'Language', color: '#00599C', bg: '#00599C20', library: 'devicon' },
-  { name: 'C#', icon: 'devicon-csharp-plain', category: 'Language', color: '#239120', bg: '#23912020', library: 'devicon' },
-  { name: 'PHP', icon: 'devicon-php-plain', category: 'Language', color: '#777BB4', bg: '#777BB420', library: 'devicon' },
-  { name: 'Ruby', icon: 'devicon-ruby-plain', category: 'Language', color: '#CC342D', bg: '#CC342D20', library: 'devicon' },
-  { name: 'Go', icon: 'devicon-go-plain', category: 'Language', color: '#00ADD8', bg: '#00ADD820', library: 'devicon' },
-  { name: 'Rust', icon: 'devicon-rust-plain', category: 'Language', color: '#000000', bg: '#00000020', library: 'devicon' },
-  { name: 'Swift', icon: 'devicon-swift-plain', category: 'Language', color: '#FA7343', bg: '#FA734320', library: 'devicon' },
-  { name: 'Kotlin', icon: 'devicon-kotlin-plain', category: 'Language', color: '#0095D5', bg: '#0095D520', library: 'devicon' },
-  { name: 'Dart', icon: 'devicon-dart-plain', category: 'Language', color: '#0175C2', bg: '#0175C220', library: 'devicon' },
-  { name: 'HTML5', icon: 'devicon-html5-plain', category: 'Markup', color: '#E34F26', bg: '#E34F2620', library: 'devicon' },
-  { name: 'CSS3', icon: 'devicon-css3-plain', category: 'Styling', color: '#1572B6', bg: '#1572B620', library: 'devicon' },
-  { name: 'Sass', icon: 'devicon-sass-original', category: 'Styling', color: '#CC6699', bg: '#CC669920', library: 'devicon' },
-  { name: 'Tailwind CSS', icon: 'devicon-tailwindcss-plain', category: 'Styling', color: '#38B2AC', bg: '#38B2AC20', library: 'devicon' },
-  { name: 'Bootstrap', icon: 'devicon-bootstrap-plain', category: 'Styling', color: '#7952B3', bg: '#7952B320', library: 'devicon' },
-  { name: 'Express.js', icon: 'devicon-express-original', category: 'Backend', color: '#000000', bg: '#00000020', library: 'devicon' },
-  { name: 'Django', icon: 'devicon-django-plain', category: 'Backend', color: '#092E20', bg: '#092E2020', library: 'devicon' },
-  { name: 'Flask', icon: 'devicon-flask-original', category: 'Backend', color: '#000000', bg: '#00000020', library: 'devicon' },
-  { name: 'Spring', icon: 'devicon-spring-plain', category: 'Backend', color: '#6DB33F', bg: '#6DB33F20', library: 'devicon' },
-  { name: 'Laravel', icon: 'devicon-laravel-plain', category: 'Backend', color: '#FF2D20', bg: '#FF2D2020', library: 'devicon' },
-  { name: 'MongoDB', icon: 'devicon-mongodb-plain', category: 'Database', color: '#47A248', bg: '#47A24820', library: 'devicon' },
-  { name: 'PostgreSQL', icon: 'devicon-postgresql-plain', category: 'Database', color: '#4169E1', bg: '#4169E120', library: 'devicon' },
-  { name: 'MySQL', icon: 'devicon-mysql-plain', category: 'Database', color: '#4479A1', bg: '#4479A120', library: 'devicon' },
-  { name: 'Redis', icon: 'devicon-redis-plain', category: 'Database', color: '#DC382D', bg: '#DC382D20', library: 'devicon' },
-  { name: 'SQLite', icon: 'devicon-sqlite-plain', category: 'Database', color: '#003B57', bg: '#003B5720', library: 'devicon' },
-  { name: 'Firebase', icon: 'devicon-firebase-plain', category: 'Backend', color: '#FFCA28', bg: '#FFCA2820', library: 'devicon' },
-  { name: 'AWS', icon: 'devicon-amazonwebservices-original', category: 'Cloud', color: '#FF9900', bg: '#FF990020', library: 'devicon' },
-  { name: 'Google Cloud', icon: 'devicon-googlecloud-plain', category: 'Cloud', color: '#4285F4', bg: '#4285F420', library: 'devicon' },
-  { name: 'Azure', icon: 'devicon-azure-plain', category: 'Cloud', color: '#0078D4', bg: '#0078D420', library: 'devicon' },
-  { name: 'Docker', icon: 'devicon-docker-plain', category: 'DevOps', color: '#2496ED', bg: '#2496ED20', library: 'devicon' },
-  { name: 'Kubernetes', icon: 'devicon-kubernetes-plain', category: 'DevOps', color: '#326CE5', bg: '#326CE520', library: 'devicon' },
-  { name: 'Git', icon: 'devicon-git-plain', category: 'Tools', color: '#F05032', bg: '#F0503220', library: 'devicon' },
-  { name: 'GitHub', icon: 'devicon-github-original', category: 'Tools', color: '#181717', bg: '#18171720', library: 'devicon' },
-  { name: 'GitLab', icon: 'devicon-gitlab-plain', category: 'Tools', color: '#FC6D26', bg: '#FC6D2620', library: 'devicon' },
-  { name: 'VS Code', icon: 'devicon-vscode-plain', category: 'Tools', color: '#007ACC', bg: '#007ACC20', library: 'devicon' },
-  { name: 'Figma', icon: 'devicon-figma-plain', category: 'Design', color: '#F24E1E', bg: '#F24E1E20', library: 'devicon' },
-  { name: 'Linux', icon: 'devicon-linux-plain', category: 'OS', color: '#FCC624', bg: '#FCC62420', library: 'devicon' },
-  { name: 'Ubuntu', icon: 'devicon-ubuntu-plain', category: 'OS', color: '#E95420', bg: '#E9542020', library: 'devicon' },
-  { name: 'Android', icon: 'devicon-android-plain', category: 'Mobile', color: '#3DDC84', bg: '#3DDC8420', library: 'devicon' },
-  { name: 'Flutter', icon: 'devicon-flutter-plain', category: 'Mobile', color: '#02569B', bg: '#02569B20', library: 'devicon' },
-  { name: 'React Native', icon: 'devicon-react-original', category: 'Mobile', color: '#61DAFB', bg: '#61DAFB20', library: 'devicon' },
-  { name: 'Unity', icon: 'devicon-unity-original', category: 'Game Dev', color: '#000000', bg: '#00000020', library: 'devicon' },
-  { name: 'TensorFlow', icon: 'devicon-tensorflow-original', category: 'ML/AI', color: '#FF6F00', bg: '#FF6F0020', library: 'devicon' },
-  { name: 'PyTorch', icon: 'devicon-pytorch-original', category: 'ML/AI', color: '#EE4C2C', bg: '#EE4C2C20', library: 'devicon' },
-  { name: 'GraphQL', icon: 'devicon-graphql-plain', category: 'API', color: '#E10098', bg: '#E1009820', library: 'devicon' },
-  { name: 'Webpack', icon: 'devicon-webpack-plain', category: 'Build Tools', color: '#8DD6F9', bg: '#8DD6F920', library: 'devicon' },
-  { name: 'Vite', icon: 'devicon-vitejs-plain', category: 'Build Tools', color: '#646CFF', bg: '#646CFF20', library: 'devicon' },
-  { name: 'Jest', icon: 'devicon-jest-plain', category: 'Testing', color: '#C21325', bg: '#C2132520', library: 'devicon' },
+  // Devicon technologies with new CDN format
+  { name: 'JavaScript', icon: 'devicon-javascript-plain', category: 'Language', color: '#F7DF1E', bg: '#F7DF1E20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'TypeScript', icon: 'devicon-typescript-plain', category: 'Language', color: '#3178C6', bg: '#3178C620', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+  { name: 'React', icon: 'devicon-react-original', category: 'Framework', color: '#61DAFB', bg: '#61DAFB20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Next.js', icon: 'devicon-nextjs-original', category: 'Framework', color: '#000000', bg: '#00000020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+  { name: 'Vue.js', icon: 'devicon-vuejs-plain', category: 'Framework', color: '#4FC08D', bg: '#4FC08D20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+  { name: 'Angular', icon: 'devicon-angularjs-plain', category: 'Framework', color: '#DD0031', bg: '#DD003120', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg' },
+  { name: 'Svelte', icon: 'devicon-svelte-plain', category: 'Framework', color: '#FF3E00', bg: '#FF3E0020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg' },
+  { name: 'Node.js', icon: 'devicon-nodejs-plain', category: 'Runtime', color: '#339933', bg: '#33993320', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { name: 'Python', icon: 'devicon-python-plain', category: 'Language', color: '#3776AB', bg: '#3776AB20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'Java', icon: 'devicon-java-plain', category: 'Language', color: '#ED8B00', bg: '#ED8B0020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+  { name: 'C++', icon: 'devicon-cplusplus-plain', category: 'Language', color: '#00599C', bg: '#00599C20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
+  { name: 'C#', icon: 'devicon-csharp-plain', category: 'Language', color: '#239120', bg: '#23912020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+  { name: 'PHP', icon: 'devicon-php-plain', category: 'Language', color: '#777BB4', bg: '#777BB420', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
+  { name: 'Ruby', icon: 'devicon-ruby-plain', category: 'Language', color: '#CC342D', bg: '#CC342D20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg' },
+  { name: 'Go', icon: 'devicon-go-plain', category: 'Language', color: '#00ADD8', bg: '#00ADD820', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
+  { name: 'Rust', icon: 'devicon-rust-plain', category: 'Language', color: '#000000', bg: '#00000020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg' },
+  { name: 'Swift', icon: 'devicon-swift-plain', category: 'Language', color: '#FA7343', bg: '#FA734320', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg' },
+  { name: 'Kotlin', icon: 'devicon-kotlin-plain', category: 'Language', color: '#0095D5', bg: '#0095D520', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+  { name: 'Dart', icon: 'devicon-dart-plain', category: 'Language', color: '#0175C2', bg: '#0175C220', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg' },
+  { name: 'HTML5', icon: 'devicon-html5-plain', category: 'Markup', color: '#E34F26', bg: '#E34F2620', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+  { name: 'CSS3', icon: 'devicon-css3-plain', category: 'Styling', color: '#1572B6', bg: '#1572B620', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+  { name: 'Sass', icon: 'devicon-sass-original', category: 'Styling', color: '#CC6699', bg: '#CC669920', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg' },
+  { name: 'Tailwind CSS', icon: 'devicon-tailwindcss-plain', category: 'Styling', color: '#38B2AC', bg: '#38B2AC20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+  { name: 'Bootstrap', icon: 'devicon-bootstrap-plain', category: 'Styling', color: '#7952B3', bg: '#7952B320', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+  { name: 'Express.js', icon: 'devicon-express-original', category: 'Backend', color: '#000000', bg: '#00000020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
+  { name: 'Django', icon: 'devicon-django-plain', category: 'Backend', color: '#092E20', bg: '#092E2020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-original.svg' },
+  { name: 'Flask', icon: 'devicon-flask-original', category: 'Backend', color: '#000000', bg: '#00000020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg' },
+  { name: 'Spring', icon: 'devicon-spring-plain', category: 'Backend', color: '#6DB33F', bg: '#6DB33F20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
+  { name: 'Laravel', icon: 'devicon-laravel-plain', category: 'Backend', color: '#FF2D20', bg: '#FF2D2020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg' },
+  { name: 'MongoDB', icon: 'devicon-mongodb-plain', category: 'Database', color: '#47A248', bg: '#47A24820', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+  { name: 'PostgreSQL', icon: 'devicon-postgresql-plain', category: 'Database', color: '#4169E1', bg: '#4169E120', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'MySQL', icon: 'devicon-mysql-plain', category: 'Database', color: '#4479A1', bg: '#4479A120', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+  { name: 'Redis', icon: 'devicon-redis-plain', category: 'Database', color: '#DC382D', bg: '#DC382D20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg' },
+  { name: 'SQLite', icon: 'devicon-sqlite-plain', category: 'Database', color: '#003B57', bg: '#003B5720', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg' },
+  { name: 'Firebase', icon: 'devicon-firebase-plain', category: 'Backend', color: '#FFCA28', bg: '#FFCA2820', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg' },
+  { name: 'AWS', icon: 'devicon-amazonwebservices-original', category: 'Cloud', color: '#FF9900', bg: '#FF990020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg' },
+  { name: 'Google Cloud', icon: 'devicon-googlecloud-plain', category: 'Cloud', color: '#4285F4', bg: '#4285F420', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
+  { name: 'Azure', icon: 'devicon-azure-plain', category: 'Cloud', color: '#0078D4', bg: '#0078D420', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg' },
+  { name: 'Docker', icon: 'devicon-docker-plain', category: 'DevOps', color: '#2496ED', bg: '#2496ED20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+  { name: 'Podman', icon: 'devicon-podman-plain', category: 'DevOps', color: '#892CA0', bg: '#892CA020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/podman/podman-original.svg' },
+  { name: 'Kubernetes', icon: 'devicon-kubernetes-plain', category: 'DevOps', color: '#326CE5', bg: '#326CE520', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg' },
+  { name: 'Jenkins', icon: 'devicon-jenkins-plain', category: 'DevOps', color: '#D33833', bg: '#D3383320', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg' },
+  { name: 'Kafka', icon: 'devicon-kafka-plain', category: 'DevOps', color: '#231F20', bg: '#231F2020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg' },
+  { name: 'Prometheus', icon: 'devicon-prometheus-plain', category: 'DevOps', color: '#E6522C', bg: '#E6522C20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg' },
+  { name: 'Grafana', icon: 'devicon-grafana-plain', category: 'DevOps', color: '#F46800', bg: '#F4680020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg' },
+  { name: 'Elasticsearch', icon: 'devicon-elasticsearch-plain', category: 'DevOps', color: '#005571', bg: '#00557120', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg' },
+  { name: 'Ansible', icon: 'devicon-ansible-plain', category: 'DevOps', color: '#EE0000', bg: '#EE000020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg' },
+  { name: 'Terraform', icon: 'devicon-terraform-plain', category: 'DevOps', color: '#623CE4', bg: '#623CE420', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg' },
+  { name: 'Git', icon: 'devicon-git-plain', category: 'Tools', color: '#F05032', bg: '#F0503220', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+  { name: 'GitHub', icon: 'devicon-github-original', category: 'Tools', color: '#181717', bg: '#18171720', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
+  { name: 'GitLab', icon: 'devicon-gitlab-plain', category: 'Tools', color: '#FC6D26', bg: '#FC6D2620', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg' },
+  { name: 'VS Code', icon: 'devicon-vscode-plain', category: 'Tools', color: '#007ACC', bg: '#007ACC20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg' },
+  { name: 'Figma', icon: 'devicon-figma-plain', category: 'Design', color: '#F24E1E', bg: '#F24E1E20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
+  { name: 'Linux', icon: 'devicon-linux-plain', category: 'OS', color: '#FCC624', bg: '#FCC62420', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' },
+  { name: 'Ubuntu', icon: 'devicon-ubuntu-plain', category: 'OS', color: '#E95420', bg: '#E9542020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-original.svg' },
+  { name: 'Android', icon: 'devicon-android-plain', category: 'Mobile', color: '#3DDC84', bg: '#3DDC8420', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg' },
+  { name: 'Flutter', icon: 'devicon-flutter-plain', category: 'Mobile', color: '#02569B', bg: '#02569B20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
+  { name: 'React Native', icon: 'devicon-react-original', category: 'Mobile', color: '#61DAFB', bg: '#61DAFB20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Unity', icon: 'devicon-unity-original', category: 'Game Dev', color: '#000000', bg: '#00000020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg' },
+  { name: 'TensorFlow', icon: 'devicon-tensorflow-original', category: 'ML/AI', color: '#FF6F00', bg: '#FF6F0020', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+  { name: 'PyTorch', icon: 'devicon-pytorch-original', category: 'ML/AI', color: '#EE4C2C', bg: '#EE4C2C20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg' },
+  { name: 'GraphQL', icon: 'devicon-graphql-plain', category: 'API', color: '#E10098', bg: '#E1009820', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-original.svg' },
+  { name: 'Webpack', icon: 'devicon-webpack-plain', category: 'Build Tools', color: '#8DD6F9', bg: '#8DD6F920', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg' },
+  { name: 'Vite', icon: 'devicon-vitejs-plain', category: 'Build Tools', color: '#646CFF', bg: '#646CFF20', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg' },
+  { name: 'Jest', icon: 'devicon-jest-plain', category: 'Testing', color: '#C21325', bg: '#C2132520', library: 'devicon', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-original.svg' },
   
   // Simple Icons technologies
   { name: 'Vercel', icon: 'si-vercel', category: 'Cloud', color: '#000000', bg: '#00000020', library: 'simpleicons' },
@@ -88,30 +96,11 @@ const TECHNOLOGIES = [
   { name: 'Remix', icon: 'si-remix', category: 'Framework', color: '#000000', bg: '#00000020', library: 'simpleicons' },
   { name: 'Solid.js', icon: 'si-solid', category: 'Framework', color: '#2C4F7C', bg: '#2C4F7C20', library: 'simpleicons' },
   { name: 'Deno', icon: 'si-deno', category: 'Runtime', color: '#000000', bg: '#00000020', library: 'simpleicons' },
-  { name: 'Svelte', icon: 'si-svelte', category: 'Framework', color: '#FF3E00', bg: '#FF3E0020', library: 'simpleicons' },
-  { name: 'Vuepress', icon: 'si-vuepress', category: 'Framework', color: '#3EAF7C', bg: '#3EAF7C20', library: 'simpleicons' },
-  { name: 'Gatsby', icon: 'si-gatsby', category: 'Framework', color: '#663399', bg: '#66339920', library: 'simpleicons' },
-  { name: 'Strapi', icon: 'si-strapi', category: 'CMS', color: '#4945FF', bg: '#4945FF20', library: 'simpleicons' },
-  { name: 'Contentful', icon: 'si-contentful', category: 'CMS', color: '#2478CC', bg: '#2478CC20', library: 'simpleicons' },
-  { name: 'Sanity', icon: 'si-sanity', category: 'CMS', color: '#F03E2F', bg: '#F03E2F20', library: 'simpleicons' },
-  { name: 'Algolia', icon: 'si-algolia', category: 'Search', color: '#5468FF', bg: '#5468FF20', library: 'simpleicons' },
-  { name: 'Stripe', icon: 'si-stripe', category: 'Payment', color: '#008CDD', bg: '#008CDD20', library: 'simpleicons' },
-  { name: 'Auth0', icon: 'si-auth0', category: 'Auth', color: '#EB5424', bg: '#EB542420', library: 'simpleicons' },
-  { name: 'Clerk', icon: 'si-clerk', category: 'Auth', color: '#6C47FF', bg: '#6C47FF20', library: 'simpleicons' },
   
   // React Icons technologies
   { name: 'Bun', icon: 'ri-bun', category: 'Runtime', color: '#FBF0DF', bg: '#FBF0DF20', library: 'reacticons' },
   { name: 'Tauri', icon: 'ri-tauri', category: 'Framework', color: '#FFC131', bg: '#FFC13120', library: 'reacticons' },
-  { name: 'Electron', icon: 'ri-electron', category: 'Framework', color: '#47848F', bg: '#47848F20', library: 'reacticons' },
-  { name: 'Storybook', icon: 'ri-storybook', category: 'Tools', color: '#FF4785', bg: '#FF478520', library: 'reacticons' },
-  { name: 'Playwright', icon: 'ri-playwright', category: 'Testing', color: '#2EAD33', bg: '#2EAD3320', library: 'reacticons' },
-  { name: 'Cypress', icon: 'ri-cypress', category: 'Testing', color: '#17202C', bg: '#17202C20', library: 'reacticons' },
-  { name: 'Vitest', icon: 'ri-vitest', category: 'Testing', color: '#6E9F18', bg: '#6E9F1820', library: 'reacticons' },
-  { name: 'Nuxt.js', icon: 'ri-nuxt', category: 'Framework', color: '#00DC82', bg: '#00DC8220', library: 'reacticons' },
-  { name: 'Qwik', icon: 'ri-qwik', category: 'Framework', color: '#AC7EF4', bg: '#AC7EF420', library: 'reacticons' },
-  { name: 'Turborepo', icon: 'ri-turborepo', category: 'Build Tools', color: '#EF4444', bg: '#EF444420', library: 'reacticons' },
-  { name: 'Nx', icon: 'ri-nx', category: 'Build Tools', color: '#143055', bg: '#14305520', library: 'reacticons' },
-  { name: 'pnpm', icon: 'ri-pnpm', category: 'Package Manager', color: '#F69220', bg: '#F6922020', library: 'reacticons' }
+  { name: 'Electron', icon: 'ri-electron', category: 'Framework', color: '#47848F', bg: '#47848F20', library: 'reacticons' }
 ]
 
 const CATEGORIES = [...new Set(TECHNOLOGIES.map(tech => tech.category))]
@@ -225,9 +214,21 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
                       borderColor: tech.color + '30'
                     }}
                   >
+                    <img 
+                      src={tech.imageUrl || `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.name.toLowerCase()}/${tech.name.toLowerCase()}-original.svg`}
+                      alt={tech.name}
+                      width="16"
+                      height="16"
+                      className="object-contain"
+                      onError={(e) => {
+                        // Fallback to icon class if image fails
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'inline-block';
+                      }}
+                    />
                     <i 
                       className={`${tech.icon} text-sm`}
-                      style={{ color: tech.color }}
+                      style={{ color: tech.color, display: 'none' }}
                     ></i>
                     <span>{tech.name}</span>
                     <X 
@@ -259,9 +260,21 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
                     }}
                     onClick={() => handleSelect(tech)}
                   >
+                    <img 
+                      src={tech.imageUrl || `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.name.toLowerCase()}/${tech.name.toLowerCase()}-original.svg`}
+                      alt={tech.name}
+                      width="24"
+                      height="24"
+                      className="object-contain"
+                      onError={(e) => {
+                        // Fallback to icon class if image fails
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'inline-block';
+                      }}
+                    />
                     <i 
                       className={`${tech.icon} text-xl`}
-                      style={{ color: tech.color }}
+                      style={{ color: tech.color, display: 'none' }}
                     ></i>
                     <span className="text-sm font-medium">{tech.name}</span>
                   </Button>
