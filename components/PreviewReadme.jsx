@@ -75,12 +75,12 @@ export default function PreviewReadme({ data }) {
       markdown += `<h3 align="left">${techHeading}</h3>\n\n###\n\n`
       markdown += `<div align="left">\n`
       data.technologies.forEach((tech, index) => {
-        // Use the new CDN format for devicon
-        let iconUrl = ''
-        if (tech.icon.includes('devicon-')) {
+        // Use the imageUrl from the tech object if available, otherwise generate fallback
+        let iconUrl = tech.imageUrl || ''
+        if (!iconUrl && tech.icon.includes('devicon-')) {
           const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
           iconUrl = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${iconName}/${iconName}-original.svg`
-        } else {
+        } else if (!iconUrl) {
           // Fallback to original URL for other icon types
           const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
           iconUrl = `https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg`
@@ -228,12 +228,12 @@ export default function PreviewReadme({ data }) {
       html += `<h3 class="text-xl font-semibold mb-3 mt-6">${techHeading}</h3>\n`
       html += `<div class="grid grid-cols-8 md:grid-cols-12 lg:grid-cols-16 gap-3 mb-6 items-center">\n`
       data.technologies.forEach(tech => {
-        // Use the new CDN format for devicon
-        let iconUrl = ''
-        if (tech.icon.includes('devicon-')) {
+        // Use the imageUrl from the tech object if available, otherwise generate fallback
+        let iconUrl = tech.imageUrl || ''
+        if (!iconUrl && tech.icon.includes('devicon-')) {
           const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
           iconUrl = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${iconName}/${iconName}-original.svg`
-        } else {
+        } else if (!iconUrl) {
           // Fallback to original URL for other icon types
           const iconName = tech.icon.replace('devicon-', '').replace('-plain', '').replace('-original', '')
           iconUrl = `https://raw.githubusercontent.com/devicons/devicon/master/icons/${iconName}/${tech.icon.replace('devicon-', '')}.svg`
@@ -349,7 +349,7 @@ export default function PreviewReadme({ data }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6">
       {/* Action Buttons */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -402,10 +402,10 @@ export default function PreviewReadme({ data }) {
         </CardContent>
       </Card>
 
-      {/* Markdown Code Modal */}
+      {/* Enhanced Markdown Code Modal with Better Scrolling */}
       <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden">
-          <DialogHeader>
+        <DialogContent className="max-w-6xl max-h-[95vh] flex flex-col overflow-hidden">
+          <DialogHeader className="flex-shrink-0 pb-4 border-b">
             <DialogTitle className="flex items-center justify-between pr-8">
               <span className="flex items-center gap-2">
                 <Code2 className="w-5 h-5" />
@@ -413,70 +413,146 @@ export default function PreviewReadme({ data }) {
               </span>
             </DialogTitle>
           </DialogHeader>
-          <div className="relative rounded-lg border-2 border-muted-foreground/10 mb-4 overflow-hidden bg-muted">
+          
+          <div className="flex-1 min-h-0 overflow-hidden relative">
+            {/* Enhanced scrollable content container */}
             <div 
-              className="overflow-auto max-h-[60vh] scrollbar-visible" 
+              className="h-full overflow-auto markdown-code-scroll bg-gray-50 rounded-lg border-2 border-gray-200 relative"
               style={{ 
-                scrollbarWidth: 'thin',
-                scrollbarColor: '#6B7280 #F3F4F6'
+                scrollBehavior: 'smooth'
               }}
             >
-              <style jsx>{`
-                .scrollbar-visible {
-                  scrollbar-width: thin;
-                  scrollbar-color: #6B7280 #F3F4F6;
-                }
-                
-                .scrollbar-visible::-webkit-scrollbar {
-                  width: 14px;
-                  height: 14px;
-                  background-color: #F3F4F6;
-                }
-                
-                .scrollbar-visible::-webkit-scrollbar-track {
-                  background: #F3F4F6;
-                  border-radius: 10px;
-                }
-                
-                .scrollbar-visible::-webkit-scrollbar-thumb {
-                  background-color: #6B7280;
-                  border-radius: 10px;
-                  border: 2px solid #F3F4F6;
-                  min-height: 20px;
-                }
-                
-                .scrollbar-visible::-webkit-scrollbar-thumb:hover {
-                  background-color: #4B5563;
-                }
-                
-                .scrollbar-visible::-webkit-scrollbar-corner {
-                  background: #F3F4F6;
-                }
-              `}</style>
-              <pre 
-                className="p-4 text-sm whitespace-pre-wrap break-words font-mono bg-muted" 
-                style={{ 
-                  margin: 0, 
-                  userSelect: 'text',
-                  WebkitUserSelect: 'text',
-                  MozUserSelect: 'text',
-                  msUserSelect: 'text',
-                  minHeight: '300px'
-                }}
-              >
-                {generateMarkdown}
-              </pre>
+              {/* Copy button positioned over the content */}
+              <div className="sticky top-0 right-0 z-20 flex justify-end p-3 bg-gradient-to-b from-gray-50 via-gray-50 to-transparent">
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={copyToClipboard}
+                  className="flex items-center gap-2 bg-primary hover:bg-primary/90 shadow-lg"
+                >
+                  <Copy className="w-4 h-4" />
+                  {copied ? 'Copied!' : 'Copy Code'}
+                </Button>
+              </div>
+              
+              {/* Code content */}
+              <div className="px-6 pb-6 pt-0">
+                <pre 
+                  className="text-sm whitespace-pre-wrap break-words font-mono leading-relaxed text-gray-800 select-text" 
+                  style={{ 
+                    margin: 0, 
+                    userSelect: 'text',
+                    WebkitUserSelect: 'text',
+                    MozUserSelect: 'text',
+                    msUserSelect: 'text',
+                    minHeight: '400px',
+                    fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                    fontSize: '13px',
+                    lineHeight: '1.5'
+                  }}
+                >
+                  {generateMarkdown}
+                </pre>
+              </div>
             </div>
-            <Button
-              variant="default"
-              size="sm"
-              onClick={copyToClipboard}
-              className="absolute top-4 right-4 flex items-center gap-2 bg-primary hover:bg-primary/90 z-10"
-            >
-              <Copy className="w-4 h-4" />
-              {copied ? 'Copied!' : 'Copy Code'}
-            </Button>
           </div>
+
+          {/* Enhanced scrollbar styles */}
+          <style jsx>{`
+            .markdown-code-scroll {
+              scrollbar-width: auto;
+              scrollbar-color: #4B5563 #F9FAFB;
+            }
+            
+            .markdown-code-scroll::-webkit-scrollbar {
+              width: 18px;
+              height: 18px;
+              background-color: #F9FAFB;
+            }
+            
+            .markdown-code-scroll::-webkit-scrollbar-track {
+              background: #F3F4F6;
+              border-radius: 10px;
+              border: 2px solid #E5E7EB;
+              margin: 4px;
+            }
+            
+            .markdown-code-scroll::-webkit-scrollbar-thumb {
+              background: linear-gradient(180deg, #6B7280 0%, #4B5563 50%, #374151 100%);
+              border-radius: 10px;
+              border: 3px solid #F9FAFB;
+              min-height: 50px;
+              box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            }
+            
+            .markdown-code-scroll::-webkit-scrollbar-thumb:hover {
+              background: linear-gradient(180deg, #4B5563 0%, #374151 50%, #1F2937 100%);
+              box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            }
+            
+            .markdown-code-scroll::-webkit-scrollbar-thumb:active {
+              background: linear-gradient(180deg, #374151 0%, #1F2937 50%, #111827 100%);
+            }
+
+            .markdown-code-scroll::-webkit-scrollbar-corner {
+              background: #F9FAFB;
+              border-radius: 8px;
+            }
+
+            /* Enhanced scroll buttons */
+            .markdown-code-scroll::-webkit-scrollbar-button:vertical:start:decrement {
+              display: block;
+              height: 24px;
+              background: linear-gradient(180deg, #D1D5DB 0%, #9CA3AF 100%);
+              border-radius: 10px 10px 5px 5px;
+              border: 2px solid #E5E7EB;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+
+            .markdown-code-scroll::-webkit-scrollbar-button:vertical:end:increment {
+              display: block;
+              height: 24px;
+              background: linear-gradient(180deg, #9CA3AF 0%, #D1D5DB 100%);
+              border-radius: 5px 5px 10px 10px;
+              border: 2px solid #E5E7EB;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+
+            .markdown-code-scroll::-webkit-scrollbar-button:hover {
+              background: linear-gradient(180deg, #6B7280 0%, #4B5563 100%);
+            }
+
+            .markdown-code-scroll::-webkit-scrollbar-button:active {
+              background: linear-gradient(180deg, #4B5563 0%, #374151 100%);
+            }
+
+            /* Horizontal scrollbar styling */
+            .markdown-code-scroll::-webkit-scrollbar-button:horizontal:start:decrement {
+              display: block;
+              width: 24px;
+              background: linear-gradient(90deg, #D1D5DB 0%, #9CA3AF 100%);
+              border-radius: 10px 5px 5px 10px;
+              border: 2px solid #E5E7EB;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+
+            .markdown-code-scroll::-webkit-scrollbar-button:horizontal:end:increment {
+              display: block;
+              width: 24px;
+              background: linear-gradient(90deg, #9CA3AF 0%, #D1D5DB 100%);
+              border-radius: 5px 10px 10px 5px;
+              border: 2px solid #E5E7EB;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+          `}</style>
         </DialogContent>
       </Dialog>
     </div>
