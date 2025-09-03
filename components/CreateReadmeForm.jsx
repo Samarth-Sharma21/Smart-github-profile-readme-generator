@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Plus, X, Coffee, Heart, Edit2 } from "lucide-react";
 import TechSearch from "@/components/TechSearch";
 import SocialSearch from "@/components/SocialSearch";
@@ -72,7 +73,12 @@ export default function CreateReadmeForm({ data, onChange }) {
     // Filter out techs that already exist
     const newTechs = techArray
       .filter((tech) => !data.technologies.find((t) => t.name === tech.name))
-      .map((tech) => ({ ...tech, showName: true })); // Default to showing name
+      .map((tech) => ({ 
+        ...tech, 
+        showName: true, // Default to showing name
+        selectedProvider: tech.selectedProvider || 'devicons', // Ensure provider is set
+        imageUrl: tech.imageUrl || getIconUrl(tech, tech.selectedProvider || 'devicons') // Ensure imageUrl is set
+      }));
 
     if (newTechs.length > 0) {
       onChange({
@@ -87,6 +93,50 @@ export default function CreateReadmeForm({ data, onChange }) {
         t.name === techName ? { ...t, [field]: value } : t
       ),
     });
+  };
+
+  // Icon provider libraries
+  const ICON_LIBRARIES = {
+    devicons: {
+      name: "Devicons",
+      getUrl: (tech) => `https://raw.githubusercontent.com/devicons/devicon/master/icons/${tech.name.toLowerCase().replace(/[^a-z0-9]/g, '')}/${tech.name.toLowerCase().replace(/[^a-z0-9]/g, '')}-original.svg`
+    },
+    skillicons: {
+      name: "Skill Icons", 
+      getUrl: (tech) => `https://skillicons.dev/icons?i=${tech.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`
+    },
+    simpleicons: {
+      name: "Simple Icons",
+      getUrl: (tech) => `https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${tech.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.svg`
+    },
+    shields: {
+      name: "Shields.io",
+      getUrl: (tech) => `https://img.shields.io/badge/${tech.name.replace(/\s+/g, '%20')}-${tech.color?.replace('#', '') || '000000'}?style=for-the-badge&logo=${tech.name.toLowerCase().replace(/[^a-z0-9]/g, '')}&logoColor=white`
+    }
+  };
+
+  // Helper function to get icon URL based on provider
+  const getIconUrl = (tech, provider = 'devicons') => {
+    const library = ICON_LIBRARIES[provider];
+    if (library && library.getUrl) {
+      return library.getUrl(tech);
+    }
+    return tech.imageUrl || ICON_LIBRARIES.devicons.getUrl(tech);
+  };
+
+  const handleProviderChange = (techName, provider) => {
+    const tech = data.technologies.find(t => t.name === techName);
+    if (tech) {
+      // Update both provider and imageUrl in a single call to avoid multiple re-renders
+      const newImageUrl = getIconUrl(tech, provider);
+      onChange({
+        technologies: data.technologies.map((t) =>
+          t.name === techName 
+            ? { ...t, selectedProvider: provider, imageUrl: newImageUrl } 
+            : t
+        ),
+      });
+    }
   };
 
   const removeTechnology = (techName) => {
@@ -307,6 +357,12 @@ export default function CreateReadmeForm({ data, onChange }) {
                         Selected Technologies ({data.technologies.length}):
                       </div>
 
+                      {/* Disclaimer message - moved here */}
+                      <div className="text-sm text-muted-foreground bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <i className="fas fa-info-circle mr-2 text-blue-500"></i>
+                        If an icon is not visible, please try selecting a different provider from the dropdown.
+                      </div>
+
                       {/* Enhanced Technologies Display with Full Scrolling Support */}
                       <div className="border rounded-lg bg-gray-50/30">
                         <ScrollArea className="h-80 w-full p-4">
@@ -321,9 +377,9 @@ export default function CreateReadmeForm({ data, onChange }) {
                                   <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg"
                                     style={{ backgroundColor: tech.bg || `${tech.color}15` }}>
                                     <img
+                                      key={`${tech.name}-${tech.selectedProvider || 'devicons'}`}
                                       src={
-                                        tech.imageUrl ||
-                                        `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.name.toLowerCase()}/${tech.name.toLowerCase()}-original.svg`
+                                        tech.imageUrl || getIconUrl(tech, tech.selectedProvider || 'devicons')
                                       }
                                       alt={tech.name}
                                       width="28"
@@ -361,24 +417,48 @@ export default function CreateReadmeForm({ data, onChange }) {
                                         {tech.category}
                                       </Badge>
                                     </div>
-                                    <div className="flex items-center gap-1">
-                                      <Checkbox
-                                        checked={tech.showName}
-                                        onCheckedChange={(checked) =>
-                                          updateTechnology(
-                                            tech.name,
-                                            "showName",
-                                            checked
-                                          )
-                                        }
-                                        id={`show-name-${techIndex}`}
-                                      />
-                                      <Label
-                                        htmlFor={`show-name-${techIndex}`}
-                                        className="text-sm text-gray-600 cursor-pointer"
-                                      >
-                                        Show name in README
-                                      </Label>
+                                    <div className="flex items-center gap-4 mb-2">
+                                      <div className="flex items-center gap-1">
+                                        <Checkbox
+                                          checked={tech.showName}
+                                          onCheckedChange={(checked) =>
+                                            updateTechnology(
+                                              tech.name,
+                                              "showName",
+                                              checked
+                                            )
+                                          }
+                                          id={`show-name-${techIndex}`}
+                                        />
+                                        <Label
+                                          htmlFor={`show-name-${techIndex}`}
+                                          className="text-sm text-gray-600 cursor-pointer"
+                                        >
+                                          Show name
+                                        </Label>
+                                      </div>
+                                      {/* Change Provider Dropdown */}
+                                      <div className="flex items-center gap-1">
+                                        <Label className="text-sm text-gray-600">
+                                          Provider:
+                                        </Label>
+                                        <Select 
+                                          key={`${tech.name}-${tech.selectedProvider || 'devicons'}`}
+                                          value={tech.selectedProvider || 'devicons'} 
+                                          onValueChange={(value) => handleProviderChange(tech.name, value)}
+                                        >
+                                          <SelectTrigger className="w-32 h-7 text-xs border border-gray-300 rounded">
+                                            <SelectValue placeholder="Select provider" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            {Object.entries(ICON_LIBRARIES).map(([key, library]) => (
+                                              <SelectItem key={key} value={key}>
+                                                {library.name}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
