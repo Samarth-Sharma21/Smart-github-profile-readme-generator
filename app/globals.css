@@ -1,337 +1,255 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
-@import url('https://use.fontawesome.com/releases/v6.0.0/css/all.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom scrollbar styles */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #000000 transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #000000; /* AMOLED black color */
-  border-radius: 6px; /* More rounded corners */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Add a subtle border for visibility */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #000000;
-}
-
-/* Apply custom scrollbar to all elements that need scrolling */
-body, .overflow-auto, .overflow-y-auto, .overflow-x-auto, [class*="overflow-"], pre {
-  scrollbar-width: thin;
-  scrollbar-color: #000000 transparent;
-}
-
-/* Allow text selection for specific elements */
-.user-select-text {
-  user-select: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-}
-
-body::-webkit-scrollbar,
-.overflow-auto::-webkit-scrollbar,
-.overflow-y-auto::-webkit-scrollbar,
-.overflow-x-auto::-webkit-scrollbar,
-[class*="overflow-"]::-webkit-scrollbar,
-pre::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-body::-webkit-scrollbar-track,
-.overflow-auto::-webkit-scrollbar-track,
-.overflow-y-auto::-webkit-scrollbar-track,
-.overflow-x-auto::-webkit-scrollbar-track,
-[class*="overflow-"]::-webkit-scrollbar-track,
-pre::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-body::-webkit-scrollbar-thumb,
-.overflow-auto::-webkit-scrollbar-thumb,
-.overflow-y-auto::-webkit-scrollbar-thumb,
-.overflow-x-auto::-webkit-scrollbar-thumb,
-[class*="overflow-"]::-webkit-scrollbar-thumb,
-pre::-webkit-scrollbar-thumb {
-  background-color: #000000;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-body::-webkit-scrollbar-thumb:hover,
-.overflow-auto::-webkit-scrollbar-thumb:hover,
-.overflow-y-auto::-webkit-scrollbar-thumb:hover,
-.overflow-x-auto::-webkit-scrollbar-thumb:hover,
-[class*="overflow-"]::-webkit-scrollbar-thumb:hover,
-pre::-webkit-scrollbar-thumb:hover {
-  background-color: #000000;
-}
-
-body {
-    margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
-}
-
-/* Coffee button animation styles */
-.coffee-btn {
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-.coffee-btn:hover {
-    width: 180px;
-    border-radius: 25px;
-    padding: 0 16px;
-}
-
-.coffee-btn .coffee-icon {
-    margin: 0;
-    transition: margin 0.3s ease-in-out;
-}
-
-.coffee-btn:hover .coffee-icon {
-    margin-right: 8px;
-}
-
-.coffee-btn .coffee-text {
-    max-width: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out, max-width 0.3s ease-in-out;
-}
-
-.coffee-btn:hover .coffee-text {
-    max-width: 150px;
-    opacity: 1;
-}
-
-.App {
-    text-align: center;
-}
-
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* GitHub Markdown Styles */
-.markdown-body {
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    margin: 0;
-    color: #1f2328;
-    background-color: #ffffff;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-    font-size: 16px;
-    line-height: 1.5;
-    word-wrap: break-word;
-}
-
-.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-weight: 600;
-    line-height: 1.25;
-}
-
-.markdown-body h1 {
-    font-size: 2em;
-    border-bottom: 1px solid #d1d9e0;
-    padding-bottom: 10px;
-}
-
-.markdown-body h2 {
-    font-size: 1.5em;
-    border-bottom: 1px solid #d1d9e0;
-    padding-bottom: 8px;
-}
-
-.markdown-body h3 {
-    font-size: 1.25em;
-}
-
-.markdown-body p {
-    margin-top: 0;
-    margin-bottom: 16px;
-}
-
-.markdown-body a {
-    color: #0969da;
-    text-decoration: none;
-}
-
-.markdown-body a:hover {
-    text-decoration: underline;
-}
-
-.markdown-body img {
-    max-width: 100%;
-    height: auto;
-    display: inline-block;
-}
-
 @layer base {
   :root {
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --primary: 222.2 47.4% 11.2%;
-        --primary-foreground: 210 40% 98%;
-        --secondary: 210 40% 96.1%;
-        --secondary-foreground: 222.2 47.4% 11.2%;
-        --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96.1%;
-        --accent-foreground: 222.2 47.4% 11.2%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 222.2 84% 4.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-        --sidebar-background: 0 0% 98%;
-        --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 240 5.9% 10%;
-        --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
-        --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
-    }
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 9% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
   .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
-        --primary: 210 40% 98%;
-        --primary-foreground: 222.2 47.4% 11.2%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 212.7 26.8% 83.9%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-        --sidebar-background: 240 5.9% 10%;
-        --sidebar-foreground: 240 4.8% 95.9%;
-        --sidebar-primary: 224.3 76.3% 48%;
-        --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 240 3.7% 15.9%;
-        --sidebar-accent-foreground: 240 4.8% 95.9%;
-        --sidebar-border: 240 3.7% 15.9%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
-    }
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 9% 9%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
 }
 
-/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f1f5f9;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
+  background-color: #f8fafc;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
-  border-radius: 4px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  margin: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.5);
-  border-radius: 4px;
+  background: linear-gradient(135deg, #cbd5e0 0%, #94a3b8 50%, #64748b 100%);
+  border-radius: 6px;
+  border: 1px solid #f8fafc;
+  min-height: 30px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.7);
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #475569 100%);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.12);
 }
 
-/* Firefox scrollbar */
-.custom-scrollbar {
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, #64748b 0%, #475569 50%, #334155 100%);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+/* Slow scroll buttons for Select dropdowns */
+.scroll-button-slow {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+
+.scroll-button-slow:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+/* Modal scroll lock styles */
+body.modal-open {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Enhanced modal content scrolling */
+[data-radix-dialog-content] {
+  outline: none;
+  max-height: 90vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+[data-radix-dialog-content]::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-radix-dialog-content]::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+[data-radix-dialog-content]::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+[data-radix-dialog-content]::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Prevent background scroll on modal overlay */
+[data-radix-dialog-overlay] {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Ensure ScrollArea inside modals work properly */
+[data-radix-scroll-area-root] {
+  overflow: hidden;
+}
+
+[data-radix-scroll-area-viewport] {
+  overscroll-behavior: contain;
+}
+
+.scroll-button-slow:active {
+  background-color: rgba(59, 130, 246, 0.2);
+  transform: scale(0.95);
+  transition: all 0.15s ease;
+}
+
+/* Custom scroll speed for dropdowns */
+[data-radix-select-content] {
+  scroll-behavior: smooth;
+}
+
+[data-radix-select-scroll-up-button],
+[data-radix-select-scroll-down-button] {
+  scroll-behavior: smooth;
+  transition: all 0.2s ease;
+}
+
+[data-radix-select-scroll-up-button]:active,
+[data-radix-select-scroll-down-button]:active {
+  transform: scale(0.95);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Coffee Button Animation */
+.coffee-btn {
+  width: 50px;
+  height: 50px;
+  transition: all 0.3s ease;
+}
+
+.coffee-btn:hover {
+  width: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.coffee-btn:hover .coffee-text {
+  opacity: 1;
+  margin-left: 8px;
+}
+
+.coffee-btn:hover .coffee-icon {
+  transform: rotate(15deg);
+}
+
+/* Enhanced Selected Tech Scrollbar */
+.selected-tech-scrollbar [data-radix-scroll-area-viewport] {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--primary) / 0.5) hsl(var(--muted));
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+.selected-tech-scrollbar [data-radix-scroll-area-viewport]::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+  background-color: #f7fafc;
+}
+
+.selected-tech-scrollbar [data-radix-scroll-area-viewport]::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  margin: 2px;
+}
+
+.selected-tech-scrollbar [data-radix-scroll-area-viewport]::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #cbd5e0 0%, #94a3b8 50%, #64748b 100%);
+  border-radius: 8px;
+  border: 2px solid #f7fafc;
+  min-height: 40px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.selected-tech-scrollbar [data-radix-scroll-area-viewport]::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #94a3b8 0%, #64748b 50%, #475569 100%);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.selected-tech-scrollbar [data-radix-scroll-area-viewport]::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #64748b 0%, #475569 50%, #334155 100%);
+}
+
+.selected-tech-scrollbar [data-radix-scroll-area-viewport]::-webkit-scrollbar-corner {
+  background: #f7fafc;
+  border-radius: 6px;
 }
