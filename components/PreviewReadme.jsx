@@ -361,7 +361,7 @@ export default function PreviewReadme({ data }) {
             variant="default"
             size="sm"
             onClick={() => setShowRawCode(true)}
-            className="flex items-center gap-2 bg-primary hover:bg-primary/90"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
           >
             <Code2 className="w-4 h-4" />
             View Markdown
@@ -402,155 +402,165 @@ export default function PreviewReadme({ data }) {
         </CardContent>
       </Card>
 
-      {/* Enhanced Markdown Code Modal with Better Scrolling */}
+      {/* Redesigned Markdown Code Modal with Hover-Only Scrollbar */}
       <Dialog open={showRawCode} onOpenChange={setShowRawCode}>
         <DialogContent className="max-w-6xl max-h-[95vh] flex flex-col overflow-hidden">
-          <DialogHeader className="flex-shrink-0 pb-4 border-b">
+          <DialogHeader className="flex-shrink-0 pb-6 border-b border-gray-200">
             <DialogTitle className="flex items-center justify-between pr-8">
-              <span className="flex items-center gap-2">
-                <Code2 className="w-5 h-5" />
-                Markdown Code
-              </span>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Code2 className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">Markdown Code</h3>
+                  <p className="text-sm text-gray-500 mt-1">Ready to copy to your GitHub profile</p>
+                </div>
+              </div>
             </DialogTitle>
           </DialogHeader>
           
-          <div className="flex-1 min-h-0 overflow-hidden relative">
-            {/* Enhanced scrollable content container */}
-            <div 
-              className="h-full overflow-auto markdown-code-scroll bg-gray-50 rounded-lg border-2 border-gray-200 relative"
-              style={{ 
-                scrollBehavior: 'smooth'
-              }}
-            >
-              {/* Copy button positioned over the content */}
-              <div className="sticky top-0 right-0 z-20 flex justify-end p-3 bg-gradient-to-b from-gray-50 via-gray-50 to-transparent">
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={copyToClipboard}
-                  className="flex items-center gap-2 bg-primary hover:bg-primary/90 shadow-lg"
-                >
-                  <Copy className="w-4 h-4" />
-                  {copied ? 'Copied!' : 'Copy Code'}
-                </Button>
+          <div className="flex-1 min-h-0 overflow-hidden">
+            {/* Main content area with hover scrollbar */}
+            <div className="h-full relative bg-slate-50 rounded-xl border border-gray-200 overflow-hidden">
+              {/* Header with copy button */}
+              <div className="sticky top-0 z-10 bg-gradient-to-b from-slate-50 via-slate-50 to-slate-50/80 backdrop-blur-sm border-b border-gray-200">
+                <div className="flex items-center justify-between px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                    <span className="ml-3 text-sm font-medium text-gray-600">README.md</span>
+                  </div>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={copyToClipboard}
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {copied ? 'Copied!' : 'Copy All'}
+                  </Button>
+                </div>
               </div>
               
-              {/* Code content */}
-              <div className="px-6 pb-6 pt-0">
-                <pre 
-                  className="text-sm whitespace-pre-wrap break-words font-mono leading-relaxed text-gray-800 select-text" 
-                  style={{ 
-                    margin: 0, 
-                    userSelect: 'text',
-                    WebkitUserSelect: 'text',
-                    MozUserSelect: 'text',
-                    msUserSelect: 'text',
-                    minHeight: '400px',
-                    fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-                    fontSize: '13px',
-                    lineHeight: '1.5'
-                  }}
-                >
-                  {generateMarkdown}
-                </pre>
+              {/* Scrollable code container */}
+              <div 
+                className="markdown-viewer-scroll overflow-auto"
+                style={{ 
+                  maxHeight: '500px',
+                  scrollBehavior: 'smooth'
+                }}
+              >
+                <div className="p-6 pb-8">
+                  <pre 
+                    className="text-sm font-mono leading-7 text-gray-800 whitespace-pre-wrap break-words select-text"
+                    style={{ 
+                      fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Menlo, Consolas, "Liberation Mono", "Courier New", monospace',
+                      fontSize: '14px',
+                      lineHeight: '1.7',
+                      margin: 0,
+                      userSelect: 'text',
+                      WebkitUserSelect: 'text',
+                      MozUserSelect: 'text',
+                      msUserSelect: 'text'
+                    }}
+                  >
+                    {generateMarkdown}
+                  </pre>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Enhanced scrollbar styles */}
+          {/* Hover-only scrollbar styles */}
           <style jsx>{`
-            .markdown-code-scroll {
-              scrollbar-width: auto;
-              scrollbar-color: #4B5563 #F9FAFB;
+            .markdown-viewer-scroll {
+              scrollbar-width: none; /* Firefox - hide by default */
+              -ms-overflow-style: none; /* IE and Edge - hide by default */
             }
             
-            .markdown-code-scroll::-webkit-scrollbar {
-              width: 18px;
-              height: 18px;
-              background-color: #F9FAFB;
+            .markdown-viewer-scroll::-webkit-scrollbar {
+              width: 0px;
+              background: transparent;
+              transition: width 0.3s ease;
             }
             
-            .markdown-code-scroll::-webkit-scrollbar-track {
-              background: #F3F4F6;
-              border-radius: 10px;
-              border: 2px solid #E5E7EB;
+            .markdown-viewer-scroll:hover {
+              scrollbar-width: thin; /* Firefox - show on hover */
+              scrollbar-color: #6B7280 #F1F5F9;
+            }
+            
+            .markdown-viewer-scroll:hover::-webkit-scrollbar {
+              width: 16px;
+              background: #F1F5F9;
+            }
+            
+            .markdown-viewer-scroll::-webkit-scrollbar-track {
+              background: transparent;
+              border-radius: 8px;
+            }
+            
+            .markdown-viewer-scroll:hover::-webkit-scrollbar-track {
+              background: #F1F5F9;
+              border: 1px solid #E2E8F0;
+              border-radius: 8px;
               margin: 4px;
             }
             
-            .markdown-code-scroll::-webkit-scrollbar-thumb {
-              background: linear-gradient(180deg, #6B7280 0%, #4B5563 50%, #374151 100%);
-              border-radius: 10px;
-              border: 3px solid #F9FAFB;
-              min-height: 50px;
+            .markdown-viewer-scroll::-webkit-scrollbar-thumb {
+              background: transparent;
+              border-radius: 8px;
+              transition: all 0.3s ease;
+            }
+            
+            .markdown-viewer-scroll:hover::-webkit-scrollbar-thumb {
+              background: linear-gradient(180deg, #9CA3AF 0%, #6B7280 50%, #4B5563 100%);
+              border: 3px solid #F1F5F9;
+              border-radius: 8px;
+              min-height: 40px;
               box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
             }
             
-            .markdown-code-scroll::-webkit-scrollbar-thumb:hover {
-              background: linear-gradient(180deg, #4B5563 0%, #374151 50%, #1F2937 100%);
-              box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            .markdown-viewer-scroll::-webkit-scrollbar-thumb:hover {
+              background: linear-gradient(180deg, #6B7280 0%, #4B5563 50%, #374151 100%) !important;
+              box-shadow: inset 0 1px 4px rgba(0,0,0,0.15);
             }
             
-            .markdown-code-scroll::-webkit-scrollbar-thumb:active {
-              background: linear-gradient(180deg, #374151 0%, #1F2937 50%, #111827 100%);
+            .markdown-viewer-scroll::-webkit-scrollbar-thumb:active {
+              background: linear-gradient(180deg, #4B5563 0%, #374151 50%, #1F2937 100%) !important;
+              box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
             }
 
-            .markdown-code-scroll::-webkit-scrollbar-corner {
-              background: #F9FAFB;
-              border-radius: 8px;
+            .markdown-viewer-scroll::-webkit-scrollbar-corner {
+              background: transparent;
+            }
+            
+            .markdown-viewer-scroll:hover::-webkit-scrollbar-corner {
+              background: #F1F5F9;
+              border-radius: 4px;
             }
 
-            /* Enhanced scroll buttons */
-            .markdown-code-scroll::-webkit-scrollbar-button:vertical:start:decrement {
-              display: block;
-              height: 24px;
-              background: linear-gradient(180deg, #D1D5DB 0%, #9CA3AF 100%);
-              border-radius: 10px 10px 5px 5px;
-              border: 2px solid #E5E7EB;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
-              background-repeat: no-repeat;
-              background-position: center;
+            /* Visual indicator for scrollable content */
+            .markdown-viewer-scroll {
+              position: relative;
             }
-
-            .markdown-code-scroll::-webkit-scrollbar-button:vertical:end:increment {
-              display: block;
-              height: 24px;
-              background: linear-gradient(180deg, #9CA3AF 0%, #D1D5DB 100%);
-              border-radius: 5px 5px 10px 10px;
-              border: 2px solid #E5E7EB;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-              background-repeat: no-repeat;
-              background-position: center;
+            
+            .markdown-viewer-scroll::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 4px;
+              height: 100%;
+              background: linear-gradient(180deg, transparent 0%, rgba(107,114,128,0.1) 50%, transparent 100%);
+              opacity: 0;
+              transition: opacity 0.3s ease;
+              pointer-events: none;
+              border-radius: 2px;
             }
-
-            .markdown-code-scroll::-webkit-scrollbar-button:hover {
-              background: linear-gradient(180deg, #6B7280 0%, #4B5563 100%);
-            }
-
-            .markdown-code-scroll::-webkit-scrollbar-button:active {
-              background: linear-gradient(180deg, #4B5563 0%, #374151 100%);
-            }
-
-            /* Horizontal scrollbar styling */
-            .markdown-code-scroll::-webkit-scrollbar-button:horizontal:start:decrement {
-              display: block;
-              width: 24px;
-              background: linear-gradient(90deg, #D1D5DB 0%, #9CA3AF 100%);
-              border-radius: 10px 5px 5px 10px;
-              border: 2px solid #E5E7EB;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
-              background-repeat: no-repeat;
-              background-position: center;
-            }
-
-            .markdown-code-scroll::-webkit-scrollbar-button:horizontal:end:increment {
-              display: block;
-              width: 24px;
-              background: linear-gradient(90deg, #9CA3AF 0%, #D1D5DB 100%);
-              border-radius: 5px 10px 10px 5px;
-              border: 2px solid #E5E7EB;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
-              background-repeat: no-repeat;
-              background-position: center;
+            
+            .markdown-viewer-scroll:hover::after {
+              opacity: 0; /* Hide when actual scrollbar shows */
             }
           `}</style>
         </DialogContent>
