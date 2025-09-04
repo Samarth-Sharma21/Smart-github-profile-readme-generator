@@ -17,39 +17,66 @@ import { Toaster } from '@/components/ui/toaster'
 
 export default function App() {
   const [currentView, setCurrentView] = useState('create')
-  const [readmeData, setReadmeData] = useState({
-    profile: {
-      name: '',
-      subtitle: '',
-      welcomeMessage: '',
-      showNameAsHeading: false
-    },
-    technologies: [],
-    socialLinks: [],
-    githubStats: {
-      showProfileViews: false,
-      showGithubStats: false,
-      showStreakStats: false,
-      showTopLanguages: false,
-      showActivityGraph: false,
-      username: ''
-    },
-    projects: [],
-    support: {
-      buyMeCoffee: '',
-      kofi: ''
-    },
-    contact: {
-      email: ''
-    },
-    sectionHeadings: {
-      technologies: '🛠️ Technologies & Skills',
-      socialLinks: '🌐 Social Links', 
-      githubStats: '📊 GitHub Stats',
-      projects: '🚀 Featured Projects',
-      support: '☕ Support Me',
-      contact: '📫 Contact Me'
+  
+  // Initialize readmeData with sessionStorage persistence
+  const [readmeData, setReadmeData] = useState(() => {
+    // Default section order
+    const defaultSectionOrder = ['profile', 'technologies', 'socialLinks', 'githubStats', 'projects', 'support', 'contact'];
+    
+    // Try to load saved section order from sessionStorage
+    let savedSectionOrder = defaultSectionOrder;
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = sessionStorage.getItem('github-readme-section-order');
+        if (saved) {
+          const parsedOrder = JSON.parse(saved);
+          // Validate that the saved order contains all required sections
+          if (Array.isArray(parsedOrder) && 
+              defaultSectionOrder.every(id => parsedOrder.includes(id)) && 
+              parsedOrder.length === defaultSectionOrder.length) {
+            savedSectionOrder = parsedOrder;
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to load saved section order:', error);
+      }
     }
+    
+    return {
+      profile: {
+        name: '',
+        subtitle: '',
+        welcomeMessage: '',
+        showNameAsHeading: false
+      },
+      technologies: [],
+      socialLinks: [],
+      githubStats: {
+        showProfileViews: false,
+        showGithubStats: false,
+        showStreakStats: false,
+        showTopLanguages: false,
+        showActivityGraph: false,
+        username: ''
+      },
+      projects: [],
+      support: {
+        buyMeCoffee: '',
+        kofi: ''
+      },
+      contact: {
+        email: ''
+      },
+      sectionHeadings: {
+        technologies: '🛠️ Technologies & Skills',
+        socialLinks: '🌐 Social Links', 
+        githubStats: '📊 GitHub Stats',
+        projects: '🚀 Featured Projects',
+        support: '☕ Support Me',
+        contact: '📫 Contact Me'
+      },
+      sectionOrder: savedSectionOrder
+    };
   })
 
   const starRef = useRef(null)
@@ -57,7 +84,20 @@ export default function App() {
   const mainContentRef = useRef(null)
 
   const handleDataChange = (newData) => {
-    setReadmeData(prev => ({ ...prev, ...newData }))
+    setReadmeData(prev => {
+      const updated = { ...prev, ...newData };
+      
+      // Save section order to sessionStorage when it changes
+      if (newData.sectionOrder && typeof window !== 'undefined') {
+        try {
+          sessionStorage.setItem('github-readme-section-order', JSON.stringify(newData.sectionOrder));
+        } catch (error) {
+          console.warn('Failed to save section order to sessionStorage:', error);
+        }
+      }
+      
+      return updated;
+    });
   }
 
   const switchToPreview = () => {
