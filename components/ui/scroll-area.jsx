@@ -6,10 +6,13 @@ import { cn } from "@/lib/utils"
 const ScrollArea = React.forwardRef(({ className, children, ...props }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
+    // Users missed hover-only scrollbars on clipped lists.
+    type="auto"
     className={cn("relative overflow-hidden", className)}
     {...props}
   >
-    <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+    {/* h-full cannot resolve against a root max-height, so inherit it. */}
+    <ScrollAreaPrimitive.Viewport className="h-full max-h-[inherit] w-full rounded-[inherit]">
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollBar />

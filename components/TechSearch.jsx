@@ -2004,8 +2004,7 @@ export default function TechSearch({ open, onOpenChange, onSelect }) {
               <div className="text-sm font-medium mb-3 text-gray-700">
                 Selected Technologies ({selectedTechs.length}):
               </div>
-              {/* Fixed ScrollArea with visible scrollbar and proper height */}
-              <ScrollArea className="selected-tech-scrollbar h-32 w-full rounded-md border bg-white">
+              <ScrollArea className="h-32 w-full rounded-md border bg-white">
                 <div className="flex flex-wrap gap-2 p-3 pr-4">
                   {selectedTechs.map((tech) => (
                     <div key={tech.name} className="flex items-center gap-2 p-2 bg-white rounded-lg border-2 hover:shadow-sm transition-all"

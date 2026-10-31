@@ -530,7 +530,7 @@ export default function CreateReadmeForm({ data, onChange }) {
 
               {data.technologies.length > 0 && (
                 <ScrollArea className="max-h-80">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-3">
                     {data.technologies.map((tech) => (
                       <div
                         key={tech.name}
