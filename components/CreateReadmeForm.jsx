@@ -177,12 +177,20 @@ export default function CreateReadmeForm({ data, onChange }) {
     });
   };
 
-  const cardsWorkflow = data.githubStats.selfUpdating
+  const statsUsername = (data.githubStats.username || "").trim();
+  const cardsWorkflow = data.githubStats.selfUpdating && statsUsername
     ? cardsWorkflowYaml({
         stats: data.githubStats.showGithubStats,
         topLangs: data.githubStats.showTopLanguages,
       })
     : "";
+  const selfUpdatingHint = !data.githubStats.selfUpdating
+    ? ""
+    : !statsUsername
+      ? "Enter your GitHub username to get the workflow."
+      : !cardsWorkflow
+        ? "Self-updating covers the Stats and Top Languages cards. Tick at least one of them."
+        : "";
 
   const copyCardsWorkflow = async () => {
     try {
@@ -785,12 +793,16 @@ export default function CreateReadmeForm({ data, onChange }) {
                   </div>
                 </div>
 
+                {selfUpdatingHint && (
+                  <p className="text-sm text-muted-foreground">{selfUpdatingHint}</p>
+                )}
+
                 {cardsWorkflow && (
                   <div className="space-y-2 rounded-md border p-3">
                     <p className="text-sm">
                       Save this as{" "}
                       <code>.github/workflows/readme-cards.yml</code> in your{" "}
-                      <code>{data.githubStats.username || "username"}/{data.githubStats.username || "username"}</code>{" "}
+                      <code>{statsUsername}/{statsUsername}</code>{" "}
                       repo, then run it once from the Actions tab.
                     </p>
                     <div className="flex gap-2">

@@ -17,4 +17,9 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - run: node scripts/check-card-urls.mjs octocat
+      - name: Card URLs and workflow inputs
+        run: node scripts/check-card-urls.mjs octocat
+      - name: Generated workflow is valid YAML
+        run: |
+          node --input-type=module -e "import { cardsWorkflowYaml } from './lib/stats-cards.mjs'; process.stdout.write(cardsWorkflowYaml({ stats: true, topLangs: true }))" > /tmp/readme-cards.yml
+          ruby -ryaml -e 'YAML.safe_load(File.read("/tmp/readme-cards.yml"))'

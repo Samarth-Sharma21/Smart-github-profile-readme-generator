@@ -15,6 +15,9 @@ import {
   topLangsCardUrl,
 } from '@/lib/stats-cards.mjs'
 
+const escapeAttr = (value) =>
+  value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 export default function PreviewReadme({ data }) {
   const [copied, setCopied] = useState(false)
   const [showRawCode, setShowRawCode] = useState(false)
@@ -176,12 +179,14 @@ export default function PreviewReadme({ data }) {
   const generateGithubStatsSection = () => {
     let markdown = '';
     let html = '';
-    const { username, selfUpdating } = data.githubStats;
+    const username = (data.githubStats.username || '').trim();
+    const { selfUpdating } = data.githubStats;
+    const usernameAlt = escapeAttr(username);
 
     // Profile Views Badge (handled separately to appear early)
     if (data.githubStats.showProfileViews && username) {
-      markdown += `<p align="left"> <img src="${profileViewsUrl(username)}" alt="${username}" /> </p>\n\n`;
-      html += `<p class="mb-6"><img src="${profileViewsUrl(username)}" alt="${username}" /></p>\n`;
+      markdown += `<p align="left"> <img src="${profileViewsUrl(username)}" alt="${usernameAlt}" /> </p>\n\n`;
+      html += `<p class="mb-6"><img src="${profileViewsUrl(username)}" alt="${usernameAlt}" /></p>\n`;
     }
 
     // GitHub Stats
@@ -215,6 +220,10 @@ export default function PreviewReadme({ data }) {
 
       if (hasStats) {
         html += `</div>\n`;
+      }
+
+      if (selfUpdating && (data.githubStats.showGithubStats || data.githubStats.showTopLanguages)) {
+        html += `<p class="text-sm text-gray-500 mb-6">Self-updating: the stats and language cards above appear in your README after the workflow has run once in ${usernameAlt}/${usernameAlt}.</p>\n`;
       }
     }
 
