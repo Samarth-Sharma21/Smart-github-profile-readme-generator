@@ -3,7 +3,6 @@
   <h1>Smart GitHub Profile README Generator</h1>
   <p>Create stunning GitHub profile pages in minutes</p>
   
-  [![Netlify Status](https://api.netlify.com/api/v1/badges/your-netlify-id/deploy-status)](https://app.netlify.com/sites/github-profile-readme-generator/deploys)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat&labelColor=yellow&color=yellow)](https://opensource.org/licenses/MIT)
 </div>
 
@@ -51,21 +50,16 @@ If you find this tool helpful, consider supporting the project:
 - 👤 **Profile Introduction** - Create a personalized welcome section with your name, role, and bio
 - 🛠️ **Technologies & Skills** - Showcase your technical expertise with auto-generated badges
 - 🌐 **Social Links** - Connect visitors to all your online profiles with custom icons
-- 📊 **GitHub Stats** - Display dynamic statistics about your GitHub activity and contributions
+- 📊 **GitHub Stats** - Stats, streak, top-language and profile-view cards, with an optional GitHub Actions workflow that builds the cards in your own profile repo
 - 🚀 **Featured Projects** - Highlight your best repositories with descriptions and links
-- 📝 **Blog Posts** - Automatically display your latest articles from dev.to, Medium, or other platforms
-- 🏆 **Achievements** - Showcase certifications, awards, and recognition
 - ☕ **Support Section** - Add Ko-fi, Buy Me a Coffee, or other support platform links
 - 📫 **Contact Information** - Make it easy for collaborators and recruiters to reach you
 
 ### User Experience
 - 🎨 **Live Preview** - See your README update in real-time as you make changes
-- 📋 **One-click Copy** - Copy your markdown with a single click
-- 💾 **Templates** - Choose from various pre-designed templates to get started quickly
-- 🎭 **Themes** - Select from light, dark, and custom color schemes
+- 📋 **Copy or Download** - Copy the markdown or download `README.md`
 - 🧩 **Drag-and-Drop Sections** - Rearrange sections to create your perfect layout
 - 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
-- 🔄 **Import Existing** - Upload your current README to edit and enhance it
 
 ### Technical
 - ⚡ **Fast Performance** - Built with Next.js for optimal speed and SEO
@@ -223,7 +217,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [GSAP](https://greensock.com/gsap/) - Animation library
 - [Lucide React](https://lucide.dev/) - Icon library
-- [GitHub API](https://docs.github.com/en/rest) - For fetching GitHub stats
+- [GitHub-Stats-Extended](https://github.com/stats-organization/github-stats-extended) and [github-readme-streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats) - Stats cards
 
 ## 📞 Contact
 

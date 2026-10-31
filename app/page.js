@@ -56,7 +56,7 @@ export default function App() {
         showGithubStats: false,
         showStreakStats: false,
         showTopLanguages: false,
-        showActivityGraph: false,
+        selfUpdating: false,
         username: ''
       },
       projects: [],

@@ -7,6 +7,13 @@ import { Badge } from '@/components/ui/badge'
 import { Copy, Download, Eye, Code2, X } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { toast } from 'sonner'
+import {
+  PROFILE_CARD_PATHS,
+  profileViewsUrl,
+  statsCardUrl,
+  streakCardUrl,
+  topLangsCardUrl,
+} from '@/lib/stats-cards.mjs'
 
 export default function PreviewReadme({ data }) {
   const [copied, setCopied] = useState(false)
@@ -169,19 +176,20 @@ export default function PreviewReadme({ data }) {
   const generateGithubStatsSection = () => {
     let markdown = '';
     let html = '';
+    const { username, selfUpdating } = data.githubStats;
 
     // Profile Views Badge (handled separately to appear early)
-    if (data.githubStats.showProfileViews && data.githubStats.username) {
-      markdown += `<p align="left"> <img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat&base=1000" alt="${data.githubStats.username}" /> </p>\n\n`;
-      html += `<p class="mb-6"><img src="https://komarev.com/ghpvc/?username=${data.githubStats.username}&label=Profile%20views&color=0e75b6&style=flat&base=1000" alt="${data.githubStats.username}" /></p>\n`;
+    if (data.githubStats.showProfileViews && username) {
+      markdown += `<p align="left"> <img src="${profileViewsUrl(username)}" alt="${username}" /> </p>\n\n`;
+      html += `<p class="mb-6"><img src="${profileViewsUrl(username)}" alt="${username}" /></p>\n`;
     }
 
     // GitHub Stats
-    if (data.githubStats.username) {
+    if (username) {
       const statsHeading = data.sectionHeadings?.githubStats || '🔥 My Stats :';
       let hasStats = false;
       
-      if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages || data.githubStats.showActivityGraph) {
+      if (data.githubStats.showGithubStats || data.githubStats.showStreakStats || data.githubStats.showTopLanguages) {
         markdown += `<h3 align="left">${statsHeading}</h3>\n\n###\n\n`;
         html += `<h3 class="text-xl font-semibold mb-4 mt-6">${statsHeading}</h3>\n`;
         html += `<div class="flex justify-center mb-6">\n`;
@@ -189,27 +197,24 @@ export default function PreviewReadme({ data }) {
       }
 
       if (data.githubStats.showGithubStats) {
-        markdown += `<div align="center">\n  <img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="stats graph" />\n</div>\n\n`;
-        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api?username=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="stats graph" class="max-w-full" /></div>\n`;
+        const src = selfUpdating ? `./${PROFILE_CARD_PATHS.stats}` : statsCardUrl(username);
+        markdown += `<div align="center">\n  <img src="${src}" height="220" alt="stats graph" />\n</div>\n\n`;
+        html += `<div class="flex justify-center mb-4"><img src="${statsCardUrl(username)}" height="220" alt="stats graph" class="max-w-full" /></div>\n`;
       }
 
       if (data.githubStats.showStreakStats) {
-        markdown += `<div align="center">\n  <img src="https://streak-stats.demolab.com?user=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="streak graph" />\n</div>\n\n`;
-        html += `<div class="flex justify-center mb-4"><img src="https://streak-stats.demolab.com?user=${data.githubStats.username}&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="220" alt="streak graph" class="max-w-full" /></div>\n`;
+        markdown += `<div align="center">\n  <img src="${streakCardUrl(username)}" height="220" alt="streak graph" />\n</div>\n\n`;
+        html += `<div class="flex justify-center mb-4"><img src="${streakCardUrl(username)}" height="220" alt="streak graph" class="max-w-full" /></div>\n`;
       }
 
       if (data.githubStats.showTopLanguages) {
-        markdown += `<div align="center">\n  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dark&hide_border=false&border_radius=5&order=2" height="150" alt="languages graph" />\n</div>\n\n`;
-        html += `<div class="flex justify-center mb-4"><img src="https://github-readme-stats.vercel.app/api/top-langs?username=${data.githubStats.username}&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dark&hide_border=false&border_radius=5&order=2" height="150" alt="languages graph" class="max-w-full" /></div>\n`;
+        const src = selfUpdating ? `./${PROFILE_CARD_PATHS.topLangs}` : topLangsCardUrl(username);
+        markdown += `<div align="center">\n  <img src="${src}" height="150" alt="languages graph" />\n</div>\n\n`;
+        html += `<div class="flex justify-center mb-4"><img src="${topLangsCardUrl(username)}" height="150" alt="languages graph" class="max-w-full" /></div>\n`;
       }
 
       if (hasStats) {
         html += `</div>\n`;
-      }
-
-      if (data.githubStats.showActivityGraph) {
-        markdown += `<div align="center">\n  <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=minimal" alt="${data.githubStats.username}" />\n</div>\n\n`;
-        html += `<div class="flex justify-center mb-6 overflow-hidden"><img src="https://github-readme-activity-graph.vercel.app/graph?username=${data.githubStats.username}&theme=minimal" alt="${data.githubStats.username}" class="max-w-full w-full" /></div>\n`;
       }
     }
 

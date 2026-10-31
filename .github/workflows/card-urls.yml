@@ -1,0 +1,20 @@
+name: Check card URLs
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - lib/stats-cards.mjs
+      - scripts/check-card-urls.mjs
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: node scripts/check-card-urls.mjs octocat

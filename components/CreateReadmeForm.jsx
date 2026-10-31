@@ -14,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search, Plus, X, Coffee, Heart, Edit2, GripVertical } from "lucide-react";
 import TechSearch from "@/components/TechSearch";
 import SocialSearch from "@/components/SocialSearch";
+import { toast } from "sonner";
+import { cardsWorkflowYaml } from "@/lib/stats-cards.mjs";
 
 // Drag and drop imports
 import {
@@ -173,6 +175,34 @@ export default function CreateReadmeForm({ data, onChange }) {
         [headingKey]: value,
       },
     });
+  };
+
+  const cardsWorkflow = data.githubStats.selfUpdating
+    ? cardsWorkflowYaml({
+        stats: data.githubStats.showGithubStats,
+        topLangs: data.githubStats.showTopLanguages,
+      })
+    : "";
+
+  const copyCardsWorkflow = async () => {
+    try {
+      await navigator.clipboard.writeText(cardsWorkflow);
+      toast.success("Workflow copied to clipboard!");
+    } catch (err) {
+      toast.error("Failed to copy to clipboard");
+    }
+  };
+
+  const downloadCardsWorkflow = () => {
+    const blob = new Blob([cardsWorkflow], { type: "text/yaml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "readme-cards.yml";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleGithubStatsChange = (field, value) => {
@@ -733,18 +763,46 @@ export default function CreateReadmeForm({ data, onChange }) {
                   <Label htmlFor="top-languages">Show Top Languages</Label>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <Separator />
+
+                <div className="flex items-start space-x-2">
                   <Checkbox
-                    id="activity-graph"
-                    checked={data.githubStats.showActivityGraph}
+                    id="self-updating"
+                    checked={data.githubStats.selfUpdating}
                     onCheckedChange={(checked) =>
-                      handleGithubStatsChange("showActivityGraph", checked)
+                      handleGithubStatsChange("selfUpdating", checked)
                     }
                   />
-                  <Label htmlFor="activity-graph">
-                    Show Activity Graph
-                  </Label>
+                  <div className="space-y-1">
+                    <Label htmlFor="self-updating">
+                      Self-updating cards (GitHub Actions)
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      Stats and language cards are built by a workflow in your
+                      profile repo, so they keep working if a hosted card
+                      service goes down.
+                    </p>
+                  </div>
                 </div>
+
+                {cardsWorkflow && (
+                  <div className="space-y-2 rounded-md border p-3">
+                    <p className="text-sm">
+                      Save this as{" "}
+                      <code>.github/workflows/readme-cards.yml</code> in your{" "}
+                      <code>{data.githubStats.username || "username"}/{data.githubStats.username || "username"}</code>{" "}
+                      repo, then run it once from the Actions tab.
+                    </p>
+                    <div className="flex gap-2">
+                      <Button type="button" size="sm" variant="outline" onClick={copyCardsWorkflow}>
+                        Copy workflow
+                      </Button>
+                      <Button type="button" size="sm" variant="outline" onClick={downloadCardsWorkflow}>
+                        Download workflow
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
